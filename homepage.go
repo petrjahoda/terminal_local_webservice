@@ -11,6 +11,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -125,6 +126,7 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 						interfaceIpAddress = ip.String()
 						mask := ip.DefaultMask()
 						interfaceMask = fmt.Sprintf("%d.%d.%d.%d", mask[0], mask[1], mask[2], mask[3])
+						interfaceGateway = GetGateway()
 
 					}
 				case *net.IPAddr:
@@ -133,11 +135,13 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 						interfaceIpAddress = ip.String()
 						mask := ip.DefaultMask()
 						interfaceMask = fmt.Sprintf("%d.%d.%d.%d", mask[0], mask[1], mask[2], mask[3])
+						interfaceGateway = GetGateway()
 					}
 				}
 			}
 		}
 	}
+
 	if interfaceIpAddress == "" {
 		interfaceIpAddress = "not connected"
 
@@ -145,9 +149,7 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 	if interfaceMask == "" {
 		interfaceMask = "not connected"
 	}
-	if interfaceGateway == "" {
-		interfaceGateway = "not connected"
-	}
+
 	return interfaceIpAddress, interfaceMask, interfaceGateway
 }
 
@@ -156,4 +158,19 @@ type HomepageData struct {
 	Mask            string
 	Gateway         string
 	ServerIpAddress string
+}
+
+func GetGateway() string {
+	data, err := exec.Command("Powershell.exe", "Get-NetIPConfiguration -InterfaceIndex 15").Output()
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	result := string(data)
+	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+		if strings.Contains(line, "IPv4DefaultGateway") {
+			return line[22:]
+		}
+	}
+	return "not connected"
 }
