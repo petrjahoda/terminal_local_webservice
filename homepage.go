@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"golang.org/x/net/route"
+	"github.com/kbinani/screenshot"
 	"html/template"
+	"image/png"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -17,6 +18,30 @@ import (
 
 type ServerIpAddress struct {
 	IpAddress string
+}
+
+func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	LogInfo("MAIN", "Generating screenshot")
+	n := screenshot.NumActiveDisplays()
+	LogInfo("MAIN", "Displays: "+strconv.Itoa(n))
+
+	for i := 0; i < n; i++ {
+		bounds := screenshot.GetDisplayBounds(i)
+		LogInfo("MAIN", "Bounds: "+bounds.String())
+		img, err := screenshot.CaptureRect(bounds)
+		if err != nil {
+			LogError("MAIN", "Error generating screenshot: "+err.Error())
+			continue
+		}
+		fileName := "image.png"
+		file, _ := os.Create(fileName)
+		defer file.Close()
+		_ = png.Encode(file, img)
+		LogInfo("MAIN", "Generated screenshot: "+fileName)
+	}
+	LogInfo("MAIN", "Generating finished")
+	renderTemplate(w, "screenshot", &Page{})
+
 }
 
 func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -100,7 +125,6 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 						interfaceIpAddress = ip.String()
 						mask := ip.DefaultMask()
 						interfaceMask = fmt.Sprintf("%d.%d.%d.%d", mask[0], mask[1], mask[2], mask[3])
-						interfaceGateway = GetGateway()
 
 					}
 				case *net.IPAddr:
@@ -109,7 +133,6 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 						interfaceIpAddress = ip.String()
 						mask := ip.DefaultMask()
 						interfaceMask = fmt.Sprintf("%d.%d.%d.%d", mask[0], mask[1], mask[2], mask[3])
-						interfaceGateway = GetGateway()
 					}
 				}
 			}
@@ -126,45 +149,6 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 		interfaceGateway = "not connected"
 	}
 	return interfaceIpAddress, interfaceMask, interfaceGateway
-}
-
-func GetGateway() string {
-	rib, _ := route.FetchRIB(0, route.RIBTypeRoute, 0)
-	messages, err := route.ParseRIB(route.RIBTypeRoute, rib)
-	if err != nil {
-		println(err.Error())
-	}
-	for _, message := range messages {
-		route_message := message.(*route.RouteMessage)
-		addresses := route_message.Addrs
-
-		var destination, gateway *route.Inet4Addr
-		ok := false
-		if destination, ok = addresses[0].(*route.Inet4Addr); !ok {
-			continue
-		}
-
-		if gateway, ok = addresses[1].(*route.Inet4Addr); !ok {
-			continue
-		}
-
-		if destination == nil || gateway == nil {
-			continue
-		}
-		var defaultRoute = [4]byte{0, 0, 0, 0}
-		if destination.IP == defaultRoute {
-			return strconv.Itoa(int(gateway.IP[0])) + "." + strconv.Itoa(int(gateway.IP[1])) + "." + strconv.Itoa(int(gateway.IP[2])) + "." + strconv.Itoa(int(gateway.IP[3]))
-		}
-	}
-	return "gateway not set"
-}
-
-func ipv4MaskString(m []byte) string {
-	if len(m) != 4 {
-		panic("ipv4Mask: len must be 4 bytes")
-	}
-
-	return fmt.Sprintf("%d.%d.%d.%d", m[0], m[1], m[2], m[3])
 }
 
 type HomepageData struct {
