@@ -111,37 +111,28 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 	var interfaceIpAddress string
 	var interfaceMask string
 	var interfaceGateway string
-	for _, requestedInterface := range interfaces {
-		if requestedInterface.Name == Interface {
-			addrs, err := requestedInterface.Addrs()
-			if err != nil {
-				println("Bad interface")
-			}
-			for _, addr := range addrs {
-				var ip net.IP
-				switch v := addr.(type) {
-				case *net.IPNet:
-					ip = v.IP.To4()
-					if ip != nil {
-						interfaceIpAddress = ip.String()
-						mask := ip.DefaultMask()
-						interfaceMask = fmt.Sprintf("%d.%d.%d.%d", mask[0], mask[1], mask[2], mask[3])
-						interfaceGateway = GetGateway()
+	data, err := exec.Command("Powershell.exe", "ipconfig").Output()
 
-					}
-				case *net.IPAddr:
-					ip = v.IP
-					if ip != nil {
-						interfaceIpAddress = ip.String()
-						mask := ip.DefaultMask()
-						interfaceMask = fmt.Sprintf("%d.%d.%d.%d", mask[0], mask[1], mask[2], mask[3])
-						interfaceGateway = GetGateway()
-					}
-				}
-			}
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	result := string(data)
+	println(result)
+	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+		if strings.Contains(line, "IPv4 Address") {
+			interfaceIpAddress = line[38:]
+		}
+		if strings.Contains(line, "Subnet Mask") {
+			interfaceMask = line[38:]
+		}
+		if strings.Contains(line, "Default Gateway") {
+			interfaceGateway = line[38:]
 		}
 	}
+	if interfaceGateway == "" {
+		interfaceGateway = "not connected"
 
+	}
 	if interfaceIpAddress == "" {
 		interfaceIpAddress = "not connected"
 
@@ -158,19 +149,4 @@ type HomepageData struct {
 	Mask            string
 	Gateway         string
 	ServerIpAddress string
-}
-
-func GetGateway() string {
-	data, err := exec.Command("Powershell.exe", "Get-NetIPConfiguration -InterfaceIndex 15").Output()
-
-	if err != nil {
-		fmt.Println("Error: ", err)
-	}
-	result := string(data)
-	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "IPv4DefaultGateway") {
-			return line[22:]
-		}
-	}
-	return "not connected"
 }
