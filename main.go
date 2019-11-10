@@ -23,6 +23,8 @@ func main() {
 	streamer := sse.New()
 	router.GET("/", Homepage)
 	router.GET("/screenshot", Screenshot)
+	router.GET("/restart", Restart)
+	router.GET("/setup", Setup)
 	router.GET("/darcula.css", darcula)
 	router.GET("/metro.min.js", metrojs)
 	router.GET("/metro-all.css", metrocss)

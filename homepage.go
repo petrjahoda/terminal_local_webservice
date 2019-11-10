@@ -18,7 +18,14 @@ import (
 )
 
 type ServerIpAddress struct {
-	IpAddress string
+	ServerIpAddress string
+}
+
+type HomepageData struct {
+	IpAddress       string
+	Mask            string
+	Gateway         string
+	ServerIpAddress string
 }
 
 func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -42,7 +49,15 @@ func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params
 	}
 	LogInfo("MAIN", "Generating finished")
 	renderTemplate(w, "screenshot", &Page{})
+}
 
+func Restart(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	data, err := exec.Command("Powershell.exe", "Restart-Computer").Output()
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	LogInfo("MAIN", string(data))
 }
 
 func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -64,20 +79,39 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 	_ = tmpl.Execute(w, data)
 }
 
+func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	_ = r.ParseForm()
+	tmpl := template.Must(template.ParseFiles("setup.html"))
+
+	interfaces, _ := net.Interfaces()
+	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData(interfaces)
+
+	CreateConfigIfNotExists()
+	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+
+	data := HomepageData{
+		IpAddress:       interfaceIpAddress,
+		Mask:            interfaceMask,
+		Gateway:         interfaceGateway,
+		ServerIpAddress: interfaceServerIpAddress,
+	}
+	_ = tmpl.Execute(w, data)
+}
+
 func LoadSettingsFromConfigFile() string {
 
-	configDirectory := filepath.Join(".", "Config")
+	configDirectory := filepath.Join(".", "config")
 	configFileName := "config.json"
 	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
 	readFile, _ := ioutil.ReadFile(configFullPath)
 	ConfigFile := ServerIpAddress{}
 	_ = json.Unmarshal(readFile, &ConfigFile)
-	ServerIpAddress := ConfigFile.IpAddress
+	ServerIpAddress := ConfigFile.ServerIpAddress
 	return ServerIpAddress
 }
 
 func CreateConfigIfNotExists() {
-	configDirectory := filepath.Join(".", "Config")
+	configDirectory := filepath.Join(".", "config")
 	configFileName := "config.json"
 	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
 
@@ -91,7 +125,7 @@ func CreateConfigIfNotExists() {
 		} else {
 			LogInfo("MAIN", "Directory for config file created")
 			data := ServerIpAddress{
-				IpAddress: "192.168.1.11",
+				ServerIpAddress: "192.168.1.11",
 			}
 			file, _ := json.MarshalIndent(data, "", "  ")
 			writingError := ioutil.WriteFile(configFullPath, file, 0666)
@@ -142,11 +176,4 @@ func GetNetworkData(interfaces []net.Interface) (string, string, string) {
 	}
 
 	return interfaceIpAddress, interfaceMask, interfaceGateway
-}
-
-type HomepageData struct {
-	IpAddress       string
-	Mask            string
-	Gateway         string
-	ServerIpAddress string
 }
