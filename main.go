@@ -33,6 +33,7 @@ func main() {
 	router.GET("/js/metro.min.js", metrojs)
 	router.GET("/css/metro-all.css", metrocss)
 	router.GET("/image.png", image)
+
 	router.Handler("GET", "/listen", streamer)
 	go StreamTime(streamer)
 	LogInfo("MAIN", "Server running")

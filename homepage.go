@@ -4,13 +4,18 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
+	"github.com/kbinani/screenshot"
 	"html/template"
+	"image/png"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type ServerIpAddress struct {
@@ -24,33 +29,26 @@ type HomepageData struct {
 	ServerIpAddress string
 	Timer           string
 	Url             string
+	Dhcp            string
 }
 
 func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	LogInfo("MAIN", "Generating screenshot")
-	data, err := exec.Command("Powershell.exe", "screenshot.exe").Output()
+	n := screenshot.NumActiveDisplays()
+	LogInfo("MAIN", "Displays: "+strconv.Itoa(n))
 
-	if err != nil {
-		fmt.Println("Error: ", err)
+	for i := 0; i < n; i++ {
+		img, err := screenshot.CaptureDisplay(i)
+		if err != nil {
+			LogError("MAIN", "Error generating screenshot: "+err.Error())
+			continue
+		}
+		fileName := "image.png"
+		file, _ := os.Create(fileName)
+		defer file.Close()
+		_ = png.Encode(file, img)
+		LogInfo("MAIN", "Generated screenshot: "+fileName)
 	}
-	LogInfo("MAIN", string(data))
-	//n := screenshot.NumActiveDisplays()
-	//LogInfo("MAIN", "Displays: "+strconv.Itoa(n))
-	//
-	//for i := 0; i < n; i++ {
-	//	bounds := screenshot.GetDisplayBounds(i)
-	//	LogInfo("MAIN", "Bounds: "+bounds.String())
-	//	img, err := screenshot.CaptureRect(bounds)
-	//	if err != nil {
-	//		LogError("MAIN", "Error generating screenshot: "+err.Error())
-	//		continue
-	//	}
-	//	fileName := "image.png"
-	//	file, _ := os.Create(fileName)
-	//	defer file.Close()
-	//	_ = png.Encode(file, img)
-	//	LogInfo("MAIN", "Generated screenshot: "+fileName)
-	//}
 	LogInfo("MAIN", "Generating finished")
 	renderTemplate(w, "screenshot", &Page{})
 }
@@ -77,12 +75,23 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 
-	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	timer := "86400"
 	url := ""
-	if interfaceIpAddress != "not connected" {
-		println("timing")
+
+	hostName := interfaceServerIpAddress
+	portNum := "80"
+	seconds := 2
+	timeOut := time.Duration(seconds) * time.Second
+
+	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
+
+	if err != nil {
+		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
+		interfaceServerIpAddress += " not accessible"
+	} else {
+		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
 		timer = "20"
 		url = "http://" + interfaceServerIpAddress + "/"
 	}
@@ -94,6 +103,7 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 		ServerIpAddress: interfaceServerIpAddress,
 		Timer:           timer,
 		Url:             url,
+		Dhcp:            dhcpEnabled,
 	}
 	_ = tmpl.Execute(w, data)
 }
@@ -102,7 +112,7 @@ func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/setup.html"))
 
-	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 
 	data := HomepageData{
@@ -110,6 +120,7 @@ func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
 		ServerIpAddress: interfaceServerIpAddress,
+		Dhcp:            dhcpEnabled,
 	}
 	_ = tmpl.Execute(w, data)
 }
@@ -141,7 +152,7 @@ func CreateConfigIfNotExists() {
 		} else {
 			LogInfo("MAIN", "Directory for config file created")
 			data := ServerIpAddress{
-				ServerIpAddress: "192.168.1.11",
+				ServerIpAddress: "",
 			}
 			file, _ := json.MarshalIndent(data, "", "  ")
 			writingError := ioutil.WriteFile(configFullPath, file, 0666)
@@ -157,40 +168,48 @@ func CreateConfigIfNotExists() {
 	}
 }
 
-func GetNetworkData() (string, string, string) {
+func GetNetworkData() (string, string, string, string) {
 	var interfaceIpAddress string
 	var interfaceMask string
 	var interfaceGateway string
+	var interfaceDhcp string
 
-	data, err := exec.Command("Powershell.exe", "ipconfig").Output()
+	data, err := exec.Command("Powershell.exe", "ipconfig /all").Output()
 
 	if err != nil {
 		fmt.Println("Error: ", err)
 	}
 	result := string(data)
 	println(result)
+	ethernetStarts := false
 	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "IPv4 Address") {
-			interfaceIpAddress = line[38:]
+		if strings.Contains(line, "Ethernet") {
+			ethernetStarts = true
 		}
-		if strings.Contains(line, "Subnet Mask") {
-			interfaceMask = line[38:]
-		}
-		if strings.Contains(line, "Default Gateway") {
-			interfaceGateway = line[38:]
+		if ethernetStarts {
+			if strings.Contains(line, "IPv4 Address") {
+				interfaceIpAddress = line[38:]
+			}
+			if strings.Contains(line, "Subnet Mask") {
+				interfaceMask = line[38:]
+			}
+			if strings.Contains(line, "Default Gateway") {
+				interfaceGateway = line[38:]
+			}
+			if strings.Contains(line, "DHCP Enabled") {
+				interfaceDhcp = line[38:]
+			}
+			if strings.Contains(line, "Wireless") {
+				break
+			}
+
 		}
 	}
 	if interfaceGateway == "" {
 		interfaceGateway = "not connected"
-
-	}
-	if interfaceIpAddress == "" {
 		interfaceIpAddress = "not connected"
-
-	}
-	if interfaceMask == "" {
 		interfaceMask = "not connected"
+		interfaceDhcp = "not connected"
 	}
-
-	return interfaceIpAddress, interfaceMask, interfaceGateway
+	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }

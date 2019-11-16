@@ -43,14 +43,15 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 			LogInfo("MAIN", "Server ip address updated")
 		}
 	}
-	tmpl := template.Must(template.ParseFiles("homepage.html"))
-	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData()
+	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+	interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	data := HomepageData{
 		IpAddress:       interfaceIpAddress,
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
 		ServerIpAddress: interfaceServerIpAddress,
+		Dhcp:            interfaceDhcp,
 	}
 	_ = tmpl.Execute(w, data)
 }
@@ -63,14 +64,15 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprout
 	}
 	LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
 
-	tmpl := template.Must(template.ParseFiles("homepage.html"))
-	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData()
+	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+	interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	data := HomepageData{
 		IpAddress:       interfaceIpAddress,
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
 		ServerIpAddress: interfaceServerIpAddress,
+		Dhcp:            interfaceDhcp,
 	}
 	_ = tmpl.Execute(w, data)
 }

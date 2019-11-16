@@ -51,3 +51,51 @@
 2019-11-16 09:15:44.626   MAIN   INF   Generating screenshot
 2019-11-16 09:15:44.626   MAIN   INF   
 2019-11-16 09:15:44.626   MAIN   INF   Generating finished
+2019-11-16 13:15:38.631   MAIN   INF   Config file already exists
+2019-11-16 13:15:38.632   MAIN   INF   Server running
+2019-11-16 13:16:30.125   MAIN   INF   Config file already exists
+2019-11-16 13:16:30.125   MAIN   INF   Server running
+2019-11-16 13:17:04.469   MAIN   INF   Config file already exists
+2019-11-16 13:17:04.469   MAIN   INF   Server running
+2019-11-16 13:20:28.428   MAIN   INF   Config file already exists
+2019-11-16 13:20:28.428   MAIN   INF   Server running
+2019-11-16 13:20:57.349   MAIN   INF   Config file already exists
+2019-11-16 13:20:57.349   MAIN   INF   Server running
+2019-11-16 13:22:41.783   MAIN   INF   Updating server ip address
+2019-11-16 13:22:41.783   MAIN   INF   Server ip address updated
+2019-11-16 13:22:46.989   MAIN   INF   Updating server ip address
+2019-11-16 13:22:46.989   MAIN   INF   Server ip address updated
+2019-11-16 13:24:12.787   MAIN   INF   Config file already exists
+2019-11-16 13:24:12.787   MAIN   INF   Server running
+2019-11-16 13:47:01.669   MAIN   INF   Config file already exists
+2019-11-16 13:47:01.669   MAIN   INF   Server running
+2019-11-16 13:47:39.369   MAIN   INF   Config file already exists
+2019-11-16 13:47:39.369   MAIN   INF   Server running
+2019-11-16 13:48:26.427   MAIN   INF   Config file already exists
+2019-11-16 13:48:26.427   MAIN   INF   Server running
+2019-11-16 13:50:50.178   MAIN   INF   Config file already exists
+2019-11-16 13:50:50.179   MAIN   INF   Server running
+2019-11-16 13:51:07.338   MAIN   INF   Config file already exists
+2019-11-16 13:51:07.338   MAIN   INF   Server running
+2019-11-16 13:51:25.454   MAIN   INF   Config file already exists
+2019-11-16 13:51:25.454   MAIN   INF   Server running
+2019-11-16 13:51:50.013   MAIN   INF   Config file already exists
+2019-11-16 13:51:50.013   MAIN   INF   Server running
+2019-11-16 13:54:12.087   MAIN   INF   Config file already exists
+2019-11-16 13:54:12.087   MAIN   INF   Server running
+2019-11-16 13:54:28.682   MAIN   INF   Config file already exists
+2019-11-16 13:54:28.683   MAIN   INF   Server running
+2019-11-16 13:54:42.066   MAIN   INF   Config file already exists
+2019-11-16 13:54:42.066   MAIN   INF   Server running
+2019-11-16 13:55:18.201   MAIN   INF   Config file already exists
+2019-11-16 13:55:18.201   MAIN   INF   Server running
+2019-11-16 13:55:54.116   MAIN   INF   Config file already exists
+2019-11-16 13:55:54.116   MAIN   INF   Server running
+2019-11-16 13:56:27.556   MAIN   INF   Config file already exists
+2019-11-16 13:56:27.556   MAIN   INF   Server running
+2019-11-16 13:58:29.119   MAIN   INF   Config file already exists
+2019-11-16 13:58:29.119   MAIN   INF   Server running
+2019-11-16 13:58:34.195   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-16 13:59:17.824   MAIN   INF   Config file already exists
+2019-11-16 13:59:17.824   MAIN   INF   Server running
+2019-11-16 13:59:19.591   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
