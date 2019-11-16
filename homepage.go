@@ -4,16 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"github.com/kbinani/screenshot"
 	"html/template"
-	"image/png"
 	"io/ioutil"
-	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -26,27 +22,35 @@ type HomepageData struct {
 	Mask            string
 	Gateway         string
 	ServerIpAddress string
+	Timer           string
+	Url             string
 }
 
 func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	LogInfo("MAIN", "Generating screenshot")
-	n := screenshot.NumActiveDisplays()
-	LogInfo("MAIN", "Displays: "+strconv.Itoa(n))
+	data, err := exec.Command("Powershell.exe", "screenshot.exe").Output()
 
-	for i := 0; i < n; i++ {
-		bounds := screenshot.GetDisplayBounds(i)
-		LogInfo("MAIN", "Bounds: "+bounds.String())
-		img, err := screenshot.CaptureRect(bounds)
-		if err != nil {
-			LogError("MAIN", "Error generating screenshot: "+err.Error())
-			continue
-		}
-		fileName := "image.png"
-		file, _ := os.Create(fileName)
-		defer file.Close()
-		_ = png.Encode(file, img)
-		LogInfo("MAIN", "Generated screenshot: "+fileName)
+	if err != nil {
+		fmt.Println("Error: ", err)
 	}
+	LogInfo("MAIN", string(data))
+	//n := screenshot.NumActiveDisplays()
+	//LogInfo("MAIN", "Displays: "+strconv.Itoa(n))
+	//
+	//for i := 0; i < n; i++ {
+	//	bounds := screenshot.GetDisplayBounds(i)
+	//	LogInfo("MAIN", "Bounds: "+bounds.String())
+	//	img, err := screenshot.CaptureRect(bounds)
+	//	if err != nil {
+	//		LogError("MAIN", "Error generating screenshot: "+err.Error())
+	//		continue
+	//	}
+	//	fileName := "image.png"
+	//	file, _ := os.Create(fileName)
+	//	defer file.Close()
+	//	_ = png.Encode(file, img)
+	//	LogInfo("MAIN", "Generated screenshot: "+fileName)
+	//}
 	LogInfo("MAIN", "Generating finished")
 	renderTemplate(w, "screenshot", &Page{})
 }
@@ -60,33 +64,45 @@ func Restart(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	LogInfo("MAIN", string(data))
 }
 
+func Shutdown(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	data, err := exec.Command("Powershell.exe", "Stop-Computer").Output()
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	LogInfo("MAIN", string(data))
+}
+
 func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	_ = r.ParseForm()
-	tmpl := template.Must(template.ParseFiles("homepage.html"))
+	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 
-	interfaces, _ := net.Interfaces()
-	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData(interfaces)
-
-	CreateConfigIfNotExists()
+	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+	timer := "86400"
+	url := ""
+	if interfaceIpAddress != "not connected" {
+		println("timing")
+		timer = "20"
+		url = "http://" + interfaceServerIpAddress + "/"
+	}
 
 	data := HomepageData{
 		IpAddress:       interfaceIpAddress,
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
 		ServerIpAddress: interfaceServerIpAddress,
+		Timer:           timer,
+		Url:             url,
 	}
 	_ = tmpl.Execute(w, data)
 }
 
 func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	_ = r.ParseForm()
-	tmpl := template.Must(template.ParseFiles("setup.html"))
+	tmpl := template.Must(template.ParseFiles("html/setup.html"))
 
-	interfaces, _ := net.Interfaces()
-	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData(interfaces)
-
-	CreateConfigIfNotExists()
+	interfaceIpAddress, interfaceMask, interfaceGateway := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 
 	data := HomepageData{
@@ -141,10 +157,11 @@ func CreateConfigIfNotExists() {
 	}
 }
 
-func GetNetworkData(interfaces []net.Interface) (string, string, string) {
+func GetNetworkData() (string, string, string) {
 	var interfaceIpAddress string
 	var interfaceMask string
 	var interfaceGateway string
+
 	data, err := exec.Command("Powershell.exe", "ipconfig").Output()
 
 	if err != nil {

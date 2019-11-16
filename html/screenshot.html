@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<header>
+    <div id="time" class="text-leader"
+         style="position:absolute;font-weight: 500;top:25px;left:50%;transform: translate(-50%, -50%);">
+
+    </div>
+</header>
+<div class="text-leader"
+     style="position:absolute;font-weight: 500;bottom:10px;left:50%;transform: translate(-50%, -50%);">
+    www.zapsi.eu
+</div>
+<div style="position:absolute;top:35%;left:50%;height: 60%">
+    <img style="height: 100%;transform: translate(-50%, -50%);border: 1px dodgerblue solid" src="../image.png"
+         alt="Italian Trulli">
+</div>
+
+<div style="text-align: center;position:absolute;top:80%;left:50%;transform: translate(-50%, -50%);">
+    <form action="/">
+        <input style="width: 276px;margin: 20px;" class="button primary large" type="submit" value="Back"/>
+    </form>
+</div>
+<div style="text-align: center;position:absolute;top:70%;left:50%;transform: translate(-50%, -50%);">
+    <form action="/screenshot">
+        <input style="width: 276px;margin: 20px;" class="button primary large" type="submit" value="Refresh"/>
+    </form>
+</div>
+<link rel="stylesheet" href="../css/metro-all.css">
+<link rel="stylesheet" href="../css/darcula.css">
+<script src="../js/metro.min.js"></script>
+<script type="text/javascript">
+    const source = new EventSource('/listen');
+    source.addEventListener('time', () => {
+        document.getElementById("time").innerHTML = event.data;
+
+    }, false);
+</script>
+
+
+
+
+

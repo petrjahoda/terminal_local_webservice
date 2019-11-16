@@ -12,5 +12,6 @@ require (
 	github.com/lxn/win v0.0.0-20191106123917-121afc750dd3 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.10 // indirect
-	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5
+	github.com/sparrc/go-ping v0.0.0-20190613174326-4e5b6552494c
+	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5 // indirect
 )
