@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="../css/metro-all.css">
+<link rel="stylesheet" href="../css/darcula.css">
+<script src="../js/metro.min.js"></script>
+<script type="text/javascript">
+    const source = new EventSource('/listen');
+    source.addEventListener('time', () => {
+        document.getElementById("time").innerHTML = event.data;
+
+    }, false);
+</script>
 <header>
     <div id="time" class="text-leader"
          style="position:absolute;font-weight: 500;top:25px;left:50%;transform: translate(-50%, -50%);">
@@ -62,16 +72,7 @@
     </form>
 </div>
 
-<link rel="stylesheet" href="../css/metro-all.css">
-<link rel="stylesheet" href="../css/darcula.css">
-<script src="../js/metro.min.js"></script>
-<script type="text/javascript">
-    const source = new EventSource('/listen');
-    source.addEventListener('time', () => {
-        document.getElementById("time").innerHTML = event.data;
 
-    }, false);
-</script>
 
 
 

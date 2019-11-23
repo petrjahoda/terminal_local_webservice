@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="../css/metro-all.css">
+<link rel="stylesheet" href="../css/darcula.css">
+<script src="../js/metro.min.js"></script>
+<script type="text/javascript">
+    const source = new EventSource('/listen');
+    source.addEventListener('time', () => {
+        document.getElementById("time").innerHTML = event.data;
+
+    }, false);
+
+    const networkDataSource = new EventSource('/networkdata');
+    networkDataSource.addEventListener('networkdata', () => {
+        const networkdata = event.data.split(";");
+        document.getElementById("ipaddress").innerHTML = networkdata[0];
+        document.getElementById("mask").innerHTML = networkdata[1];
+        document.getElementById("gateway").innerHTML = networkdata[2];
+        document.getElementById("dhcp").innerHTML = networkdata[3];
+    }, false);
+</script>
 <meta http-equiv="refresh" content="{{.Timer}};URL='{{.Url}}'">
 <header>
     <div id="time" class="text-leader"
@@ -57,25 +76,7 @@
         <input style="width: 276px;margin: 20px;" class="button primary large alert" type="submit" value="Shutdown"/>
     </form>
 </div>
-<link rel="stylesheet" href="../css/metro-all.css">
-<link rel="stylesheet" href="../css/darcula.css">
-<script src="../js/metro.min.js"></script>
-<script type="text/javascript">
-    const source = new EventSource('/listen');
-    source.addEventListener('time', () => {
-        document.getElementById("time").innerHTML = event.data;
 
-    }, false);
-
-    const networkDataSource = new EventSource('/networkdata');
-    networkDataSource.addEventListener('networkdata', () => {
-        const networkdata = event.data.split(";");
-        document.getElementById("ipaddress").innerHTML = networkdata[0];
-        document.getElementById("mask").innerHTML = networkdata[1];
-        document.getElementById("gateway").innerHTML = networkdata[2];
-        document.getElementById("dhcp").innerHTML = networkdata[3];
-    }, false);
-</script>
 
 
 
