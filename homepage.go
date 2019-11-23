@@ -8,14 +8,12 @@ import (
 	"html/template"
 	"image/png"
 	"io/ioutil"
-	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type ServerIpAddress struct {
@@ -29,8 +27,6 @@ type HomepageData struct {
 	Mask            string
 	Gateway         string
 	ServerIpAddress string
-	Timer           string
-	Url             string
 	Dhcp            string
 }
 
@@ -77,34 +73,11 @@ func Shutdown(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-
-	interfaceServerIpAddress := LoadSettingsFromConfigFile()
-	timer := "86400"
-	url := ""
-
-	hostName := interfaceServerIpAddress
-	portNum := "80"
-	seconds := 2
-	timeOut := time.Duration(seconds) * time.Second
-
-	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
-
-	if err != nil {
-		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
-		interfaceServerIpAddress += " not accessible"
-	} else {
-		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
-		timer = "20"
-		url = "http://" + interfaceServerIpAddress + "/"
-	}
-
 	data := HomepageData{
 		IpAddress:       "",
 		Mask:            "",
 		Gateway:         "",
-		ServerIpAddress: interfaceServerIpAddress,
-		Timer:           timer,
-		Url:             url,
+		ServerIpAddress: "",
 		Dhcp:            "",
 	}
 	HomepageLoaded = true

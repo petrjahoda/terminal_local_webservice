@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
+	"html/template"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -28,7 +29,7 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 		}
 		LogInfo("MAIN", "Change to static ip with result: "+string(result))
 	}
-	if pattern.MatchString(serveripaddress[0]) {
+	if len(serveripaddress[0]) > 0 {
 		configDirectory := filepath.Join(".", "config")
 		configFileName := "config.json"
 		configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
@@ -45,7 +46,17 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 		}
 	}
 	HomepageLoaded = true
-	renderTemplate(w, "homepage", &Page{})
+	_ = r.ParseForm()
+	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+	data := HomepageData{
+		IpAddress:       "",
+		Mask:            "",
+		Gateway:         "",
+		ServerIpAddress: "",
+		Dhcp:            "",
+	}
+	HomepageLoaded = true
+	_ = tmpl.Execute(w, data)
 
 }
 
@@ -57,7 +68,17 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprout
 	}
 	LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
 	HomepageLoaded = true
-	renderTemplate(w, "homepage", &Page{})
+	_ = r.ParseForm()
+	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+	data := HomepageData{
+		IpAddress:       "",
+		Mask:            "",
+		Gateway:         "",
+		ServerIpAddress: "",
+		Dhcp:            "",
+	}
+	HomepageLoaded = true
+	_ = tmpl.Execute(w, data)
 
 }
 
