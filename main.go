@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"github.com/julienschmidt/sse"
 	"html/template"
 	"net/http"
+	"os/exec"
+	"strings"
 	"time"
 )
 
@@ -20,8 +23,11 @@ type Page struct {
 func main() {
 	LogDirectoryFileCheck("MAIN")
 	CreateConfigIfNotExists()
+
 	router := httprouter.New()
-	streamer := sse.New()
+	timeStreamer := sse.New()
+	networkDataStreamer := sse.New()
+
 	router.GET("/", Homepage)
 	router.GET("/screenshot", Screenshot)
 	router.GET("/changenetwork", ChangeNetwork)
@@ -34,10 +40,20 @@ func main() {
 	router.GET("/css/metro-all.css", metrocss)
 	router.GET("/image.png", image)
 
-	router.Handler("GET", "/listen", streamer)
-	go StreamTime(streamer)
+	router.Handler("GET", "/listen", timeStreamer)
+	router.Handler("GET", "/networkdata", networkDataStreamer)
+	go StreamTime(timeStreamer)
+	go StreamNetworkData(networkDataStreamer)
 	LogInfo("MAIN", "Server running")
 	_ = http.ListenAndServe(":8000", router)
+}
+
+func StreamNetworkData(streamer *sse.Streamer) {
+	for {
+		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
+		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled)
+		time.Sleep(1 * time.Second)
+	}
 }
 
 func StreamTime(streamer *sse.Streamer) {
@@ -45,6 +61,58 @@ func StreamTime(streamer *sse.Streamer) {
 		streamer.SendString("", "time", time.Now().Format("15:04:05"))
 		time.Sleep(1 * time.Second)
 	}
+}
+
+func GetNetworkData() (string, string, string, string) {
+	var interfaceIpAddress string
+	var interfaceMask string
+	var interfaceGateway string
+	var interfaceDhcp string
+
+	data, err := exec.Command("Powershell.exe", "ipconfig /all").Output()
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	result := string(data)
+	ethernetStarts := false
+	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+		if strings.Contains(line, "Ethernet") {
+			ethernetStarts = true
+		}
+		if ethernetStarts {
+			if strings.Contains(line, "IPv4 Address") {
+				interfaceIpAddress = line[38:]
+				interfaceIpAddress = interfaceIpAddress[:len(interfaceIpAddress)-1]
+
+			}
+			if strings.Contains(line, "Subnet Mask") {
+				interfaceMask = line[38:]
+				interfaceMask = interfaceMask[:len(interfaceMask)-1]
+
+			}
+			if strings.Contains(line, "Default Gateway") {
+				interfaceGateway = line[38:]
+				interfaceGateway = interfaceGateway[:len(interfaceGateway)-1]
+
+			}
+			if strings.Contains(line, "DHCP Enabled") {
+				interfaceDhcp = line[38:]
+				interfaceDhcp = interfaceDhcp[:len(interfaceDhcp)-1]
+			}
+			if strings.Contains(line, "Wireless") {
+				break
+			}
+
+		}
+	}
+	if interfaceGateway == "" {
+		interfaceGateway = "not connected"
+		interfaceIpAddress = "not connected"
+		interfaceMask = "not connected"
+		interfaceDhcp = "not connected"
+	}
+	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {

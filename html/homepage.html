@@ -25,15 +25,15 @@
 <h2 style="text-align: center;font-weight: 500;position:absolute;top:52%;right:50%">
     Dhcp: </h2>
 
-<h2 style="text-align: center;font-weight: 500;position:absolute;top:20%;left:51%;">
-    {{.IpAddress}}</h2>
-<h2 style="text-align: center;font-weight: 500;position:absolute;top:28%;left:51%">
+<h2 id="ipaddress" style="text-align: center;font-weight: 500;position:absolute;top:20%;left:51%;">
+</h2>
+<h2 id="mask" style="text-align: center;font-weight: 500;position:absolute;top:28%;left:51%">
     {{.Mask}}</h2>
-<h2 style="text-align: center;font-weight: 500;position:absolute;top:36%;left:51%">
+<h2 id="gateway" style="text-align: center;font-weight: 500;position:absolute;top:36%;left:51%">
     {{.Gateway}}</h2>
 <h2 style="text-align: center;font-weight: 500;position:absolute;top:44%;left:51%">
     {{.ServerIpAddress}}</h2>
-<h2 style="text-align: center;font-weight: 500;position:absolute;top:52%;left:51%">
+<h2 id="dhcp" style="text-align: center;font-weight: 500;position:absolute;top:52%;left:51%">
     {{.Dhcp}}</h2>
 
 
@@ -66,7 +66,18 @@
         document.getElementById("time").innerHTML = event.data;
 
     }, false);
+
+    const networkDataSource = new EventSource('/networkdata');
+    networkDataSource.addEventListener('networkdata', () => {
+        const networkdata = event.data.split(";");
+        document.getElementById("ipaddress").innerHTML = networkdata[0];
+        document.getElementById("mask").innerHTML = networkdata[1];
+        document.getElementById("gateway").innerHTML = networkdata[2];
+        document.getElementById("dhcp").innerHTML = networkdata[3];
+    }, false);
 </script>
+
+
 
 
 

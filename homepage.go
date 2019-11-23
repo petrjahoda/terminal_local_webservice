@@ -75,7 +75,6 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 
-	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	timer := "86400"
 	url := ""
@@ -97,13 +96,13 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 	}
 
 	data := HomepageData{
-		IpAddress:       interfaceIpAddress,
-		Mask:            interfaceMask,
-		Gateway:         interfaceGateway,
+		IpAddress:       "",
+		Mask:            "",
+		Gateway:         "",
 		ServerIpAddress: interfaceServerIpAddress,
 		Timer:           timer,
 		Url:             url,
-		Dhcp:            dhcpEnabled,
+		Dhcp:            "",
 	}
 	_ = tmpl.Execute(w, data)
 }
@@ -112,15 +111,33 @@ func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/setup.html"))
 
-	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+	timer := "86400"
+	url := ""
 
+	hostName := interfaceServerIpAddress
+	portNum := "80"
+	seconds := 2
+	timeOut := time.Duration(seconds) * time.Second
+
+	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
+
+	if err != nil {
+		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
+		interfaceServerIpAddress += " not accessible"
+	} else {
+		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
+		timer = "20"
+		url = "http://" + interfaceServerIpAddress + "/"
+	}
 	data := HomepageData{
-		IpAddress:       interfaceIpAddress,
-		Mask:            interfaceMask,
-		Gateway:         interfaceGateway,
+		IpAddress:       "",
+		Mask:            "",
+		Gateway:         "",
 		ServerIpAddress: interfaceServerIpAddress,
-		Dhcp:            dhcpEnabled,
+		Timer:           timer,
+		Url:             url,
+		Dhcp:            "",
 	}
 	_ = tmpl.Execute(w, data)
 }
@@ -166,50 +183,4 @@ func CreateConfigIfNotExists() {
 	} else {
 		LogError("MAIN", "Config file does not exist")
 	}
-}
-
-func GetNetworkData() (string, string, string, string) {
-	var interfaceIpAddress string
-	var interfaceMask string
-	var interfaceGateway string
-	var interfaceDhcp string
-
-	data, err := exec.Command("Powershell.exe", "ipconfig /all").Output()
-
-	if err != nil {
-		fmt.Println("Error: ", err)
-	}
-	result := string(data)
-	println(result)
-	ethernetStarts := false
-	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "Ethernet") {
-			ethernetStarts = true
-		}
-		if ethernetStarts {
-			if strings.Contains(line, "IPv4 Address") {
-				interfaceIpAddress = line[38:]
-			}
-			if strings.Contains(line, "Subnet Mask") {
-				interfaceMask = line[38:]
-			}
-			if strings.Contains(line, "Default Gateway") {
-				interfaceGateway = line[38:]
-			}
-			if strings.Contains(line, "DHCP Enabled") {
-				interfaceDhcp = line[38:]
-			}
-			if strings.Contains(line, "Wireless") {
-				break
-			}
-
-		}
-	}
-	if interfaceGateway == "" {
-		interfaceGateway = "not connected"
-		interfaceIpAddress = "not connected"
-		interfaceMask = "not connected"
-		interfaceDhcp = "not connected"
-	}
-	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }
