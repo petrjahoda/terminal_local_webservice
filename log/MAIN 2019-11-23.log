@@ -61,3 +61,837 @@
 2019-11-23 08:11:21.461   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
 2019-11-23 08:11:33.741   MAIN   INF   Config file already exists
 2019-11-23 08:11:33.741   MAIN   INF   Server running
+2019-11-23 10:46:24.820   MAIN   INF   Config file already exists
+2019-11-23 10:46:24.820   MAIN   INF   Server running
+2019-11-23 10:46:28.118   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 10:46:30.895   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 10:46:32.344   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:07.287   MAIN   INF   Config file already exists
+2019-11-23 17:24:07.287   MAIN   INF   Server running
+2019-11-23 17:24:07.366   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:08.482   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:09.711   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:10.776   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:11.864   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:12.930   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:13.997   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:14.966   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:15.056   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:16.131   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:17.193   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:18.256   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:19.324   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:20.393   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:21.488   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:22.554   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:23.626   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:24.694   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:25.766   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:26.835   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:27.901   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:28.995   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:30.055   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:31.122   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:25:59.442   MAIN   INF   Config file already exists
+2019-11-23 17:25:59.442   MAIN   INF   Server running
+2019-11-23 17:25:59.502   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:00.567   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:01.633   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:01.908   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:02.702   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:03.769   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:04.838   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:05.903   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:07.060   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:08.126   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:26.305   MAIN   INF   Config file already exists
+2019-11-23 17:26:26.305   MAIN   INF   Server running
+2019-11-23 17:26:26.336   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:26:27.357   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:26:28.378   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:26:28.980   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:26:29.400   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:26:30.414   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:26:31.434   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:26:32.455   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:42.465   MAIN   INF   Config file already exists
+2019-11-23 17:28:42.465   MAIN   INF   Server running
+2019-11-23 17:28:42.524   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:28:50.645   MAIN   INF   Config file already exists
+2019-11-23 17:28:50.646   MAIN   INF   Server running
+2019-11-23 17:28:50.661   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:51.679   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:52.697   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:53.717   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:54.735   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:55.431   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:55.753   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:56.771   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:57.791   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:58.813   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:28:59.832   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:00.854   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:01.874   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:02.886   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:03.905   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:04.922   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:05.940   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:06.960   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:07.979   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:08.999   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:10.020   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:11.034   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:12.056   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:13.076   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:14.095   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:15.112   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:16.123   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:17.138   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:18.154   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:19.168   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:20.183   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:21.202   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:22.212   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:29:23.233   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:17.268   MAIN   INF   Config file already exists
+2019-11-23 17:30:17.268   MAIN   INF   Server running
+2019-11-23 17:30:17.280   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:18.302   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:19.342   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:20.361   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:21.380   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:21.813   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:22.397   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:23.417   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:24.438   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:25.455   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:26.472   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:27.484   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:28.505   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:29.526   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:30.545   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:31.562   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:32.580   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:33.598   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:34.615   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:35.632   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:36.648   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:37.663   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:38.681   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:39.699   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:40.716   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:41.733   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:42.751   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:43.770   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:44.791   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:45.809   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:46.821   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:47.837   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:48.857   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:49.877   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:50.893   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:51.913   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:52.931   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:53.948   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:54.965   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:56.007   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:57.024   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:58.040   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:30:59.077   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:00.092   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:01.109   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:02.128   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:03.148   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:04.165   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:05.184   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:06.204   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:07.221   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:08.239   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:09.256   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:10.285   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:11.304   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:12.318   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:13.336   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:14.358   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:15.377   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:16.395   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:17.412   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:18.430   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:19.450   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:20.467   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:21.483   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:22.500   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:23.521   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:24.539   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:25.557   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:26.579   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:27.596   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:28.615   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:29.632   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:30.648   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:31.665   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:32.683   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:33.704   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:34.721   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:35.737   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:36.755   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:37.774   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:38.795   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:39.813   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:40.829   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:41.846   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:42.863   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:43.880   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:44.903   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:45.925   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:46.947   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:47.965   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:48.978   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:49.996   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:51.013   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:52.030   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:53.041   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:54.060   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:55.071   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:56.105   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:57.145   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:58.161   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:31:59.177   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:00.195   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:01.211   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:02.222   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:03.239   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:04.267   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:05.284   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:06.302   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:07.319   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:08.330   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:09.346   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:10.364   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:11.394   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:12.410   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:13.426   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:14.455   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:15.472   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:16.490   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:17.500   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:18.517   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:19.528   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:20.545   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:21.564   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:22.581   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:23.592   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:24.609   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:25.627   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:26.645   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:27.663   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:28.680   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:29.698   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:30.715   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:31.732   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:32.750   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:33.771   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:34.788   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:35.800   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:36.812   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:37.824   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:38.841   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:39.859   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:40.877   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:41.895   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:42.912   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:43.930   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:44.947   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:45.966   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:46.983   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:48.000   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:49.010   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:50.022   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:51.034   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:52.050   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:53.067   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:54.084   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:55.102   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:56.119   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:57.129   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:58.148   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:32:59.166   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:00.183   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:01.200   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:02.217   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:03.235   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:04.252   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:05.265   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:06.283   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:07.300   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:08.317   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:09.335   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:10.352   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:11.394   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:12.412   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:13.429   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:14.446   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:15.465   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:16.484   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:17.501   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:18.533   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:19.552   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:20.573   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:21.592   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:22.609   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:23.627   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:24.643   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:25.663   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:26.704   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:29.360   MAIN   INF   Config file already exists
+2019-11-23 17:33:29.360   MAIN   INF   Server running
+2019-11-23 17:33:29.393   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:30.411   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:31.431   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:31.557   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:32.452   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:33.473   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:34.491   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:35.503   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:36.521   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:37.541   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:38.559   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:39.577   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:40.595   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:41.612   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:42.634   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:43.665   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:44.784   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:45.796   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:46.824   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:47.860   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:48.879   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:49.900   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:50.918   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:51.936   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:52.958   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:53.974   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:54.991   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:56.012   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:57.033   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:58.050   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:33:59.070   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:00.091   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:01.107   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:02.124   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:03.142   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:04.164   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:05.180   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:06.198   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:07.213   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:08.229   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:09.250   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:10.268   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:11.287   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:12.309   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:13.325   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:14.342   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:15.361   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:16.379   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:17.399   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:18.420   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:19.442   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:20.461   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:21.483   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:22.501   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:23.519   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:24.537   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:25.556   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:26.569   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:27.590   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:28.609   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:29.628   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:30.671   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:31.689   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:32.706   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:33.729   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:34.748   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:35.766   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:36.782   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:37.800   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:34:38.817   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:03.941   MAIN   INF   Config file already exists
+2019-11-23 17:39:03.941   MAIN   INF   Server running
+2019-11-23 17:39:03.967   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:04.984   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:06.002   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:07.023   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:07.508   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:08.040   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:09.060   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:11.232   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:12.251   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:13.272   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:14.290   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:15.307   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:16.324   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:17.343   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:18.364   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:19.381   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:20.401   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:21.420   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:22.438   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:23.457   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:24.478   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:25.493   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:26.503   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:27.520   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:28.551   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:29.567   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:30.584   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:31.602   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:32.619   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:33.635   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:34.651   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:35.674   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:36.691   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:37.707   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:38.750   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:39.782   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:40.794   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:41.805   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:42.816   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:43.826   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:44.837   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:45.849   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:46.859   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:47.870   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:48.880   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:49.897   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:50.908   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:51.918   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:52.930   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:53.952   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:55.977   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:56.994   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:58.011   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:39:59.030   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:00.047   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:01.064   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:02.081   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:03.097   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:04.115   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:05.132   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:06.148   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:07.165   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:08.181   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:09.195   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:10.213   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:11.230   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:12.248   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:13.265   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:14.282   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:15.293   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:16.314   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:17.331   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:18.348   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:19.367   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:20.390   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:21.409   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:23.527   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:24.553   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:25.570   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:26.587   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:27.604   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:28.651   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:29.668   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:30.688   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:31.708   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:33.868   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:34.885   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:35.907   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:36.924   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:37.943   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:40.013   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:42.164   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:43.188   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:44.206   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:45.223   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:46.241   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:47.257   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:48.274   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:49.294   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:50.312   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:51.330   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:52.349   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:53.366   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:54.385   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:58.863   MAIN   INF   Config file already exists
+2019-11-23 17:40:58.863   MAIN   INF   Server running
+2019-11-23 17:40:58.876   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:59.895   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:40:59.956   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:00.909   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:02.522   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:02.957   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:03.978   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:04.997   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:06.016   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:07.034   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:08.052   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:10.084   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:12.123   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:13.145   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:14.157   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:15.173   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:18.176   MAIN   ERR   www.seznam.cz not accessible: dial tcp 77.75.74.172:80: i/o timeout
+2019-11-23 17:41:19.188   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:20.202   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:21.213   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:22.242   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:24.266   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:25.278   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:26.298   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:28.318   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:29.330   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:30.342   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:31.361   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:32.384   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:33.416   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:34.427   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:35.440   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:36.454   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:37.466   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:38.484   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:39.499   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:40.511   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:43.569   MAIN   INF   Config file already exists
+2019-11-23 17:41:43.569   MAIN   INF   Server running
+2019-11-23 17:41:43.581   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:44.057   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:44.596   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:45.615   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:46.635   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:48.723   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:49.744   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:50.766   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:53.770   MAIN   ERR   www.seznam.cz not accessible: dial tcp 77.75.74.176:80: i/o timeout
+2019-11-23 17:41:54.788   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:55.810   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:56.829   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:57.842   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:58.859   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:41:59.877   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:00.896   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:01.917   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:02.940   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:03.959   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:04.984   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:06.004   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:07.025   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:09.100   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:10.119   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:11.140   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:12.159   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:13.178   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:14.196   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:15.212   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:16.234   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:17.254   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:18.271   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:19.287   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:20.306   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:21.321   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:22.341   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:23.359   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:24.376   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:25.391   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:26.410   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:27.429   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:45.035   MAIN   INF   Config file already exists
+2019-11-23 17:42:45.035   MAIN   INF   Server running
+2019-11-23 17:42:45.059   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:46.073   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:47.090   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:48.107   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:49.121   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:50.134   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:51.150   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:42:52.173   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:52.885   MAIN   INF   Config file already exists
+2019-11-23 17:49:52.885   MAIN   INF   Server running
+2019-11-23 17:49:52.910   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:53.929   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:54.942   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:55.960   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:56.980   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:57.994   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:58.385   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:49:59.013   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:00.034   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:01.054   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:02.066   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:03.076   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:04.092   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:05.109   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:06.128   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:07.150   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:08.171   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:09.189   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:10.214   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:11.236   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:12.259   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:13.275   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:14.288   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:15.305   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:16.319   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:17.338   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:57.484   MAIN   INF   Config file already exists
+2019-11-23 17:50:57.484   MAIN   INF   Server running
+2019-11-23 17:50:57.500   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:58.513   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:59.263   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:50:59.534   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:00.553   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:01.568   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:02.580   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:03.601   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:04.620   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:05.661   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:06.684   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:07.704   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:08.725   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:09.737   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:10.750   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:11.768   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:12.787   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:13.807   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:14.823   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:15.834   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:16.851   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:17.867   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:18.882   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:19.901   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:20.915   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:21.934   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:22.946   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:23.964   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:24.977   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:25.996   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:27.013   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:51:28.025   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:23.154   MAIN   INF   Config file already exists
+2019-11-23 17:52:23.155   MAIN   INF   Server running
+2019-11-23 17:52:23.179   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:24.197   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:24.874   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:25.217   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:26.234   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:27.255   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:28.276   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:29.293   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:30.307   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:31.330   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:32.351   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:54.437   MAIN   INF   Config file already exists
+2019-11-23 17:52:54.437   MAIN   INF   Server running
+2019-11-23 17:52:54.450   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:55.468   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:56.480   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:57.498   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:58.519   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:59.347   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:52:59.535   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:00.554   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:01.565   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:02.587   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:03.604   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:04.624   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:05.643   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:06.661   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:07.675   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:08.694   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:09.715   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:10.727   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:11.746   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:12.763   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:13.783   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:14.798   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:15.809   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:16.820   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:17.836   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:18.850   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:19.869   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:20.887   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:21.903   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:22.921   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:23.934   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:24.947   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:27.307   MAIN   INF   Config file already exists
+2019-11-23 17:53:27.308   MAIN   INF   Server running
+2019-11-23 17:53:27.320   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:28.333   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:29.243   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:29.344   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:30.367   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:31.385   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:32.402   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:33.426   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:34.446   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:35.466   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:36.485   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:37.500   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:38.514   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:39.535   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:47.579   MAIN   INF   Config file already exists
+2019-11-23 17:53:47.579   MAIN   INF   Server running
+2019-11-23 17:53:47.591   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:48.271   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:48.619   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:49.661   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:50.673   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:51.688   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:52.706   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:53.724   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:54.742   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:55.754   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:53:56.774   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:54:03.629   MAIN   INF   Config file already exists
+2019-11-23 17:54:03.629   MAIN   INF   Server running
+2019-11-23 17:54:03.652   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:04.621   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:04.653   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:05.658   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:06.663   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:07.668   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:08.669   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:09.671   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:10.673   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:11.679   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:12.685   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:13.690   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:14.696   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:15.700   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:16.702   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:17.704   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:18.709   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:42.922   MAIN   INF   Config file already exists
+2019-11-23 17:54:42.922   MAIN   INF   Server running
+2019-11-23 17:54:42.924   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:43.926   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:44.929   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:45.932   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:46.239   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:46.933   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:47.938   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:48.943   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:49.860   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:49.945   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:50.950   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:51.951   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:52.953   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:53.956   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:54.962   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:55.965   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:55:11.567   MAIN   INF   Config file already exists
+2019-11-23 17:55:11.567   MAIN   INF   Server running
+2019-11-23 17:55:11.579   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:12.600   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:13.617   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:14.629   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:15.648   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:16.670   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:17.687   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:18.704   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:19.724   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:20.744   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:21.766   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:22.787   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:55:59.955   MAIN   INF   Config file already exists
+2019-11-23 17:55:59.955   MAIN   INF   Server running
+2019-11-23 17:55:59.973   MAIN   INF   www.seznam.cz accessible
+2019-11-23 17:56:07.223   MAIN   INF   Config file already exists
+2019-11-23 17:56:07.223   MAIN   INF   Server running
+2019-11-23 17:56:07.225   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:08.229   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:09.232   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:10.233   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:10.682   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:11.235   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:12.237   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:13.243   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:14.249   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:15.254   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:27.921   MAIN   INF   Config file already exists
+2019-11-23 17:57:27.921   MAIN   INF   Server running
+2019-11-23 17:57:27.923   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:28.925   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:29.131   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:29.928   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:30.929   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:31.934   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:32.939   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:33.803   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:33.944   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:34.948   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:35.952   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:36.956   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:37.960   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:31.302   MAIN   INF   Config file already exists
+2019-11-23 18:00:31.303   MAIN   INF   Server running
+2019-11-23 18:00:31.307   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:31.902   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:32.312   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:33.316   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:34.320   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:35.325   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:36.328   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:37.329   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:43.345   MAIN   INF   Config file already exists
+2019-11-23 18:00:43.345   MAIN   INF   Server running
+2019-11-23 18:00:43.370   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:44.388   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:45.407   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:46.423   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:46.750   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:47.444   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:48.464   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:49.485   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:50.499   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:51.518   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:51.793   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:52.538   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:53.555   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:54.577   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:55.598   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:56.619   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:57.636   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:00:58.659   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:46.409   MAIN   INF   Config file already exists
+2019-11-23 18:01:46.410   MAIN   INF   Server running
+2019-11-23 18:01:46.428   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:47.448   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:48.466   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:49.478   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:50.115   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:50.498   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:51.511   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:52.530   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:53.545   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:53.569   MAIN   INF   Generating screenshot
+2019-11-23 18:01:53.605   MAIN   INF   Displays: 1
+2019-11-23 18:01:54.112   MAIN   INF   Generated screenshot: image.png
+2019-11-23 18:01:54.112   MAIN   INF   Generating finished
+2019-11-23 18:01:54.563   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:55.305   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:55.584   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:56.605   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:57.623   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:58.640   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:58.773   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:01:59.660   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:00.672   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:01.693   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:02.705   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:03.726   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:04.738   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:05.758   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:06.775   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:07.791   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:08.812   MAIN   INF   www.seznam.cz accessible
+2019-11-23 18:02:09.835   MAIN   INF   www.seznam.cz accessible

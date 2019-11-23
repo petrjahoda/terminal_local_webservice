@@ -22,6 +22,8 @@ type ServerIpAddress struct {
 	ServerIpAddress string
 }
 
+var HomepageLoaded bool
+
 type HomepageData struct {
 	IpAddress       string
 	Mask            string
@@ -50,6 +52,7 @@ func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params
 		LogInfo("MAIN", "Generated screenshot: "+fileName)
 	}
 	LogInfo("MAIN", "Generating finished")
+	HomepageLoaded = false
 	renderTemplate(w, "screenshot", &Page{})
 }
 
@@ -104,46 +107,16 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 		Url:             url,
 		Dhcp:            "",
 	}
+	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
 }
 
 func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	_ = r.ParseForm()
-	tmpl := template.Must(template.ParseFiles("html/setup.html"))
-
-	interfaceServerIpAddress := LoadSettingsFromConfigFile()
-	timer := "86400"
-	url := ""
-
-	hostName := interfaceServerIpAddress
-	portNum := "80"
-	seconds := 2
-	timeOut := time.Duration(seconds) * time.Second
-
-	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
-
-	if err != nil {
-		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
-		interfaceServerIpAddress += " not accessible"
-	} else {
-		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
-		timer = "20"
-		url = "http://" + interfaceServerIpAddress + "/"
-	}
-	data := HomepageData{
-		IpAddress:       "",
-		Mask:            "",
-		Gateway:         "",
-		ServerIpAddress: interfaceServerIpAddress,
-		Timer:           timer,
-		Url:             url,
-		Dhcp:            "",
-	}
-	_ = tmpl.Execute(w, data)
+	HomepageLoaded = false
+	renderTemplate(w, "setup", &Page{})
 }
 
 func LoadSettingsFromConfigFile() string {
-
 	configDirectory := filepath.Join(".", "config")
 	configFileName := "config.json"
 	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")

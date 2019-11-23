@@ -16,18 +16,20 @@
         document.getElementById("mask").innerHTML = networkdata[1];
         document.getElementById("gateway").innerHTML = networkdata[2];
         document.getElementById("dhcp").innerHTML = networkdata[3];
+        document.querySelector('meta[name="timer"]').setAttribute("content", networkdata[4] + ";URL='"+networkdata[5]+"'");
+        document.getElementById("url").innerHTML = networkdata[6];
+        document.getElementById("remainingTime").innerHTML = networkdata[4];
     }, false);
 </script>
-<meta http-equiv="refresh" content="{{.Timer}};URL='{{.Url}}'">
+<meta name="timer" id="timer" http-equiv="refresh" content="">
 <header>
     <div id="time" class="text-leader"
          style="position:absolute;font-weight: 500;top:25px;left:50%;transform: translate(-50%, -50%);">
-
+    </div>
+    <div id="remainingTime" class="text-leader"
+         style="position:absolute;font-weight: 500;top:25px;right:1%;transform: translate(-50%, -50%);">
     </div>
 </header>
-<div data-role="countdown" style="position:absolute;top:50px;font-size: 18px;font-weight: 500"
-     data-seconds="{{.Timer}}"></div>
-
 <div class="text-leader"
      style="position:absolute;font-weight: 500;bottom:10px;left:50%;transform: translate(-50%, -50%);">
     www.zapsi.eu
@@ -50,7 +52,7 @@
     {{.Mask}}</h2>
 <h2 id="gateway" style="text-align: center;font-weight: 500;position:absolute;top:36%;left:51%">
     {{.Gateway}}</h2>
-<h2 style="text-align: center;font-weight: 500;position:absolute;top:44%;left:51%">
+<h2 id="url" style="text-align: center;font-weight: 500;position:absolute;top:44%;left:51%">
     {{.ServerIpAddress}}</h2>
 <h2 id="dhcp" style="text-align: center;font-weight: 500;position:absolute;top:52%;left:51%">
     {{.Dhcp}}</h2>

@@ -27,3 +27,107 @@
 2019-11-23 08:11:02.367   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
 2019-11-23 08:11:09.373   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
 2019-11-23 08:11:21.461   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 10:46:28.118   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 10:46:30.895   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 10:46:32.345   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:07.366   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:08.483   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:09.711   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:10.776   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:11.864   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:12.930   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:13.997   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:14.966   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:15.056   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:16.131   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:17.193   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:18.256   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:19.324   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:20.393   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:21.488   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:22.554   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:23.626   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:24.694   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:25.766   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:26.835   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:27.901   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:28.996   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:30.055   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:24:31.122   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:25:59.502   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:00.568   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:01.633   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:01.909   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:02.702   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:03.769   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:04.838   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:05.903   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:07.060   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:26:08.126   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:28:42.524   MAIN   ERR   192.168.66.5 not accessible: dial tcp 192.168.66.5:80: connect: no route to host
+2019-11-23 17:41:18.176   MAIN   ERR   www.seznam.cz not accessible: dial tcp 77.75.74.172:80: i/o timeout
+2019-11-23 17:41:53.770   MAIN   ERR   www.seznam.cz not accessible: dial tcp 77.75.74.176:80: i/o timeout
+2019-11-23 17:54:03.652   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:04.621   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:04.653   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:05.658   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:06.663   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:07.668   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:08.670   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:09.671   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:10.674   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:11.679   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:12.685   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:13.690   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:14.696   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:15.700   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:16.702   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:17.704   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:18.709   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:42.924   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:43.926   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:44.929   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:45.932   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:46.239   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:46.933   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:47.938   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:48.943   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:49.860   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:49.945   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:50.950   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:51.952   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:52.953   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:53.956   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:54.962   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:54:55.965   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:07.225   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:08.229   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:09.232   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:10.233   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:10.682   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:11.235   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:12.237   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:13.243   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:14.249   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:56:15.254   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:27.923   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:28.925   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:29.131   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:29.928   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:30.930   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:31.934   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:32.939   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:33.803   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:33.944   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:34.949   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:35.952   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:36.956   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 17:57:37.960   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:31.307   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:31.902   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:32.313   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:33.316   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:34.320   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:35.325   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:36.328   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host
+2019-11-23 18:00:37.329   MAIN   ERR   www.seznam.cza not accessible: dial tcp: lookup www.seznam.cza: no such host

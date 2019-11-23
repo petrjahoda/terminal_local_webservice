@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"net/http"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -49,17 +50,39 @@ func main() {
 }
 
 func StreamNetworkData(streamer *sse.Streamer) {
+	timing := 20
+	timeToSend := "20"
 	for {
 		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
-		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled)
+		interfaceServerIpAddress := LoadSettingsFromConfigFile()
+		serverAccessible, url, interfaceServerIpAddress := // document.getElementsByTagName("META")[0].content = networkdata[4] + ";URL='"+networkdata[5]+"'";
+			CheckServerIpAddress(interfaceServerIpAddress)
+		if serverAccessible && HomepageLoaded {
+			timing--
+			timeToSend = strconv.Itoa(timing)
+		}
+		if !serverAccessible {
+			timing = 20
+			timeToSend = strconv.Itoa(timing)
+		}
+		if timing < 0 {
+			timing = 20
+			timeToSend = strconv.Itoa(timing)
+		}
+		if !HomepageLoaded {
+			timing = 20
+		}
+		println(timeToSend)
+		println(interfaceServerIpAddress)
+		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+url+";"+interfaceServerIpAddress)
 		time.Sleep(1 * time.Second)
 	}
 }
 
 func StreamTime(streamer *sse.Streamer) {
 	for {
-		streamer.SendString("", "time", time.Now().Format("15:04:05"))
-		time.Sleep(1 * time.Second)
+		streamer.SendString("", "time", time.Now().Format("15:04:05.000"))
+		time.Sleep(1 * time.Millisecond)
 	}
 }
 

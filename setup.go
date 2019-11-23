@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"html/template"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -45,37 +44,9 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 			LogInfo("MAIN", "Server ip address updated")
 		}
 	}
+	HomepageLoaded = true
+	renderTemplate(w, "homepage", &Page{})
 
-	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-	interfaceServerIpAddress := LoadSettingsFromConfigFile()
-	timer := "86400"
-	url := ""
-
-	hostName := interfaceServerIpAddress
-	portNum := "80"
-	seconds := 2
-	timeOut := time.Duration(seconds) * time.Second
-
-	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
-
-	if err != nil {
-		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
-		interfaceServerIpAddress += " not accessible"
-	} else {
-		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
-		timer = "20"
-		url = "http://" + interfaceServerIpAddress + "/"
-	}
-	data := HomepageData{
-		IpAddress:       "",
-		Mask:            "",
-		Gateway:         "",
-		ServerIpAddress: interfaceServerIpAddress,
-		Dhcp:            "",
-		Url:             url,
-		Timer:           timer,
-	}
-	_ = tmpl.Execute(w, data)
 }
 
 func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -85,35 +56,26 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprout
 		fmt.Println("Error: ", err)
 	}
 	LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
+	HomepageLoaded = true
+	renderTemplate(w, "homepage", &Page{})
 
-	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-	interfaceServerIpAddress := LoadSettingsFromConfigFile()
-	timer := "86400"
+}
+
+func CheckServerIpAddress(interfaceServerIpAddress string) (bool, string, string) {
+	serverAccessible := false
 	url := ""
-
 	hostName := interfaceServerIpAddress
 	portNum := "80"
 	seconds := 2
 	timeOut := time.Duration(seconds) * time.Second
-
-	_, err = net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
-
+	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
 	if err != nil {
 		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
 		interfaceServerIpAddress += " not accessible"
 	} else {
 		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
-		timer = "20"
+		serverAccessible = true
 		url = "http://" + interfaceServerIpAddress + "/"
 	}
-	data := HomepageData{
-		IpAddress:       "",
-		Mask:            "",
-		Gateway:         "",
-		ServerIpAddress: interfaceServerIpAddress,
-		Dhcp:            "",
-		Url:             url,
-		Timer:           timer,
-	}
-	_ = tmpl.Execute(w, data)
+	return serverAccessible, url, interfaceServerIpAddress
 }
