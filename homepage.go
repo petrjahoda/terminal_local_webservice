@@ -85,8 +85,29 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 }
 
 func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	_ = r.ParseForm()
+	password := r.Form["password"]
+	if password[0] == "54321" {
+		HomepageLoaded = false
+		renderTemplate(w, "setup", &Page{})
+	} else {
+		HomepageLoaded = true
+		_ = r.ParseForm()
+		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+		data := HomepageData{
+			IpAddress:       "",
+			Mask:            "",
+			Gateway:         "",
+			ServerIpAddress: "",
+			Dhcp:            "",
+		}
+		HomepageLoaded = true
+		_ = tmpl.Execute(w, data)
+	}
+}
+func Password(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	HomepageLoaded = false
-	renderTemplate(w, "setup", &Page{})
+	renderTemplate(w, "password", &Page{})
 }
 
 func LoadSettingsFromConfigFile() string {

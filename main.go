@@ -31,6 +31,7 @@ func main() {
 
 	router.GET("/", Homepage)
 	router.GET("/screenshot", Screenshot)
+	router.GET("/password", Password)
 	router.GET("/changenetwork", ChangeNetwork)
 	router.GET("/changenetworktodhcp", ChangeNetworkToDhcp)
 	router.GET("/restart", Restart)
