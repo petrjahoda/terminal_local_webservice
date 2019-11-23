@@ -6,11 +6,13 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"html/template"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 )
 
 func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -43,14 +45,35 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 			LogInfo("MAIN", "Server ip address updated")
 		}
 	}
+
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+	timer := "86400"
+	url := ""
+
+	hostName := interfaceServerIpAddress
+	portNum := "80"
+	seconds := 2
+	timeOut := time.Duration(seconds) * time.Second
+
+	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
+
+	if err != nil {
+		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
+		interfaceServerIpAddress += " not accessible"
+	} else {
+		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
+		timer = "20"
+		url = "http://" + interfaceServerIpAddress + "/"
+	}
 	data := HomepageData{
 		IpAddress:       "",
 		Mask:            "",
 		Gateway:         "",
 		ServerIpAddress: interfaceServerIpAddress,
 		Dhcp:            "",
+		Url:             url,
+		Timer:           timer,
 	}
 	_ = tmpl.Execute(w, data)
 }
@@ -65,12 +88,32 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprout
 
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+	timer := "86400"
+	url := ""
+
+	hostName := interfaceServerIpAddress
+	portNum := "80"
+	seconds := 2
+	timeOut := time.Duration(seconds) * time.Second
+
+	_, err = net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
+
+	if err != nil {
+		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
+		interfaceServerIpAddress += " not accessible"
+	} else {
+		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
+		timer = "20"
+		url = "http://" + interfaceServerIpAddress + "/"
+	}
 	data := HomepageData{
 		IpAddress:       "",
 		Mask:            "",
 		Gateway:         "",
 		ServerIpAddress: interfaceServerIpAddress,
 		Dhcp:            "",
+		Url:             url,
+		Timer:           timer,
 	}
 	_ = tmpl.Execute(w, data)
 }
