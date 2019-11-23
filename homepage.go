@@ -28,6 +28,7 @@ type HomepageData struct {
 	Gateway         string
 	ServerIpAddress string
 	Dhcp            string
+	Version         string
 }
 
 func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -43,9 +44,9 @@ func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params
 		}
 		fileName := "image.png"
 		file, _ := os.Create(fileName)
-		defer file.Close()
 		_ = png.Encode(file, img)
 		LogInfo("MAIN", "Generated screenshot: "+fileName)
+		file.Close()
 	}
 	LogInfo("MAIN", "Generating finished")
 	HomepageLoaded = false
@@ -73,12 +74,14 @@ func Shutdown(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+	println(version)
 	data := HomepageData{
 		IpAddress:       "",
 		Mask:            "",
 		Gateway:         "",
 		ServerIpAddress: "",
 		Dhcp:            "",
+		Version:         version,
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
@@ -94,12 +97,14 @@ func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		HomepageLoaded = true
 		_ = r.ParseForm()
 		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+		println(version)
 		data := HomepageData{
 			IpAddress:       "",
 			Mask:            "",
 			Gateway:         "",
 			ServerIpAddress: "",
 			Dhcp:            "",
+			Version:         version,
 		}
 		HomepageLoaded = true
 		_ = tmpl.Execute(w, data)

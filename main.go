@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"github.com/julienschmidt/sse"
 	"html/template"
@@ -14,6 +13,7 @@ import (
 
 var Interface = "Ethernet"
 
+const version = "2019.4.2.23"
 const deleteLogsAfter = 240 * time.Hour
 
 type Page struct {
@@ -73,8 +73,6 @@ func StreamNetworkData(streamer *sse.Streamer) {
 		if !HomepageLoaded {
 			timing = 20
 		}
-		println(timeToSend)
-		println(interfaceServerIpAddress)
 		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+url+";"+interfaceServerIpAddress)
 		time.Sleep(1 * time.Second)
 	}
@@ -96,7 +94,7 @@ func GetNetworkData() (string, string, string, string) {
 	data, err := exec.Command("Powershell.exe", "ipconfig /all").Output()
 
 	if err != nil {
-		fmt.Println("Error: ", err)
+		LogError("MAIN", err.Error())
 	}
 	result := string(data)
 	ethernetStarts := false

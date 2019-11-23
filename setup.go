@@ -54,6 +54,7 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 		Gateway:         "",
 		ServerIpAddress: "",
 		Dhcp:            "",
+		Version:         version,
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
@@ -76,6 +77,7 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprout
 		Gateway:         "",
 		ServerIpAddress: "",
 		Dhcp:            "",
+		Version:         version,
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
