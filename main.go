@@ -13,7 +13,7 @@ import (
 
 var Interface = "Ethernet"
 
-const version = "2019.4.2.23"
+const version = "2019.4.3.28"
 const deleteLogsAfter = 240 * time.Hour
 
 type Page struct {
@@ -35,6 +35,7 @@ func main() {
 	router.GET("/changenetwork", ChangeNetwork)
 	router.GET("/changenetworktodhcp", ChangeNetworkToDhcp)
 	router.GET("/restart", Restart)
+	router.GET("/restartbrowser", RestartBrowser)
 	router.GET("/shutdown", Shutdown)
 	router.GET("/setup", Setup)
 	router.GET("/css/darcula.css", darcula)
@@ -80,8 +81,8 @@ func StreamNetworkData(streamer *sse.Streamer) {
 
 func StreamTime(streamer *sse.Streamer) {
 	for {
-		streamer.SendString("", "time", time.Now().Format("15:04:05.000"))
-		time.Sleep(1 * time.Millisecond)
+		streamer.SendString("", "time", time.Now().Format("15:04:05"))
+		time.Sleep(1 * time.Second)
 	}
 }
 

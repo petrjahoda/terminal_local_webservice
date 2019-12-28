@@ -1,0 +1,46 @@
+2019-11-24 11:32:30.792   MAIN   INF   Config file already exists
+2019-11-24 11:32:30.792   MAIN   INF   Server running
+2019-11-24 11:32:30.792   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:32:30.793   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:32:31.795   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:32:31.796   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:32:32.797   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:32:32.797   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:32:33.797   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:32:33.798   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:32:34.799   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:32:34.799   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:32:35.801   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:32:35.801   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:32:36.807   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:32:36.807   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:33:54.000   MAIN   INF   Config file already exists
+2019-11-24 11:33:54.000   MAIN   INF   Server running
+2019-11-24 11:33:54.001   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:33:54.002   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:33:55.004   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:33:55.005   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:33:56.007   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:33:56.008   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:14.997   MAIN   INF   Config file already exists
+2019-11-24 11:35:14.997   MAIN   INF   Server running
+2019-11-24 11:35:14.997   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:14.999   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:16.003   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:16.004   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:33.781   MAIN   INF   Config file already exists
+2019-11-24 11:35:33.781   MAIN   INF   Server running
+2019-11-24 11:35:33.782   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:33.783   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:34.784   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:34.785   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:50.949   MAIN   INF   Config file already exists
+2019-11-24 11:35:50.949   MAIN   INF   Server running
+2019-11-24 11:35:50.950   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:50.951   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:51.952   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:51.952   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:52.953   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:52.953   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2019-11-24 11:35:53.956   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2019-11-24 11:35:53.956   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host

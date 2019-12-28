@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"html/template"
 	"io/ioutil"
@@ -16,6 +15,8 @@ import (
 )
 
 func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	LogInfo("NETWORK CHANGE", "Loading")
+	start := time.Now()
 	_ = r.ParseForm()
 	ipaddress := r.Form["ipaddress"]
 	gateway := r.Form["gateway"]
@@ -25,9 +26,9 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 	if pattern.MatchString(ipaddress[0]) && pattern.MatchString(gateway[0]) {
 		result, err := exec.Command("Powershell.exe", "netsh interface ipv4 set address name=\"Ethernet\" static "+ipaddress[0]+" "+mask[0]+" "+gateway[0]).Output()
 		if err != nil {
-			fmt.Println("Error: ", err)
+			LogError("NETWORK CHANGE", err.Error())
 		}
-		LogInfo("MAIN", "Change to static ip with result: "+string(result))
+		LogInfo("NETWORK CHANGE", "Change to static ip with result: "+string(result))
 	}
 	if len(serveripaddress[0]) > 0 {
 		configDirectory := filepath.Join(".", "config")
@@ -38,11 +39,11 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 		}
 		file, _ := json.MarshalIndent(data, "", "  ")
 		writingError := ioutil.WriteFile(configFullPath, file, 0666)
-		LogInfo("MAIN", "Updating server ip address")
+		LogInfo("NETWORK CHANGE", "Updating server ip address")
 		if writingError != nil {
-			LogError("MAIN", "Unable to update server ip address: "+writingError.Error())
+			LogError("NETWORK CHANGE", "Unable to update server ip address: "+writingError.Error())
 		} else {
-			LogInfo("MAIN", "Server ip address updated")
+			LogInfo("NETWORK CHANGE", "Server ip address updated")
 		}
 	}
 	HomepageLoaded = true
@@ -58,16 +59,18 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Par
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
+	LogInfo("NETWORK CHANGE", "Loaded in "+time.Since(start).String())
 
 }
 
 func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	println("Network is changing to DHCP")
+	LogInfo("NETWORK CHANGE TO DHCP", "Loading")
+	start := time.Now()
 	result, err := exec.Command("Powershell.exe", "netsh interface ipv4 set address name=\"Ethernet\" source=dhcp").Output()
 	if err != nil {
-		fmt.Println("Error: ", err)
+		LogError("NETWORK CHANGE TO DHCP", err.Error())
 	}
-	LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
+	LogInfo("NETWORK CHANGE TO DHCP", "Changed to DHCP with result: "+string(result))
 	HomepageLoaded = true
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
@@ -81,7 +84,7 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprout
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
-
+	LogInfo("NETWORK CHANGE TO DHCP", "Loaded in "+time.Since(start).String())
 }
 
 func CheckServerIpAddress(interfaceServerIpAddress string) (bool, string, string) {
