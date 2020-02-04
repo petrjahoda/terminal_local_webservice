@@ -11,8 +11,6 @@ import (
 	"time"
 )
 
-var Interface = "Ethernet"
-
 const version = "2020.1.2.4"
 const deleteLogsAfter = 240 * time.Hour
 
@@ -54,25 +52,39 @@ func main() {
 func StreamNetworkData(streamer *sse.Streamer) {
 	timing := 20
 	timeToSend := "20"
+	refreshDone := true
 	for {
 		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 		interfaceServerIpAddress := LoadSettingsFromConfigFile()
 		serverAccessible, url, interfaceServerIpAddress := CheckServerIpAddress(interfaceServerIpAddress)
-		if serverAccessible && HomepageLoaded {
+		if serverAccessible && !HomepageLoaded {
+			timing = 0
+			timeToSend = strconv.Itoa(timing)
+			url = "http://localhost:8000/"
+		} else if serverAccessible && HomepageLoaded {
 			timing--
 			timeToSend = strconv.Itoa(timing)
-		}
-		if !serverAccessible {
+			refreshDone = false
+		} else if !HomepageLoaded {
 			timing = 20
 			timeToSend = strconv.Itoa(timing)
+		} else if !serverAccessible {
+			if !refreshDone {
+				timing = 0
+				url = "http://localhost:8000/"
+				timeToSend = strconv.Itoa(timing)
+				refreshDone = true
+			} else {
+				timing = 20
+				timeToSend = strconv.Itoa(timing)
+
+			}
 		}
 		if timing < 0 {
 			timing = 20
 			timeToSend = strconv.Itoa(timing)
 		}
-		if !HomepageLoaded {
-			timing = 20
-		}
+
 		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+url+";"+interfaceServerIpAddress)
 		time.Sleep(1 * time.Second)
 	}
