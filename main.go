@@ -13,7 +13,7 @@ import (
 
 var Interface = "Ethernet"
 
-const version = "2019.4.3.28"
+const version = "2020.1.2.4"
 const deleteLogsAfter = 240 * time.Hour
 
 type Page struct {
@@ -57,8 +57,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 	for {
 		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 		interfaceServerIpAddress := LoadSettingsFromConfigFile()
-		serverAccessible, url, interfaceServerIpAddress := // document.getElementsByTagName("META")[0].content = networkdata[4] + ";URL='"+networkdata[5]+"'";
-			CheckServerIpAddress(interfaceServerIpAddress)
+		serverAccessible, url, interfaceServerIpAddress := CheckServerIpAddress(interfaceServerIpAddress)
 		if serverAccessible && HomepageLoaded {
 			timing--
 			timeToSend = strconv.Itoa(timing)

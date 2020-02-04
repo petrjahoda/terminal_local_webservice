@@ -1,0 +1,6 @@
+2020-02-04 09:35:52.465   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2020-02-04 09:35:52.466   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2020-02-04 09:35:53.471   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2020-02-04 09:35:53.472   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
+2020-02-04 09:35:54.473   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2020-02-04 09:35:54.473   MAIN   ERR   777 not accessible: dial tcp 0.0.3.9:80: connect: no route to host
