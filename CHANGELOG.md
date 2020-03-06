@@ -21,3 +21,4 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 - changelog.md
 - fully working on solus linux with AsusPro
 - added linux installation guide
+- updated logging

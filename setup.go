@@ -16,7 +16,7 @@ import (
 )
 
 func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("NETWORKCHANGE", "Loading")
+	LogInfo("MAIN", "Change network Loading")
 	start := time.Now()
 	_ = r.ParseForm()
 	ipaddress := r.Form["ipaddress"]
@@ -24,31 +24,30 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 	mask := r.Form["mask"]
 	serveripaddress := r.Form["serveripaddress"]
 	pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
-	LogInfo("NETWORKCHANGE", "New IP Address: "+ipaddress[0])
-	LogInfo("NETWORKCHANGE", "New Mask: "+mask[0])
-	LogInfo("NETWORKCHANGE", "New Gateway: "+gateway[0])
+	LogInfo("MAIN", "New IP Address: "+ipaddress[0])
+	LogInfo("MAIN", "New Mask: "+mask[0])
+	LogInfo("MAIN", "New Gateway: "+gateway[0])
 	if pattern.MatchString(ipaddress[0]) && pattern.MatchString(gateway[0]) {
 		if runtime.GOOS == "linux" {
-			LogInfo("NETWORKCHANGE", "Linux")
 			maskNumber := GetMaskNumberFrom(mask[0])
-			LogInfo("NETWORKCHANGE", "New Mask Number: "+maskNumber)
+			LogInfo("MAIN", "New Mask Number: "+maskNumber)
 			result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress[0]+"/"+maskNumber, "ipv4.gateway", gateway[0]).Output()
 			if err != nil {
-				LogError("NETWORK CHANGE", err.Error())
+				LogError("MAIN", err.Error())
 			}
 
-			LogInfo("NETWORKCHANGE", string(result))
+			LogInfo("MAIN", string(result))
 			result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
 			if err != nil {
-				LogError("NETWORK CHANGE", err.Error())
+				LogError("MAIN", err.Error())
 			}
-			LogInfo("NETWORK CHANGE", "Change to static ip with result: "+string(result))
+			LogInfo("MAIN", "Change to static ip with result: "+string(result))
 		} else {
 			result, err := exec.Command("Powershell.exe", "netsh interface ipv4 set address name=\"Ethernet\" static "+ipaddress[0]+" "+mask[0]+" "+gateway[0]).Output()
 			if err != nil {
-				LogError("NETWORK CHANGE", err.Error())
+				LogError("MAIN", err.Error())
 			}
-			LogInfo("NETWORK CHANGE", "Change to static ip with result: "+string(result))
+			LogInfo("MAIN", "Change to static ip with result: "+string(result))
 		}
 	}
 	if len(serveripaddress[0]) > 0 {
@@ -60,11 +59,11 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 		}
 		file, _ := json.MarshalIndent(data, "", "  ")
 		writingError := ioutil.WriteFile(configFullPath, file, 0666)
-		LogInfo("NETWORK CHANGE", "Updating server ip address")
+		LogInfo("MAIN", "Updating server ip address")
 		if writingError != nil {
-			LogError("NETWORK CHANGE", "Unable to update server ip address: "+writingError.Error())
+			LogError("MAIN", "Unable to update server ip address: "+writingError.Error())
 		} else {
-			LogInfo("NETWORK CHANGE", "Server ip address updated")
+			LogInfo("MAIN", "Server ip address updated")
 		}
 	}
 	HomepageLoaded = true
@@ -80,7 +79,7 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
-	LogInfo("NETWORK CHANGE", "Loaded in "+time.Since(start).String())
+	LogInfo("MAIN", "Change network loaded in "+time.Since(start).String())
 
 }
 
@@ -155,14 +154,14 @@ func GetMaskNumberFrom(maskNumber string) string {
 }
 
 func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("NETWORKDHCP", "Loading")
+	LogInfo("MAIN", "Change DHCP loading")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
 		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
 		if err != nil {
-			LogError("NETWORKDHCP", err.Error())
+			LogError("MAIN", err.Error())
 		}
-		LogInfo("NETWORKDHCP", "Changed to DHCP with result: "+string(result))
+		LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
 		HomepageLoaded = true
 		_ = r.ParseForm()
 		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
@@ -176,13 +175,13 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 		}
 		HomepageLoaded = true
 		_ = tmpl.Execute(w, data)
-		LogInfo("NETWORK CHANGE TO DHCP", "Loaded in "+time.Since(start).String())
+		LogInfo("MAIN", "Loaded in "+time.Since(start).String())
 	} else {
 		result, err := exec.Command("Powershell.exe", "netsh interface ipv4 set address name=\"Ethernet\" source=dhcp").Output()
 		if err != nil {
-			LogError("NETWORK CHANGE TO DHCP", err.Error())
+			LogError("MAIN", err.Error())
 		}
-		LogInfo("NETWORK CHANGE TO DHCP", "Changed to DHCP with result: "+string(result))
+		LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
 		HomepageLoaded = true
 		_ = r.ParseForm()
 		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
@@ -196,11 +195,13 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 		}
 		HomepageLoaded = true
 		_ = tmpl.Execute(w, data)
-		LogInfo("NETWORK CHANGE TO DHCP", "Loaded in "+time.Since(start).String())
+		LogInfo("MAIN", "Change DHCP loaded in "+time.Since(start).String())
 	}
 }
 
 func CheckServerIpAddress(interfaceServerIpAddress string) (bool, string, string) {
+	LogInfo("STREAM", "Checking server ip address")
+	start := time.Now()
 	serverAccessible := false
 	url := ""
 	hostName := interfaceServerIpAddress
@@ -209,12 +210,13 @@ func CheckServerIpAddress(interfaceServerIpAddress string) (bool, string, string
 	timeOut := time.Duration(seconds) * time.Second
 	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
 	if err != nil {
-		LogError("MAIN", interfaceServerIpAddress+" not accessible: "+err.Error())
+		LogError("STREAM", interfaceServerIpAddress+" not accessible: "+err.Error())
 		interfaceServerIpAddress += " not accessible"
 	} else {
-		LogInfo("MAIN", interfaceServerIpAddress+" accessible")
+		LogInfo("STREAM", interfaceServerIpAddress+" accessible")
 		serverAccessible = true
 		url = "http://" + interfaceServerIpAddress + "/"
 	}
+	LogInfo("STREAM", "Checked in "+time.Since(start).String())
 	return serverAccessible, url, interfaceServerIpAddress
 }

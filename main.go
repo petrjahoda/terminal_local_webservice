@@ -87,7 +87,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 	timeToSend := "20"
 	refreshDone := true
 	for {
-		LogInfo("NETWORKDATA", "Streaming network data")
+		LogInfo("STREAM", "Streaming network data")
 		start := time.Now()
 		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 		interfaceServerIpAddress := LoadSettingsFromConfigFile()
@@ -119,7 +119,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 			timeToSend = strconv.Itoa(timing)
 		}
 		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+url+";"+interfaceServerIpAddress)
-		LogInfo("NETWORKDATA", "Stream done in "+time.Since(start).String())
+		LogInfo("STREAM", "Stream done in "+time.Since(start).String())
 		time.Sleep(1 * time.Second)
 	}
 }
@@ -132,7 +132,7 @@ func StreamTime(streamer *sse.Streamer) {
 }
 
 func GetNetworkData() (string, string, string, string) {
-	LogInfo("NETWORKDATA", "Getting network data")
+	LogInfo("STREAM", "Getting network data")
 	var interfaceIpAddress string
 	var interfaceMask string
 	var interfaceGateway string
@@ -140,22 +140,22 @@ func GetNetworkData() (string, string, string, string) {
 	if runtime.GOOS == "linux" {
 		data, err := exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
 		if err != nil {
-			LogError("NETWORKDATA", err.Error())
+			LogError("STREAM", err.Error())
 		}
 		result := string(data)
 		for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
 			if strings.Contains(line, "IP4.ADDRESS") {
 				interfaceIpAddress = line[38:]
-				LogInfo("NETWORKDATA", "Ip Address: "+interfaceIpAddress)
+				LogInfo("STREAM", "Ip Address: "+interfaceIpAddress)
 				interfaceIpAddress = interfaceIpAddress[:]
 				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
 				maskNumber := splittedIpAddress[1]
 				interfaceMask = CalculateMaskFrom(maskNumber)
-				LogInfo("NETWORKDATA", "Mask: "+interfaceMask)
+				LogInfo("STREAM", "Mask: "+interfaceMask)
 			}
 			if strings.Contains(line, "IP4.GATEWAY") {
 				interfaceGateway = line[40:]
-				LogInfo("NETWORKDATA", "Gateway: "+interfaceGateway)
+				LogInfo("STREAM", "Gateway: "+interfaceGateway)
 				interfaceGateway = interfaceGateway[:]
 			}
 			if strings.Contains(line, "ipv4.method") {
@@ -166,15 +166,12 @@ func GetNetworkData() (string, string, string, string) {
 					interfaceDhcp = "no"
 				}
 			}
-			if strings.Contains(line, "Wireless") {
-				break
-			}
 		}
 	} else {
 		data, err := exec.Command("Powershell.exe", "ipconfig /all").Output()
 
 		if err != nil {
-			LogError("MAIN", err.Error())
+			LogError("STREAM", err.Error())
 		}
 		result := string(data)
 		ethernetStarts := false

@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"github.com/kbinani/screenshot"
 	"html/template"
@@ -33,73 +32,73 @@ type HomepageData struct {
 }
 
 func Screenshot(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	LogInfo("SCREENSHOT", "Loading")
+	LogInfo("MAIN", "Screenshot loading")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
 		data, err := exec.Command("/usr/bin/maim", "image.png").Output()
 		if err != nil {
-			LogError("SCREENSHOT", err.Error())
+			LogError("MAIN", err.Error())
 		}
-		LogInfo("SCREENSHOT", "Screenshot taken: "+string(data))
+		LogInfo("MAIN", "Screenshot taken: "+string(data))
 	} else {
 		n := screenshot.NumActiveDisplays()
 		for i := 0; i < n; i++ {
 			img, err := screenshot.CaptureDisplay(i)
 			if err != nil {
-				LogError("SCREENSHOT", "Error generating screenshot: "+err.Error())
+				LogError("MAIN", "Error generating screenshot: "+err.Error())
 				continue
 			}
 			fileName := "image.png"
 			file, _ := os.Create(fileName)
 			_ = png.Encode(file, img)
-			LogInfo("SCREENSHOT", "Generated screenshot: "+fileName)
+			LogInfo("MAIN", "Generated screenshot: "+fileName)
 			file.Close()
 		}
 
 	}
 	HomepageLoaded = false
 	renderTemplate(w, "screenshot", &Page{})
-	LogInfo("SCREENSHOT", "Loaded in "+time.Since(start).String())
+	LogInfo("MAIN", "Screenshot loaded in "+time.Since(start).String())
 }
 
 func Restart(http.ResponseWriter, *http.Request, httprouter.Params) {
-	LogInfo("RESTART", "Loading")
+	LogInfo("MAIN", "Restarting")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
 		data, err := exec.Command("reboot").Output()
 		if err != nil {
-			fmt.Println("Error: ", err)
+			LogError("MAIN", err.Error())
 		}
-		LogInfo("RESTART", "Loaded in "+time.Since(start).String()+" with result: "+string(data))
+		LogInfo("MAIN", "Restarted in "+time.Since(start).String()+" with result: "+string(data))
 	} else {
 		data, err := exec.Command("Powershell.exe", "Restart-Computer").Output()
 		if err != nil {
-			fmt.Println("Error: ", err)
+			LogError("MAIN", err.Error())
 		}
-		LogInfo("RESTART", "Loaded in "+time.Since(start).String()+" with result: "+string(data))
+		LogInfo("MAIN", "Restarted in "+time.Since(start).String()+" with result: "+string(data))
 	}
 }
 
 func Shutdown(http.ResponseWriter, *http.Request, httprouter.Params) {
-	LogInfo("SHUTDOWN", "Loading")
+	LogInfo("MAIN", "Shutting down")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
 		data, err := exec.Command("poweroff").Output()
 		if err != nil {
-			fmt.Println("Error: ", err)
+			LogError("MAIN", err.Error())
 		}
-		LogInfo("SHUTDOWN", "Loaded in "+time.Since(start).String()+" with result: "+string(data))
+		LogInfo("MAIN", "Shut down in "+time.Since(start).String()+" with result: "+string(data))
 	} else {
 		data, err := exec.Command("Powershell.exe", "Stop-Computer").Output()
 		if err != nil {
-			fmt.Println("Error: ", err)
+			LogError("MAIN", err.Error())
 		}
-		LogInfo("SHUTDOWN", "Loaded in "+time.Since(start).String()+" with result: "+string(data))
+		LogInfo("MAIN", "Shut down in "+time.Since(start).String()+" with result: "+string(data))
 	}
 }
 
 func Homepage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("HOMEPAGE", "Loading")
+	LogInfo("MAIN", "Homepage Loading")
 	start := time.Now()
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
@@ -113,11 +112,11 @@ func Homepage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
-	LogInfo("HOMEPAGE", "Loaded in "+time.Since(start).String())
+	LogInfo("MAIN", "Homepage loaded in "+time.Since(start).String())
 }
 
 func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("SETUP", "Loading")
+	LogInfo("MAIN", "Setup loading")
 	start := time.Now()
 	_ = r.ParseForm()
 	password := r.Form["password"]
@@ -126,11 +125,11 @@ func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		HomepageLoaded = false
 		renderTemplate(w, "setup", &Page{})
 	} else {
-		LogInfo("SETUP", "Bad password")
+		LogInfo("MAIN", "Bad password")
 		HomepageLoaded = true
 		_ = r.ParseForm()
 		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-		LogInfo("SETUP", version)
+		LogInfo("MAIN", version)
 		data := HomepageData{
 			IpAddress:       "",
 			Mask:            "",
@@ -141,15 +140,15 @@ func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		}
 		HomepageLoaded = true
 		_ = tmpl.Execute(w, data)
-		LogInfo("SETUP", "Loaded in "+time.Since(start).String())
+		LogInfo("MAIN", "Setup loaded in "+time.Since(start).String())
 	}
 }
 func Password(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	LogInfo("PASSWORD", "Loading")
+	LogInfo("MAIN", "Password loading")
 	start := time.Now()
 	HomepageLoaded = false
 	renderTemplate(w, "password", &Page{})
-	LogInfo("PASSWORD", "Loaded in "+time.Since(start).String())
+	LogInfo("MAIN", "Password loaded in "+time.Since(start).String())
 }
 
 func LoadSettingsFromConfigFile() string {
