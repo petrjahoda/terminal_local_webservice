@@ -1,0 +1,2 @@
+2020-03-06 13:27:15.870   MAIN   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2020-03-06 13:27:17.876   MAIN   ERR   192.168.86.20 not accessible: dial tcp 192.168.86.20:80: i/o timeout
