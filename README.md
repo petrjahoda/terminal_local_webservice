@@ -1,7 +1,6 @@
 # Terminal Local WebService
 
-
-## Installation
+## Installation for Windows
 * copy file to terminal
     * put terminal_local_webservice.exe into c:\Zapsi folder and make it run as administrator
     * put start.bat into c:\Zapsi folder and make it run as administrator
@@ -20,8 +19,7 @@ Go webservice that allows user to restart and shutdown terminal, make screenshot
 ## Additional information
 * password is 2011
 * autologin to windows is preferred
-* webservice is running on port 8000
-* special page /RestartBrowser restarts only browser (not accessible from user interface, use remotely)
+* webservice is running on port 80
 * timer is set to 20 seconds (right top corner)
     * if server ip address has running webservice, counter starts to decrease every second and the displays the page from server
     * if no webservice is running on server, 20 seconds remains

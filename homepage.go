@@ -144,7 +144,7 @@ func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		LogInfo("SETUP", "Loaded in "+time.Since(start).String())
 	}
 }
-func Password(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func Password(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	LogInfo("PASSWORD", "Loading")
 	start := time.Now()
 	HomepageLoaded = false

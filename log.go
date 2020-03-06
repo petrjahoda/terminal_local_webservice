@@ -26,10 +26,6 @@ func LogWarning(reference, data string) {
 	AppendDataToLog("WRN", reference, data)
 }
 
-func LogDebug(reference, data string) {
-	fmt.Println(Blue(time.Now().Format("2006-01-02 15:04:05.000") + " [" + reference + "] --INF-- " + data))
-}
-
 func LogDirectoryFileCheck(reference string) {
 	dateTimeFormat := "2006-01-02 15:04:05.000"
 	logDirectory := filepath.Join(".", "log")
