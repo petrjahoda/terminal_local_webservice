@@ -293,18 +293,18 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	_ = t.Execute(w, p)
 }
 
-func darcula(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+func darcula(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
 	http.ServeFile(writer, request, "css/darcula.css")
 }
 
-func metrojs(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+func metrojs(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
 	http.ServeFile(writer, request, "js/metro.min.js")
 }
 
-func metrocss(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+func metrocss(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
 	http.ServeFile(writer, request, "css/metro-all.css")
 }
 
-func image(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+func image(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
 	http.ServeFile(writer, request, "image.png")
 }

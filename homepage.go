@@ -32,7 +32,7 @@ type HomepageData struct {
 	Version         string
 }
 
-func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func Screenshot(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	LogInfo("SCREENSHOT", "Loading")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
@@ -62,7 +62,7 @@ func Screenshot(w http.ResponseWriter, r *http.Request, params httprouter.Params
 	LogInfo("SCREENSHOT", "Loaded in "+time.Since(start).String())
 }
 
-func Restart(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func Restart(http.ResponseWriter, *http.Request, httprouter.Params) {
 	LogInfo("RESTART", "Loading")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
@@ -80,7 +80,7 @@ func Restart(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	}
 }
 
-func Shutdown(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func Shutdown(http.ResponseWriter, *http.Request, httprouter.Params) {
 	LogInfo("SHUTDOWN", "Loading")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
@@ -98,7 +98,7 @@ func Shutdown(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 	}
 }
 
-func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func Homepage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("HOMEPAGE", "Loading")
 	start := time.Now()
 	_ = r.ParseForm()
@@ -116,7 +116,7 @@ func Homepage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 	LogInfo("HOMEPAGE", "Loaded in "+time.Since(start).String())
 }
 
-func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("SETUP", "Loading")
 	start := time.Now()
 	_ = r.ParseForm()
@@ -144,7 +144,7 @@ func Setup(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		LogInfo("SETUP", "Loaded in "+time.Since(start).String())
 	}
 }
-func Password(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func Password(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("PASSWORD", "Loading")
 	start := time.Now()
 	HomepageLoaded = false

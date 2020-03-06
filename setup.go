@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-func ChangeNetwork(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("NETWORKCHANGE", "Loading")
 	start := time.Now()
 	_ = r.ParseForm()
@@ -154,7 +154,7 @@ func GetMaskNumberFrom(maskNumber string) string {
 	return "0"
 }
 
-func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("NETWORKDHCP", "Loading")
 	start := time.Now()
 	if runtime.GOOS == "linux" {
