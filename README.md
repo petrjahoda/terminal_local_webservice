@@ -13,6 +13,23 @@
     * use this "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --kiosk --disable-pinch --app=http://localhost:8000" 
 
 
+## Installation for Linux, use Solus
+* install Solus on AsusPro
+* update Solus to latest version 
+* add autologin for current user
+* disable sleeping, allow dimming, disable screensaver
+* install chrome
+* install open ssh server and enable it
+* install maim (for screenshots)
+* set wallpaper to #2B2B2B set taskbar transparent
+* remove everything from taskbar
+* add chrome to startup `google-chrome-stable http://localhost --window-size=1920,1080 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null  --password-store=basic --disable-pinch --overscroll-history-navigation=0` 
+* setup nocursor in `/usr/share/lightdm/lightdm.conf.d/` in preferred config file, enable and add`xserver-command = X -nocursor`
+* copy everything from folder linux to /home/{user}/ directory
+* make it run as a service, according to `https://medium.com/tarkalabs-til/making-your-go-service-systemd-friendly-2ec1c9a702c7`
+* test the service
+* reboot
+
 ## Description
 Go webservice that allows user to restart and shutdown terminal, make screenshot and setup terminal from user interface
 
