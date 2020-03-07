@@ -17,11 +17,16 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
 ## [2020.1.3.7] - 2020-03-07
 
+### Added
+- deleting old log files
+
+### Changed
+- code reformat, pieces of code moved to proper files
+
 ### Fixed
 - properly generating screenshot, not as 'root', but as a 'zapsi' user
 
-### Added
-- deleting old log files
+
 
 ## [2020.1.3.6] - 2020-03-06
 

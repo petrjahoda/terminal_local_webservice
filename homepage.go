@@ -1,16 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/julienschmidt/httprouter"
-	"github.com/kbinani/screenshot"
 	"html/template"
-	"image/png"
-	"io/ioutil"
 	"net/http"
-	"os"
 	"os/exec"
-	"path/filepath"
 	"runtime"
 	"strings"
 	"time"
@@ -31,41 +25,88 @@ type HomepageData struct {
 	Version         string
 }
 
-func Screenshot(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Screenshot loading")
-	start := time.Now()
-	command := "sudo"
-	args := []string{"-u", "zapsi", "maim", "image.png"}
+func GetNetworkData() (string, string, string, string) {
+	LogInfo("STREAM", "Getting network data")
+	var interfaceIpAddress string
+	var interfaceMask string
+	var interfaceGateway string
+	var interfaceDhcp string
 	if runtime.GOOS == "linux" {
-		argumentDebug := ""
-		for _, arg := range args {
-			argumentDebug += arg + " "
-		}
-		LogInfo("MAIN", command+" "+argumentDebug)
-		data, err := exec.Command(command, args...).Output()
+		data, err := exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
 		if err != nil {
-			LogError("MAIN", err.Error())
+			LogError("STREAM", err.Error())
 		}
-		LogInfo("MAIN", "Screenshot taken: "+string(data))
-	} else {
-		n := screenshot.NumActiveDisplays()
-		for i := 0; i < n; i++ {
-			img, err := screenshot.CaptureDisplay(i)
-			if err != nil {
-				LogError("MAIN", "Error generating screenshot: "+err.Error())
-				continue
+		result := string(data)
+		for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+			if strings.Contains(line, "IP4.ADDRESS") {
+				interfaceIpAddress = line[38:]
+				LogInfo("STREAM", "Ip Address: "+interfaceIpAddress)
+				interfaceIpAddress = interfaceIpAddress[:]
+				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
+				maskNumber := splittedIpAddress[1]
+				interfaceMask = CalculateMaskFrom(maskNumber)
+				LogInfo("STREAM", "Mask: "+interfaceMask)
 			}
-			fileName := "image.png"
-			file, _ := os.Create(fileName)
-			_ = png.Encode(file, img)
-			LogInfo("MAIN", "Generated screenshot: "+fileName)
-			file.Close()
+			if strings.Contains(line, "IP4.GATEWAY") {
+				interfaceGateway = line[40:]
+				LogInfo("STREAM", "Gateway: "+interfaceGateway)
+				interfaceGateway = interfaceGateway[:]
+			}
+			if strings.Contains(line, "ipv4.method") {
+				interfaceDhcp = line[40:]
+				if strings.Contains(interfaceDhcp, "auto") {
+					interfaceDhcp = "yes"
+				} else {
+					interfaceDhcp = "no"
+				}
+			}
 		}
+	} else {
+		data, err := exec.Command("Powershell.exe", "ipconfig /all").Output()
 
+		if err != nil {
+			LogError("STREAM", err.Error())
+		}
+		result := string(data)
+		ethernetStarts := false
+		for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+			if strings.Contains(line, "Ethernet") {
+				ethernetStarts = true
+			}
+			if ethernetStarts {
+				if strings.Contains(line, "IPv4 Address") {
+					interfaceIpAddress = line[38:]
+					interfaceIpAddress = interfaceIpAddress[:len(interfaceIpAddress)-1]
+
+				}
+				if strings.Contains(line, "Subnet Mask") {
+					interfaceMask = line[38:]
+					interfaceMask = interfaceMask[:len(interfaceMask)-1]
+
+				}
+				if strings.Contains(line, "Default Gateway") {
+					interfaceGateway = line[38:]
+					interfaceGateway = interfaceGateway[:len(interfaceGateway)-1]
+
+				}
+				if strings.Contains(line, "DHCP Enabled") {
+					interfaceDhcp = line[38:]
+					interfaceDhcp = interfaceDhcp[:len(interfaceDhcp)-1]
+				}
+				if strings.Contains(line, "Wireless") {
+					break
+				}
+
+			}
+		}
 	}
-	HomepageLoaded = false
-	renderTemplate(w, "screenshot", &Page{})
-	LogInfo("MAIN", "Screenshot loaded in "+time.Since(start).String())
+	if interfaceGateway == "" {
+		interfaceGateway = "not connected"
+		interfaceIpAddress = "not connected"
+		interfaceMask = "not connected"
+		interfaceDhcp = "not connected"
+	}
+	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }
 
 func Restart(http.ResponseWriter, *http.Request, httprouter.Params) {
@@ -122,80 +163,72 @@ func Homepage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Homepage loaded in "+time.Since(start).String())
 }
 
-func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Setup loading")
-	start := time.Now()
-	_ = r.ParseForm()
-	password := r.Form["password"]
-	println(len(password))
-	if password[0] == "2011" {
-		HomepageLoaded = false
-		renderTemplate(w, "setup", &Page{})
-	} else {
-		LogInfo("MAIN", "Bad password")
-		HomepageLoaded = true
-		_ = r.ParseForm()
-		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-		LogInfo("MAIN", version)
-		data := HomepageData{
-			IpAddress:       "",
-			Mask:            "",
-			Gateway:         "",
-			ServerIpAddress: "",
-			Dhcp:            "",
-			Version:         version,
-		}
-		HomepageLoaded = true
-		_ = tmpl.Execute(w, data)
-		LogInfo("MAIN", "Setup loaded in "+time.Since(start).String())
+func CalculateMaskFrom(maskNumber string) string {
+	switch maskNumber {
+	case "1":
+		return "128.0.0.0"
+	case "2":
+		return "192.0.0.0"
+	case "3":
+		return "224.0.0.0"
+	case "4":
+		return "240.0.0.0"
+	case "5":
+		return "248.0.0.0"
+	case "6":
+		return "252.0.0.0"
+	case "7":
+		return "254.0.0.0"
+	case "8":
+		return "255.0.0.0"
+	case "9":
+		return "255.128.0.0"
+	case "10":
+		return "255.192.0.0"
+	case "11":
+		return "255.224.0.0"
+	case "12":
+		return "255.240.0.0"
+	case "13":
+		return "255.248.0.0"
+	case "14":
+		return "255.252.0.0"
+	case "15":
+		return "255.254.0.0"
+	case "16":
+		return "255.255.0.0"
+	case "17":
+		return "255.255.128.0"
+	case "18":
+		return "255.255.192.0"
+	case "19":
+		return "255.255.224.0"
+	case "20":
+		return "255.255.240.0"
+	case "21":
+		return "255.255.248.0"
+	case "22":
+		return "255.255.252.0"
+	case "23":
+		return "255.255.254.0"
+	case "24":
+		return "255.255.255.0"
+	case "25":
+		return "255.255.255.128"
+	case "26":
+		return "255.255.255.192"
+	case "27":
+		return "255.255.255.224"
+	case "28":
+		return "255.255.255.240"
+	case "29":
+		return "255.255.255.248"
+	case "30":
+		return "255.255.255.252"
+	case "31":
+		return "255.255.255.254"
+	case "32":
+		return "255.255.255.255"
 	}
-}
-func Password(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Password loading")
-	start := time.Now()
-	HomepageLoaded = false
-	renderTemplate(w, "password", &Page{})
-	LogInfo("MAIN", "Password loaded in "+time.Since(start).String())
-}
-
-func LoadSettingsFromConfigFile() string {
-	configDirectory := filepath.Join(".", "config")
-	configFileName := "config.json"
-	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-	readFile, _ := ioutil.ReadFile(configFullPath)
-	ConfigFile := ServerIpAddress{}
-	_ = json.Unmarshal(readFile, &ConfigFile)
-	ServerIpAddress := ConfigFile.ServerIpAddress
-	return ServerIpAddress
-}
-
-func CreateConfigIfNotExists() {
-	configDirectory := filepath.Join(".", "config")
-	configFileName := "config.json"
-	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-
-	if _, checkPathError := os.Stat(configFullPath); checkPathError == nil {
-		LogInfo("MAIN", "Config file already exists")
-	} else if os.IsNotExist(checkPathError) {
-		LogWarning("MAIN", "Config file does not exist, creating")
-		mkdirError := os.MkdirAll(configDirectory, 0777)
-		if mkdirError != nil {
-			LogError("MAIN", "Unable to create directory for config file: "+mkdirError.Error())
-		} else {
-			LogInfo("MAIN", "Directory for config file created")
-			data := ServerIpAddress{
-				ServerIpAddress: "",
-			}
-			file, _ := json.MarshalIndent(data, "", "  ")
-			writingError := ioutil.WriteFile(configFullPath, file, 0666)
-			LogInfo("MAIN", "Writing data to JSON file")
-			if writingError != nil {
-				LogError("MAIN", "Unable to write data to config file: "+writingError.Error())
-			} else {
-				LogInfo("MAIN", "Data written to config file")
-			}
-		}
-	} else {
-		LogError("MAIN", "Config file does not exist")
-	}
+	return "-"
 }

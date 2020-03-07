@@ -15,6 +15,35 @@ import (
 	"time"
 )
 
+func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	LogInfo("MAIN", "Setup loading")
+	start := time.Now()
+	_ = r.ParseForm()
+	password := r.Form["password"]
+	println(len(password))
+	if password[0] == "2011" {
+		HomepageLoaded = false
+		renderTemplate(w, "setup", &Page{})
+	} else {
+		LogInfo("MAIN", "Bad password")
+		HomepageLoaded = true
+		_ = r.ParseForm()
+		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+		LogInfo("MAIN", version)
+		data := HomepageData{
+			IpAddress:       "",
+			Mask:            "",
+			Gateway:         "",
+			ServerIpAddress: "",
+			Dhcp:            "",
+			Version:         version,
+		}
+		HomepageLoaded = true
+		_ = tmpl.Execute(w, data)
+		LogInfo("MAIN", "Setup loaded in "+time.Since(start).String())
+	}
+}
+
 func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Change network Loading")
 	start := time.Now()
