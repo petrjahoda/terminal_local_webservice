@@ -34,7 +34,6 @@ type HomepageData struct {
 func Screenshot(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Screenshot loading")
 	start := time.Now()
-
 	if runtime.GOOS == "linux" {
 		data, err := exec.Command("/usr/bin/maim", "image.png").Output()
 		if err != nil {
