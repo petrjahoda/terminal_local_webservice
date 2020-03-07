@@ -34,8 +34,15 @@ type HomepageData struct {
 func Screenshot(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Screenshot loading")
 	start := time.Now()
+	command := "sudo"
+	args := []string{"-u", "zapsi", "maim", "image.png"}
 	if runtime.GOOS == "linux" {
-		data, err := exec.Command("/usr/bin/maim", "image.png").Output()
+		argumentDebug := ""
+		for _, arg := range args {
+			argumentDebug += arg + " "
+		}
+		LogInfo("MAIN", command+" "+argumentDebug)
+		data, err := exec.Command(command, args...).Output()
 		if err != nil {
 			LogError("MAIN", err.Error())
 		}

@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-const version = "2020.1.3.6"
+const version = "2020.1.3.7"
 const programName = "Terminal local webservice"
 const programDesription = "Display local web for asus terminals"
 const deleteLogsAfter = 240 * time.Hour

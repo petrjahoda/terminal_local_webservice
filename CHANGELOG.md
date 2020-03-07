@@ -15,6 +15,11 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Security``` in case of vulnerabilities.
 
 
+## [2020.1.3.7] - 2020-03-07
+
+### Fixed
+- properly generating screenshot, not as 'root', but as a 'zapsi' user
+
 ## [2020.1.3.6] - 2020-03-06
 
 ### Added
