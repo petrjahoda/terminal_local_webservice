@@ -20,6 +20,9 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 ### Fixed
 - properly generating screenshot, not as 'root', but as a 'zapsi' user
 
+### Added
+- deleting old log files
+
 ## [2020.1.3.6] - 2020-03-06
 
 ### Added

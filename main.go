@@ -56,8 +56,16 @@ func (p *program) run() {
 	router.Handler("GET", "/networkdata", networkDataStreamer)
 	go StreamTime(timeStreamer)
 	go StreamNetworkData(networkDataStreamer)
+	go ClearOldLogFiles()
 	LogInfo("MAIN", "Server running")
 	_ = http.ListenAndServe(":80", router)
+}
+
+func ClearOldLogFiles() {
+	for {
+		DeleteOldLogFiles()
+		time.Sleep(1 * time.Hour)
+	}
 }
 
 func (p *program) Stop(s service.Service) error {
