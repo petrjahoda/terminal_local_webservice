@@ -28,6 +28,7 @@
     cursor: default;
 }
 body {
+    overscroll-behavior-x: none;
     font-size: 16px;
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
     color: #ffffff;

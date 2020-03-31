@@ -15,6 +15,11 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Security``` in case of vulnerabilities.
 
 
+## [2020.1.3.31] - 2020-03-31
+
+### Added
+- udpated darcula.css, added "overscroll-behavior-x: none;" to body, preventing touch back
+
 ## [2020.1.3.7] - 2020-03-07
 
 ### Added
