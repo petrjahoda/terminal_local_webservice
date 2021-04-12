@@ -10,7 +10,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"runtime"
 	"strings"
 	"time"
 )
@@ -57,27 +56,20 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 	LogInfo("MAIN", "New Mask: "+mask[0])
 	LogInfo("MAIN", "New Gateway: "+gateway[0])
 	if pattern.MatchString(ipaddress[0]) && pattern.MatchString(gateway[0]) {
-		if runtime.GOOS == "linux" {
-			maskNumber := GetMaskNumberFrom(mask[0])
-			LogInfo("MAIN", "New Mask Number: "+maskNumber)
-			result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress[0]+"/"+maskNumber, "ipv4.gateway", gateway[0]).Output()
-			if err != nil {
-				LogError("MAIN", err.Error())
-			}
-
-			LogInfo("MAIN", string(result))
-			result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
-			if err != nil {
-				LogError("MAIN", err.Error())
-			}
-			LogInfo("MAIN", "Change to static ip with result: "+string(result))
-		} else {
-			result, err := exec.Command("Powershell.exe", "netsh interface ipv4 set address name=\"Ethernet\" static "+ipaddress[0]+" "+mask[0]+" "+gateway[0]).Output()
-			if err != nil {
-				LogError("MAIN", err.Error())
-			}
-			LogInfo("MAIN", "Change to static ip with result: "+string(result))
+		maskNumber := GetMaskNumberFrom(mask[0])
+		LogInfo("MAIN", "New Mask Number: "+maskNumber)
+		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress[0]+"/"+maskNumber, "ipv4.gateway", gateway[0]).Output()
+		if err != nil {
+			LogError("MAIN", err.Error())
 		}
+
+		LogInfo("MAIN", string(result))
+		result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
+		if err != nil {
+			LogError("MAIN", err.Error())
+		}
+		LogInfo("MAIN", "Change to static ip with result: "+string(result))
+
 	}
 	if len(serveripaddress[0]) > 0 {
 		configDirectory := filepath.Join(".", "config")
@@ -185,47 +177,25 @@ func GetMaskNumberFrom(maskNumber string) string {
 func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Change DHCP loading")
 	start := time.Now()
-	if runtime.GOOS == "linux" {
-		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-		LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
-		HomepageLoaded = true
-		_ = r.ParseForm()
-		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-		data := HomepageData{
-			IpAddress:       "",
-			Mask:            "",
-			Gateway:         "",
-			ServerIpAddress: "",
-			Dhcp:            "",
-			Version:         version,
-		}
-		HomepageLoaded = true
-		_ = tmpl.Execute(w, data)
-		LogInfo("MAIN", "Loaded in "+time.Since(start).String())
-	} else {
-		result, err := exec.Command("Powershell.exe", "netsh interface ipv4 set address name=\"Ethernet\" source=dhcp").Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-		LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
-		HomepageLoaded = true
-		_ = r.ParseForm()
-		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-		data := HomepageData{
-			IpAddress:       "",
-			Mask:            "",
-			Gateway:         "",
-			ServerIpAddress: "",
-			Dhcp:            "",
-			Version:         version,
-		}
-		HomepageLoaded = true
-		_ = tmpl.Execute(w, data)
-		LogInfo("MAIN", "Change DHCP loaded in "+time.Since(start).String())
+	result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
+	if err != nil {
+		LogError("MAIN", err.Error())
 	}
+	LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
+	HomepageLoaded = true
+	_ = r.ParseForm()
+	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
+	data := HomepageData{
+		IpAddress:       "",
+		Mask:            "",
+		Gateway:         "",
+		ServerIpAddress: "",
+		Dhcp:            "",
+		Version:         version,
+	}
+	HomepageLoaded = true
+	_ = tmpl.Execute(w, data)
+	LogInfo("MAIN", "Loaded in "+time.Since(start).String())
 }
 
 func CheckServerIpAddress(interfaceServerIpAddress string) (bool, string, string) {
@@ -234,10 +204,9 @@ func CheckServerIpAddress(interfaceServerIpAddress string) (bool, string, string
 	serverAccessible := false
 	url := ""
 	hostName := interfaceServerIpAddress
-	portNum := "80"
 	seconds := 2
 	timeOut := time.Duration(seconds) * time.Second
-	_, err := net.DialTimeout("tcp", hostName+":"+portNum, timeOut)
+	_, err := net.DialTimeout("tcp", hostName, timeOut)
 	if err != nil {
 		LogError("STREAM", interfaceServerIpAddress+" not accessible: "+err.Error())
 		interfaceServerIpAddress += " not accessible"

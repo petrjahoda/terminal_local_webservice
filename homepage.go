@@ -112,37 +112,21 @@ func GetNetworkData() (string, string, string, string) {
 func Restart(http.ResponseWriter, *http.Request, httprouter.Params) {
 	LogInfo("MAIN", "Restarting")
 	start := time.Now()
-	if runtime.GOOS == "linux" {
-		data, err := exec.Command("reboot").Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-		LogInfo("MAIN", "Restarted in "+time.Since(start).String()+" with result: "+string(data))
-	} else {
-		data, err := exec.Command("Powershell.exe", "Restart-Computer").Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-		LogInfo("MAIN", "Restarted in "+time.Since(start).String()+" with result: "+string(data))
+	data, err := exec.Command("reboot").Output()
+	if err != nil {
+		LogError("MAIN", err.Error())
 	}
+	LogInfo("MAIN", "Restarted in "+time.Since(start).String()+" with result: "+string(data))
 }
 
 func Shutdown(http.ResponseWriter, *http.Request, httprouter.Params) {
 	LogInfo("MAIN", "Shutting down")
 	start := time.Now()
-	if runtime.GOOS == "linux" {
-		data, err := exec.Command("poweroff").Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-		LogInfo("MAIN", "Shut down in "+time.Since(start).String()+" with result: "+string(data))
-	} else {
-		data, err := exec.Command("Powershell.exe", "Stop-Computer").Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-		LogInfo("MAIN", "Shut down in "+time.Since(start).String()+" with result: "+string(data))
+	data, err := exec.Command("poweroff").Output()
+	if err != nil {
+		LogError("MAIN", err.Error())
 	}
+	LogInfo("MAIN", "Shut down in "+time.Since(start).String()+" with result: "+string(data))
 }
 
 func Homepage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

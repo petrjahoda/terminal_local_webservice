@@ -1,0 +1,168 @@
+2021-04-12 10:07:13.076   STREAM   INF   Streaming network data
+2021-04-12 10:07:13.076   STREAM   INF   Getting network data
+2021-04-12 10:07:13.078   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 10:07:13.078   STREAM   INF   Checking server ip address
+2021-04-12 10:07:13.081   STREAM   INF   192.168.86.1 accessible
+2021-04-12 10:07:13.081   STREAM   INF   Checked in 2.81814ms
+2021-04-12 10:07:13.081   STREAM   INF   Stream done in 5.094681ms
+2021-04-12 10:07:14.081   STREAM   INF   Streaming network data
+2021-04-12 10:07:14.081   STREAM   INF   Getting network data
+2021-04-12 10:07:14.082   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 10:07:14.082   STREAM   INF   Checking server ip address
+2021-04-12 10:07:14.089   STREAM   INF   192.168.86.1 accessible
+2021-04-12 10:07:14.089   STREAM   INF   Checked in 7.053243ms
+2021-04-12 10:07:14.089   STREAM   INF   Stream done in 7.816438ms
+2021-04-12 12:06:30.415   STREAM   INF   Streaming network data
+2021-04-12 12:06:30.415   STREAM   INF   Getting network data
+2021-04-12 12:06:30.415   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:30.416   STREAM   INF   Checking server ip address
+2021-04-12 12:06:30.419   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:30.419   STREAM   INF   Checked in 3.245836ms
+2021-04-12 12:06:30.419   STREAM   INF   Stream done in 4.261704ms
+2021-04-12 12:06:31.420   STREAM   INF   Streaming network data
+2021-04-12 12:06:31.420   STREAM   INF   Getting network data
+2021-04-12 12:06:31.420   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:31.421   STREAM   INF   Checking server ip address
+2021-04-12 12:06:31.425   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:31.425   STREAM   INF   Checked in 4.48176ms
+2021-04-12 12:06:31.425   STREAM   INF   Stream done in 5.556358ms
+2021-04-12 12:06:32.427   STREAM   INF   Streaming network data
+2021-04-12 12:06:32.428   STREAM   INF   Getting network data
+2021-04-12 12:06:32.428   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:32.429   STREAM   INF   Checking server ip address
+2021-04-12 12:06:32.432   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:32.432   STREAM   INF   Checked in 3.238794ms
+2021-04-12 12:06:32.432   STREAM   INF   Stream done in 4.695413ms
+2021-04-12 12:06:33.434   STREAM   INF   Streaming network data
+2021-04-12 12:06:33.434   STREAM   INF   Getting network data
+2021-04-12 12:06:33.435   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:33.435   STREAM   INF   Checking server ip address
+2021-04-12 12:06:33.445   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:33.446   STREAM   INF   Checked in 10.372441ms
+2021-04-12 12:06:33.446   STREAM   INF   Stream done in 11.527843ms
+2021-04-12 12:06:34.451   STREAM   INF   Streaming network data
+2021-04-12 12:06:34.451   STREAM   INF   Getting network data
+2021-04-12 12:06:34.452   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:34.452   STREAM   INF   Checking server ip address
+2021-04-12 12:06:34.462   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:34.463   STREAM   INF   Checked in 10.212757ms
+2021-04-12 12:06:34.463   STREAM   INF   Stream done in 11.508207ms
+2021-04-12 12:06:35.468   STREAM   INF   Streaming network data
+2021-04-12 12:06:35.468   STREAM   INF   Getting network data
+2021-04-12 12:06:35.469   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:35.469   STREAM   INF   Checking server ip address
+2021-04-12 12:06:35.474   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:35.474   STREAM   INF   Checked in 4.815023ms
+2021-04-12 12:06:35.474   STREAM   INF   Stream done in 6.135324ms
+2021-04-12 12:06:36.480   STREAM   INF   Streaming network data
+2021-04-12 12:06:36.480   STREAM   INF   Getting network data
+2021-04-12 12:06:36.481   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:36.481   STREAM   INF   Checking server ip address
+2021-04-12 12:06:36.491   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:36.491   STREAM   INF   Checked in 10.085124ms
+2021-04-12 12:06:36.491   STREAM   INF   Stream done in 11.495217ms
+2021-04-12 12:06:37.497   STREAM   INF   Streaming network data
+2021-04-12 12:06:37.497   STREAM   INF   Getting network data
+2021-04-12 12:06:37.498   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:37.498   STREAM   INF   Checking server ip address
+2021-04-12 12:06:37.508   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:37.509   STREAM   INF   Checked in 10.185065ms
+2021-04-12 12:06:37.509   STREAM   INF   Stream done in 11.645111ms
+2021-04-12 12:06:38.512   STREAM   INF   Streaming network data
+2021-04-12 12:06:38.512   STREAM   INF   Getting network data
+2021-04-12 12:06:38.513   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:38.513   STREAM   INF   Checking server ip address
+2021-04-12 12:06:38.516   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:38.516   STREAM   INF   Checked in 3.081871ms
+2021-04-12 12:06:38.516   STREAM   INF   Stream done in 4.408397ms
+2021-04-12 12:06:39.519   STREAM   INF   Streaming network data
+2021-04-12 12:06:39.519   STREAM   INF   Getting network data
+2021-04-12 12:06:39.520   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:39.520   STREAM   INF   Checking server ip address
+2021-04-12 12:06:39.531   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:39.531   STREAM   INF   Checked in 10.495758ms
+2021-04-12 12:06:39.531   STREAM   INF   Stream done in 11.835388ms
+2021-04-12 12:06:40.533   STREAM   INF   Streaming network data
+2021-04-12 12:06:40.533   STREAM   INF   Getting network data
+2021-04-12 12:06:40.534   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:40.534   STREAM   INF   Checking server ip address
+2021-04-12 12:06:40.537   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:40.537   STREAM   INF   Checked in 3.155335ms
+2021-04-12 12:06:40.537   STREAM   INF   Stream done in 4.330368ms
+2021-04-12 12:06:41.538   STREAM   INF   Streaming network data
+2021-04-12 12:06:41.539   STREAM   INF   Getting network data
+2021-04-12 12:06:41.539   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:41.540   STREAM   INF   Checking server ip address
+2021-04-12 12:06:41.549   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:41.550   STREAM   INF   Checked in 9.733694ms
+2021-04-12 12:06:41.550   STREAM   INF   Stream done in 11.208673ms
+2021-04-12 12:06:42.555   STREAM   INF   Streaming network data
+2021-04-12 12:06:42.555   STREAM   INF   Getting network data
+2021-04-12 12:06:42.556   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:42.557   STREAM   INF   Checking server ip address
+2021-04-12 12:06:42.567   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:42.567   STREAM   INF   Checked in 10.331615ms
+2021-04-12 12:06:42.567   STREAM   INF   Stream done in 11.807029ms
+2021-04-12 12:06:43.568   STREAM   INF   Streaming network data
+2021-04-12 12:06:43.568   STREAM   INF   Getting network data
+2021-04-12 12:06:43.569   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:43.569   STREAM   INF   Checking server ip address
+2021-04-12 12:06:43.579   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:43.579   STREAM   INF   Checked in 9.922401ms
+2021-04-12 12:06:43.579   STREAM   INF   Stream done in 11.199599ms
+2021-04-12 12:06:44.582   STREAM   INF   Streaming network data
+2021-04-12 12:06:44.582   STREAM   INF   Getting network data
+2021-04-12 12:06:44.583   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:44.583   STREAM   INF   Checking server ip address
+2021-04-12 12:06:44.588   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:44.589   STREAM   INF   Checked in 5.300369ms
+2021-04-12 12:06:44.589   STREAM   INF   Stream done in 6.309052ms
+2021-04-12 12:06:45.594   STREAM   INF   Streaming network data
+2021-04-12 12:06:45.594   STREAM   INF   Getting network data
+2021-04-12 12:06:45.595   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:45.596   STREAM   INF   Checking server ip address
+2021-04-12 12:06:45.599   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:45.599   STREAM   INF   Checked in 3.1697ms
+2021-04-12 12:06:45.599   STREAM   INF   Stream done in 4.759549ms
+2021-04-12 12:06:46.601   STREAM   INF   Streaming network data
+2021-04-12 12:06:46.602   STREAM   INF   Getting network data
+2021-04-12 12:06:46.602   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:46.603   STREAM   INF   Checking server ip address
+2021-04-12 12:06:46.607   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:46.607   STREAM   INF   Checked in 4.298526ms
+2021-04-12 12:06:46.607   STREAM   INF   Stream done in 5.615702ms
+2021-04-12 12:06:47.608   STREAM   INF   Streaming network data
+2021-04-12 12:06:47.608   STREAM   INF   Getting network data
+2021-04-12 12:06:47.609   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:47.609   STREAM   INF   Checking server ip address
+2021-04-12 12:06:47.619   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:47.620   STREAM   INF   Checked in 10.443142ms
+2021-04-12 12:06:47.620   STREAM   INF   Stream done in 11.474426ms
+2021-04-12 12:06:48.625   STREAM   INF   Streaming network data
+2021-04-12 12:06:48.626   STREAM   INF   Getting network data
+2021-04-12 12:06:48.626   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:48.627   STREAM   INF   Checking server ip address
+2021-04-12 12:06:48.631   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:48.631   STREAM   INF   Checked in 4.083306ms
+2021-04-12 12:06:48.631   STREAM   INF   Stream done in 5.364462ms
+2021-04-12 12:06:49.631   STREAM   INF   Streaming network data
+2021-04-12 12:06:49.632   STREAM   INF   Getting network data
+2021-04-12 12:06:49.632   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:49.633   STREAM   INF   Checking server ip address
+2021-04-12 12:06:49.636   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:49.636   STREAM   INF   Checked in 3.363007ms
+2021-04-12 12:06:49.636   STREAM   INF   Stream done in 4.588041ms
+2021-04-12 12:06:50.639   STREAM   INF   Streaming network data
+2021-04-12 12:06:50.639   STREAM   INF   Getting network data
+2021-04-12 12:06:50.640   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:50.640   STREAM   INF   Checking server ip address
+2021-04-12 12:06:50.644   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:50.644   STREAM   INF   Checked in 3.601488ms
+2021-04-12 12:06:50.644   STREAM   INF   Stream done in 5.068222ms
+2021-04-12 12:06:51.648   STREAM   INF   Streaming network data
+2021-04-12 12:06:51.648   STREAM   INF   Getting network data
+2021-04-12 12:06:51.649   STREAM   ERR   exec: "Powershell.exe": executable file not found in $PATH
+2021-04-12 12:06:51.650   STREAM   INF   Checking server ip address
+2021-04-12 12:06:51.654   STREAM   INF   192.168.86.1 accessible
+2021-04-12 12:06:51.654   STREAM   INF   Checked in 4.103064ms
+2021-04-12 12:06:51.654   STREAM   INF   Stream done in 5.627642ms

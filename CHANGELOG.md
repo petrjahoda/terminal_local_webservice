@@ -14,6 +14,10 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2021.2.1.12] - 2020-04-12
+
+### Changed
+- rpi only
 
 ## [2020.1.3.31] - 2020-03-31
 

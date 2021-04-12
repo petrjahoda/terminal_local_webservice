@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const version = "2020.1.3.31"
+const version = "2021.2.1.12"
 const programName = "Terminal local webservice"
 const programDesription = "Display local web for asus terminals"
 const deleteLogsAfter = 240 * time.Hour
@@ -60,7 +60,7 @@ func (p *program) run() {
 	go StreamNetworkData(networkDataStreamer)
 	go ClearOldLogFiles()
 	LogInfo("MAIN", "Server running")
-	_ = http.ListenAndServe(":80", router)
+	_ = http.ListenAndServe(":9999", router)
 }
 
 func CreateConfigIfNotExists() {
@@ -147,7 +147,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 		if serverAccessible && !HomepageLoaded {
 			timing = 0
 			timeToSend = strconv.Itoa(timing)
-			url = "http://localhost"
+			url = "http://localhost:9999"
 		} else if serverAccessible && HomepageLoaded {
 			timing--
 			timeToSend = strconv.Itoa(timing)
@@ -158,7 +158,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 		} else if !serverAccessible {
 			if !refreshDone {
 				timing = 0
-				url = "http://localhost"
+				url = "http://localhost:9999"
 				timeToSend = strconv.Itoa(timing)
 				refreshDone = true
 			} else {
