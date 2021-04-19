@@ -116,14 +116,20 @@ func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Index page Loading")
 	start := time.Now()
 	_ = r.ParseForm()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
+	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+	serverAccessible, url, interfaceServerIpAddress := CheckServerIpAddress(interfaceServerIpAddress)
 	tmpl := template.Must(template.ParseFiles("html/index.html"))
 	data := HomepageData{
-		IpAddress:       "",
-		Mask:            "",
-		Gateway:         "",
-		ServerIpAddress: "",
-		Dhcp:            "",
+		IpAddress:       interfaceIpAddress,
+		Mask:            interfaceMask,
+		Gateway:         interfaceGateway,
+		Dhcp:            dhcpEnabled,
+		ServerIpAddress: url + " online",
 		Version:         version,
+	}
+	if !serverAccessible {
+		data.ServerIpAddress = url + " offline"
 	}
 	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)

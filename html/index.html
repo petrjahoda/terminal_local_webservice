@@ -3,9 +3,10 @@
 <head>
     <link rel="stylesheet" href="../css/uikit.min.css">
     <link rel="stylesheet" href="../css/keyboard.css">
+    <link rel="stylesheet" href="../css/zapsi.css">
     <script src="../js/uikit.min.js" defer></script>
-    <script src="../js/index.js" defer></script>
     <script src="../js/keyboard.js" defer></script>
+    <script src="../js/index.js" defer></script>
     <meta charset="UTF-8">
     <title>Zapsi Local Webservice</title>
 </head>
@@ -14,14 +15,33 @@
     <div class="uk-text-lead uk-text-primary">
         {{.Version}}
     </div>
+    <div id="info" class="uk-text-lead uk-text-primary">
+    </div>
 </div>
-<div class="uk-position-center uk-light" style=" transform: scale(2, 2) translateY(-50px);  transform-origin: right">
+<div class="uk-position-center uk-light"
+     style=" transform: scale(2.2, 2.2) translateY(-60px);  transform-origin: right">
     <div class="uk-align-center">
-        <div id="ipaddress" class="uk-text-lead uk-text-primary">IP ADDRESS: {{.IpAddress}}</div>
-        <div id="mask" class="uk-text-lead uk-text-primary">MASK: {{.Mask}}</div>
-        <div id="gateway" class="uk-text-lead uk-text-primary">GATEWAY: {{.Gateway}}</div>
-        <div id="server" class="uk-text-lead uk-text-primary">SERVER ADDRESS: {{.ServerIpAddress}}</div>
-        <div id="dhcp" class="uk-text-lead uk-text-primary">DHCP: {{.Dhcp}}</div>
+        <label for="ipaddress"></label><input class="use-keyboard-input" style="width: 300px;">
+        <div style="display: flex;">
+            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">IP ADDRESS:</div>
+            <div id="ipaddress" class="uk-text-primary" style="flex: 1;text-align: left"> {{.IpAddress}}</div>
+        </div>
+        <div style="display: flex;">
+            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">MASK:</div>
+            <div id="mask" class="uk-text-primary" style="flex: 1;text-align: left"> {{.Mask}}</div>
+        </div>
+        <div style="display: flex;">
+            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">GATEWAY:</div>
+            <div id="gateway" class="uk-text-primary" style="flex: 1;text-align: left"> {{.Gateway}}</div>
+        </div>
+        <div style="display: flex;">
+            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">SERVER ADDRESS:</div>
+            <div id="server" class="uk-text-primary" style="flex: 1;text-align: left"> {{.ServerIpAddress}}</div>
+        </div>
+        <div style="display: flex;">
+            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">DHCP:</div>
+            <div id="dhcp" class="uk-text-primary" style="flex: 1;text-align: left"> {{.Dhcp}}</div>
+        </div>
     </div>
     <div id="button-panel">
         <button id="left-button" class="uk-button-default uk-button-large" style="width: 180px">RESTART</button>
