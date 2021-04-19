@@ -15,10 +15,9 @@ import (
 	"time"
 )
 
-const version = "2021.2.1.12"
+const version = "2021.2.1.19"
 const programName = "Terminal local webservice"
-const programDesription = "Display local web for asus terminals"
-const deleteLogsAfter = 240 * time.Hour
+const programDesription = "Display local web for rpi terminals"
 
 type Page struct {
 	Title string
@@ -34,31 +33,25 @@ func (p *program) Start(s service.Service) error {
 }
 
 func (p *program) run() {
-	LogDirectoryFileCheck("MAIN")
 	CreateConfigIfNotExists()
-
 	router := httprouter.New()
 	timeStreamer := sse.New()
 	networkDataStreamer := sse.New()
-
-	router.GET("/", Homepage)
+	router.GET("/", index)
 	router.GET("/screenshot", Screenshot)
-	router.GET("/password", Password)
-	router.GET("/changenetwork", ChangeNetwork)
-	router.GET("/changenetworktodhcp", ChangeNetworkToDhcp)
+	//router.GET("/password", Password)
+	//router.GET("/changenetwork", ChangeNetwork)
+	//router.GET("/changenetworktodhcp", ChangeNetworkToDhcp)
 	router.GET("/restart", Restart)
 	router.GET("/shutdown", Shutdown)
-	router.GET("/setup", Setup)
-	router.GET("/css/darcula.css", darcula)
-	router.GET("/js/metro.min.js", metrojs)
-	router.GET("/css/metro-all.css", metrocss)
+	router.ServeFiles("/html/*filepath", http.Dir("html"))
+	router.ServeFiles("/css/*filepath", http.Dir("css"))
+	router.ServeFiles("/js/*filepath", http.Dir("js"))
 	router.GET("/image.png", image)
-
 	router.Handler("GET", "/listen", timeStreamer)
 	router.Handler("GET", "/networkdata", networkDataStreamer)
 	go StreamTime(timeStreamer)
 	go StreamNetworkData(networkDataStreamer)
-	go ClearOldLogFiles()
 	LogInfo("MAIN", "Server running")
 	_ = http.ListenAndServe(":9999", router)
 }
@@ -103,13 +96,6 @@ func LoadSettingsFromConfigFile() string {
 	_ = json.Unmarshal(readFile, &ConfigFile)
 	ServerIpAddress := ConfigFile.ServerIpAddress
 	return ServerIpAddress
-}
-
-func ClearOldLogFiles() {
-	for {
-		DeleteOldLogFiles()
-		time.Sleep(1 * time.Hour)
-	}
 }
 
 func (p *program) Stop(s service.Service) error {
@@ -187,19 +173,6 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	t, _ := template.ParseFiles("html/" + tmpl + ".html")
 	_ = t.Execute(w, p)
 }
-
-func darcula(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
-	http.ServeFile(writer, request, "css/darcula.css")
-}
-
-func metrojs(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
-	http.ServeFile(writer, request, "js/metro.min.js")
-}
-
-func metrocss(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
-	http.ServeFile(writer, request, "css/metro-all.css")
-}
-
 func image(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
 	http.ServeFile(writer, request, "image.png")
 }

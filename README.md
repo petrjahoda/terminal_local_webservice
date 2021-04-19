@@ -1,45 +1,82 @@
-# Terminal Local WebService
+# Terminal Local WebService Rpi
 
-## Installation for Windows
-* copy file to terminal
-    * put terminal_local_webservice.exe into c:\Zapsi folder and make it run as administrator
-    * put start.bat into c:\Zapsi folder and make it run as administrator
-    * put screenshot.exe into c:\Zapsi folder and make it run as administrator
-    * put html folder into c:\Zapsi folder
-    * put css folder into c:\Zapsi folder
-    * put js folder into c:\Zapsi folder
-* create shortcut of start.bat in C:\Users\Zapsi\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup folder (in terminal)
-* create shortcut to google chrome in C:\Users\Zapsi\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup folder (in terminal)
-    * use this "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --kiosk --disable-pinch --app=http://localhost:8000" 
+## 1. Prepare Raspberry Pi
+* update and upgrade using `sudo apt-get update && sudo apt-get upgrade`
+* install raspbian lite using Raspberry Pi Imager from [official site](https://www.raspberrypi.org/software/)
+* using `sudo raspi-config`
+  * enable console autologin
+  * enable ssh
+  * enable overscan (or disable underscan)
+* install maim using `sudo apt-get install maim`
+* install network manager using `sudo apt-get install network-manager`
+* enable network manager as service using `sudo systemctl enable NetworkManager`
+* start network manager as service using `sudo systemctl start NetworkManager`
+* install ufw using `sudo apt-get install ufw`
+* enable port 9999 using `sudo ufw allow 9999`
+* reboot using `sudo reboot now`
 
+## 2. Install Chromium in kiosk mode
+* install prerequisites using `sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox`
+* install chromium using `sudo apt-get install --no-install-recommends chromium-browser`
+* edit autostart file using `sudo nano /etc/xdg/openbox/autostart`, insert those lines:
+```
+# Disable any form of screen saver / screen blanking / power management
+xset s off
+xset s noblank
+xset -dpms
 
-## Installation for Linux, use Solus
-* install Solus on AsusPro
-* update Solus to latest version 
-* add autologin for current user
-* disable sleeping, allow dimming, disable screensaver
-* install chrome
-* install open ssh server and enable it
-* install maim (for screenshots)
-* set wallpaper to #2B2B2B set taskbar transparent
-* remove everything from taskbar
-* add chrome to startup `google-chrome-stable http://localhost --window-size=1920,1080 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null  --password-store=basic --disable-pinch --overscroll-history-navigation=0` 
-* setup nocursor in `/usr/share/lightdm/lightdm.conf.d/` in preferred config file, enable and add`xserver-command = X -nocursor`
-* copy everything from folder linux to /home/{user}/ directory
-* make it run as a service, according to `https://medium.com/tarkalabs-til/making-your-go-service-systemd-friendly-2ec1c9a702c7`
-* test the service
-* reboot
+# Allow quitting the X server with CTRL-ATL-Backspace
+setxkbmap -option terminate:ctrl_alt_bksp
 
-## Description
-Go webservice that allows user to restart and shutdown terminal, make screenshot and setup terminal from user interface
+# Start Chromium in kiosk mode
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
+chromium-browser --disable-infobars --kiosk 'http://localhost:9999'
+```
+* make everything start on boot using `sudo nano .bash_profile` , insert this line:
+```
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
+```
+####TIP: by pressing `Ctrl-Alt-Backspace` you can kill chromium and get into command line
 
-## Additional information
-* password is 2011
-* autologin to windows is preferred
-* webservice is running on port 80
-* timer is set to 20 seconds (right top corner)
-    * if server ip address has running webservice, counter starts to decrease every second and the displays the page from server
-    * if no webservice is running on server, 20 seconds remains
+## 3. Copy program data to Raspberry
+* copy files from terminal_local_webservice/rpi directory to raspberry pi /home/pi
+  * rpi_linux into /home/pi
+  * /html/* into /home/pi/*
+  * /css/* into /home/pi/*
+  * /js/* into /home/pi/*
+  * example copying js directory using scp: `scp -r js pi@192.168.86.249:/home/pi`
+  
+## 4. Make program run as service
+* create new file using `sudo nano /lib/systemd/system/zapsi.service`, insert those lines:
+```
+[Unit]
+Description=Zapsi Service
+ConditionPathExists=/home/pi/rpi_linux
+After=network.target
+[Service]
+Type=simple
+User=pi
+Group=pi
+LimitNOFILE=1024
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+WorkingDirectory=/home/pi
+ExecStart=/home/pi/rpi_linux
+PermissionsStartOnly=true
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=zapsi_service
+[Install]
+WantedBy=multi-user.target
+```
+* make sure that file is executable using `sudo chmod 755 /lib/systemd/system/zapsi.service`
+* make service autostart using `sudo systemctl enable zapsi.service`
+* start the service now using  `sudo systemctl start zapsi.service`
+####TIP: search logs using `journalctl -f -u zapsi.service`
 
-    
-www.zapsi.eu © 2020
+## 5. Clean booting screen and information
+## 6. Make Raspberry Pi read-only
+
+© 2021 Petr Jahoda

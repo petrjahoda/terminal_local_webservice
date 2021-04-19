@@ -1,78 +1,90 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="../css/metro-all.css">
-<link rel="stylesheet" href="../css/darcula.css">
-<script src="../js/metro.min.js"></script>
-<script type="text/javascript">
-    const source = new EventSource('/listen');
-    source.addEventListener('time', () => {
-        document.getElementById("time").innerHTML = event.data;
-
-    }, false);
-</script>
-<header>
-    <div id="time" class="text-leader"
-         style="position:absolute;font-weight: 500;top:25px;left:50%;transform: translate(-50%, -50%);">
-
+<html lang="en" style="background: black">
+<head>
+    <link rel="stylesheet" href="../css/uikit.min.css">
+    <link rel="stylesheet" href="../css/keyboard.css">
+    <script src="../js/uikit.min.js" defer></script>
+    <script src="../js/index.js" defer></script>
+    <script src="../js/keyboard.js" defer></script>
+    <meta charset="UTF-8">
+    <title>Zapsi Local Webservice</title>
+</head>
+<body>
+<div id="info-panel" class="uk-light uk-position-top uk-text-center uk-position-small">
+    <div class="uk-text-large">
+        INFORMATION
     </div>
-</header>
-<div class="text-leader"
-     style="position:absolute;font-weight: 500;bottom:10px;left:50%;transform: translate(-50%, -50%);">
-    www.zapsi.eu
 </div>
+<div class="uk-position-center uk-light">
+    <label for="ipaddress"></label><input id="ipaddress" class="use-keyboard-input" style="width: 300px;">
+    <label for="mask"></label><input id="mask" class="use-keyboard-input" style="width: 300px;">
+    <label for="gateway"></label><input id="gateway" class="use-keyboard-input" style="width: 300px;">
+    <label for="server"></label><input id="server" class="use-keyboard-input" style="width: 300px;">
+    <div id="middle-panel">
+    </div>
+    <div id="button-panel">
+        <button id="left-button" class="uk-button uk-button-default uk-button-large" style="width: 150px">Restart
+        </button>
+        <button id="right-button" class="uk-button uk-button-default uk-button-large" style="width: 150px">
+            Shutdown
+        </button>
+    </div>
 
-<div style="text-align: center;position:absolute;top:70%;left:50%;transform: translate(-50%, -50%);">
-    <form action="/changenetworktodhcp">
-        <input style="width: 276px;margin: 20px;" class="button primary large" type="submit" value="Change to DHCP"/>
-    </form>
+
 </div>
-
-<form action="/changenetwork" style="position:absolute;top:40%;left:50%;transform: translate(-50%, -50%);">
-    <div class="row">
-        <div class="cell-4">
-            <input placeholder="Ip Address"
-                   class="input-large"
-                   type="text" data-role="keypad"
-                   data-validate="email"
-                   data-keys="0,1,2,3,4,5,6,7,8,9,."
-                   name="ipaddress">
-        </div>
-        <div class="cell-4">
-            <input placeholder="Mask"
-                   class="input-large"
-                   type="text" data-role="keypad"
-                   data-keys="0,1,2,3,4,5,6,7,8,9,."
-                   name="mask">
-        </div>
-        <div class="cell-4">
-            <input placeholder="Gateway"
-                   class="input-large"
-                   type="text" data-role="keypad"
-                   data-keys="0,1,2,3,4,5,6,7,8,9,."
-                   name="gateway">
-        </div>
+<div id="version-panel" class="uk-light uk-position-bottom uk-text-center uk-position-small">
+    <div class="uk-text-lead uk-text-primary">
+        www.zapsi.eu {{.Version}}
     </div>
-    <div class="row">
-        <div class="cell-4 offset-4">
-            <input placeholder="Server Ip Address"
-                   class="input-large"
-                   type="text" data-role="keypad"
-                   data-keys="0,1,2,3,4,5,6,7,8,9,.,:,/"
-                   name="serveripaddress">
-        </div>
-    </div>
-    <div>
-        <input style="width: 276px;text-align: center;position:fixed;top:150%;left:50%;transform: translate(-50%, -50%);"
-               class="button primary large" type="submit" value="Save"/>
-    </div>
-</form>
-
-
-
-<div style="text-align: center;position:absolute;top:80%;left:50%;transform: translate(-50%, -50%);">
-    <form action="/">
-        <input style="width: 276px;margin: 20px;" class="button primary large" type="submit" value="Back"/>
-    </form>
 </div>
+</body>
+</html>
+
+
+<!--<h2 style="text-align: center;font-weight: 500;position:absolute;top:20%;right:50%;">-->
+<!--    Actual IP Address: </h2>-->
+<!--<h2 style="text-align: center;font-weight: 500;position:absolute;top:28%;right:50%">-->
+<!--    Actual Mask: </h2>-->
+<!--<h2 style="text-align: center;font-weight: 500;position:absolute;top:36%;right:50%">-->
+<!--    Actual Gateway: </h2>-->
+<!--<h2 style="text-align: center;font-weight: 500;position:absolute;top:44%;right:50%">-->
+<!--    Server IP Address: </h2>-->
+<!--<h2 style="text-align: center;font-weight: 500;position:absolute;top:52%;right:50%">-->
+<!--    Dhcp: </h2>-->
+
+<!--<h2 id="ipaddress" style="text-align: center;font-weight: 500;position:absolute;top:20%;left:51%;">-->
+<!--</h2>-->
+<!--<h2 id="mask" style="text-align: center;font-weight: 500;position:absolute;top:28%;left:51%">-->
+<!--    {{.Mask}}</h2>-->
+<!--<h2 id="gateway" style="text-align: center;font-weight: 500;position:absolute;top:36%;left:51%">-->
+<!--    {{.Gateway}}</h2>-->
+<!--<h2 id="url" style="text-align: center;font-weight: 500;position:absolute;top:44%;left:51%">-->
+<!--    {{.ServerIpAddress}}</h2>-->
+<!--<h2 id="dhcp" style="text-align: center;font-weight: 500;position:absolute;top:52%;left:51%">-->
+<!--    {{.Dhcp}}</h2>-->
+
+
+<!--<div style="text-align: center;position:absolute;top:80%;left:28%;transform: translate(-50%, -50%);">-->
+<!--    <form action="/screenshot">-->
+<!--        <input style="width: 276px;margin: 20px;" class="button primary large" type="submit" value="Screenshot"/>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<div style="text-align: center;position:absolute;top:70%;left:50%;transform: translate(-50%, -50%);">-->
+<!--    <form action="/password">-->
+<!--        <input style="width: 276px;margin: 20px;" class="button primary large" type="submit" value="Setup"/>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<div style="text-align: center;position:absolute;top:80%;left:50%;transform: translate(-50%, -50%);">-->
+<!--    <form action="/restart">-->
+<!--        <input style="width: 276px;margin: 20px;" class="button primary large" type="submit" value="Restart"/>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<div style="text-align: center;position:absolute;top:80%;left:72%;transform: translate(-50%, -50%);">-->
+<!--    <form action="/shutdown">-->
+<!--        <input style="width: 276px;margin: 20px;" class="button primary large alert" type="submit" value="Shutdown"/>-->
+<!--    </form>-->
+<!--</div>-->
+
 
 
 
