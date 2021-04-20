@@ -8,9 +8,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -27,65 +25,27 @@ type Page struct {
 type program struct{}
 
 func (p *program) Start(s service.Service) error {
-	LogInfo("MAIN", "Starting "+programName+" on "+s.Platform())
 	go p.run()
 	return nil
 }
 
 func (p *program) run() {
-	CreateConfigIfNotExists()
 	router := httprouter.New()
-	timeStreamer := sse.New()
 	networkDataStreamer := sse.New()
-	router.GET("/", Index)
-	router.GET("/screenshot", Screenshot)
-	router.GET("/setup", Setup)
-	router.POST("/password", Password)
-	//router.GET("/changenetwork", ChangeNetwork)
-	//router.GET("/changenetworktodhcp", ChangeNetworkToDhcp)
-	router.POST("/restart", Restart)
-	router.POST("/shutdown", Shutdown)
+	router.GET("/image.png", image)
+	router.GET("/", indexPage)
+	router.GET("/screenshot", screenshotPage)
+	router.GET("/setup", setupPage)
+	router.POST("/password", checkPassword)
+	router.POST("/restart", restartRpi)
+	router.POST("/shutdown", shutdownRpi)
 	router.ServeFiles("/font/*filepath", http.Dir("font"))
 	router.ServeFiles("/html/*filepath", http.Dir("html"))
 	router.ServeFiles("/css/*filepath", http.Dir("css"))
 	router.ServeFiles("/js/*filepath", http.Dir("js"))
-	router.GET("/image.png", image)
-	router.Handler("GET", "/listen", timeStreamer)
 	router.Handler("GET", "/networkdata", networkDataStreamer)
 	go StreamNetworkData(networkDataStreamer)
-	LogInfo("MAIN", "Server running")
 	_ = http.ListenAndServe(":9999", router)
-}
-
-func CreateConfigIfNotExists() {
-	configDirectory := filepath.Join(".", "config")
-	configFileName := "config.json"
-	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-
-	if _, checkPathError := os.Stat(configFullPath); checkPathError == nil {
-		LogInfo("MAIN", "Config file already exists")
-	} else if os.IsNotExist(checkPathError) {
-		LogWarning("MAIN", "Config file does not exist, creating")
-		mkdirError := os.MkdirAll(configDirectory, 0777)
-		if mkdirError != nil {
-			LogError("MAIN", "Unable to create directory for config file: "+mkdirError.Error())
-		} else {
-			LogInfo("MAIN", "Directory for config file created")
-			data := ServerIpAddress{
-				ServerIpAddress: "",
-			}
-			file, _ := json.MarshalIndent(data, "", "  ")
-			writingError := ioutil.WriteFile(configFullPath, file, 0666)
-			LogInfo("MAIN", "Writing data to JSON file")
-			if writingError != nil {
-				LogError("MAIN", "Unable to write data to config file: "+writingError.Error())
-			} else {
-				LogInfo("MAIN", "Data written to config file")
-			}
-		}
-	} else {
-		LogError("MAIN", "Config file does not exist")
-	}
 }
 
 func LoadSettingsFromConfigFile() string {
@@ -100,7 +60,6 @@ func LoadSettingsFromConfigFile() string {
 }
 
 func (p *program) Stop(s service.Service) error {
-	LogInfo("MAIN", "Stopped on platform "+s.Platform())
 	return nil
 }
 
@@ -111,21 +70,13 @@ func main() {
 		Description: programDesription,
 	}
 	prg := &program{}
-	s, err := service.New(prg, serviceConfig)
-	if err != nil {
-		LogError("MAIN", err.Error())
-	}
-	err = s.Run()
-	if err != nil {
-		LogError("MAIN", "Problem starting "+serviceConfig.Name)
-	}
+	s, _ := service.New(prg, serviceConfig)
+	_ = s.Run()
 }
 
 func StreamNetworkData(streamer *sse.Streamer) {
 	timeToSend := "20"
 	for {
-		LogInfo("STREAM", "Streaming network data")
-		start := time.Now()
 		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 		interfaceServerIpAddress := LoadSettingsFromConfigFile()
 		serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
@@ -133,7 +84,6 @@ func StreamNetworkData(streamer *sse.Streamer) {
 			interfaceServerIpAddress = interfaceServerIpAddress + " offline"
 		}
 		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+interfaceServerIpAddress+";"+interfaceServerIpAddress)
-		LogInfo("STREAM", "Stream done in "+time.Since(start).String()+" "+strconv.FormatBool(serverAccessible))
 		time.Sleep(5 * time.Second)
 	}
 }

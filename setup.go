@@ -15,9 +15,7 @@ import (
 	"time"
 )
 
-func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Setup loading")
-	start := time.Now()
+func setupPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	tmpl := template.Must(template.ParseFiles("html/setup.html"))
@@ -35,36 +33,19 @@ func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 	fmt.Println(data)
 	_ = tmpl.Execute(w, data)
-	LogInfo("MAIN", "Setup loaded in "+time.Since(start).String())
 }
 
 func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Change network Loading")
-	start := time.Now()
 	_ = r.ParseForm()
 	ipaddress := r.Form["ipaddress"]
 	gateway := r.Form["gateway"]
 	mask := r.Form["mask"]
 	serveripaddress := r.Form["serveripaddress"]
 	pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
-	LogInfo("MAIN", "New IP Address: "+ipaddress[0])
-	LogInfo("MAIN", "New Mask: "+mask[0])
-	LogInfo("MAIN", "New Gateway: "+gateway[0])
 	if pattern.MatchString(ipaddress[0]) && pattern.MatchString(gateway[0]) {
 		maskNumber := GetMaskNumberFrom(mask[0])
-		LogInfo("MAIN", "New Mask Number: "+maskNumber)
-		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress[0]+"/"+maskNumber, "ipv4.gateway", gateway[0]).Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-
-		LogInfo("MAIN", string(result))
-		result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
-		if err != nil {
-			LogError("MAIN", err.Error())
-		}
-		LogInfo("MAIN", "Change to static ip with result: "+string(result))
-
+		exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress[0]+"/"+maskNumber, "ipv4.gateway", gateway[0])
+		exec.Command("nmcli", "con", "up", "Wired connection 1")
 	}
 	if len(serveripaddress[0]) > 0 {
 		configDirectory := filepath.Join(".", "config")
@@ -74,13 +55,7 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 			ServerIpAddress: serveripaddress[0],
 		}
 		file, _ := json.MarshalIndent(data, "", "  ")
-		writingError := ioutil.WriteFile(configFullPath, file, 0666)
-		LogInfo("MAIN", "Updating server ip address")
-		if writingError != nil {
-			LogError("MAIN", "Unable to update server ip address: "+writingError.Error())
-		} else {
-			LogInfo("MAIN", "Server ip address updated")
-		}
+		_ = ioutil.WriteFile(configFullPath, file, 0666)
 	}
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
@@ -93,7 +68,6 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 		Version:         version,
 	}
 	_ = tmpl.Execute(w, data)
-	LogInfo("MAIN", "Change network loaded in "+time.Since(start).String())
 
 }
 
@@ -168,13 +142,7 @@ func GetMaskNumberFrom(maskNumber string) string {
 }
 
 func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Change DHCP loading")
-	start := time.Now()
-	result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
-	if err != nil {
-		LogError("MAIN", err.Error())
-	}
-	LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
+	exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto")
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 	data := HomepageData{
@@ -186,22 +154,14 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 		Version:         version,
 	}
 	_ = tmpl.Execute(w, data)
-	LogInfo("MAIN", "Loaded in "+time.Since(start).String())
 }
 
 func CheckServerIpAddress(interfaceServerIpAddress string) bool {
-	LogInfo("STREAM", "Checking server ip address")
-	start := time.Now()
-	serverAccessible := false
 	seconds := 2
 	timeOut := time.Duration(seconds) * time.Second
 	_, err := net.DialTimeout("tcp", interfaceServerIpAddress, timeOut)
 	if err != nil {
-		LogError("STREAM", "Not accessible: "+err.Error())
-	} else {
-		LogInfo("STREAM", "Accessible")
-		serverAccessible = true
+		return false
 	}
-	LogInfo("STREAM", "Checked in "+time.Since(start).String())
-	return serverAccessible
+	return true
 }

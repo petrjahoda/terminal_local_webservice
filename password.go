@@ -14,7 +14,7 @@ type PasswordOutput struct {
 	Result string
 }
 
-func Password(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func checkPassword(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var data PasswordInput
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
@@ -24,7 +24,7 @@ func Password(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		_ = json.NewEncoder(w).Encode(responseData)
 		return
 	}
-	if data.Password == "2011" {
+	if data.Password == "3600" {
 		var responseData PasswordOutput
 		responseData.Result = "ok"
 		w.Header().Set("Content-Type", "application/json")

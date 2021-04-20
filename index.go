@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os/exec"
 	"strings"
-	"time"
 )
 
 type ServerIpAddress struct {
@@ -24,7 +23,6 @@ type HomepageData struct {
 }
 
 func GetNetworkData() (string, string, string, string) {
-	LogInfo("STREAM", "Getting network data")
 	interfaceIpAddress := "not assigned"
 	interfaceMask := "not assigned"
 	interfaceGateway := "not assigned"
@@ -79,29 +77,15 @@ func GetNetworkData() (string, string, string, string) {
 	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }
 
-func Restart(http.ResponseWriter, *http.Request, httprouter.Params) {
-	LogInfo("MAIN", "Restarting")
-	start := time.Now()
-	data, err := exec.Command("reboot").Output()
-	if err != nil {
-		LogError("MAIN", err.Error())
-	}
-	LogInfo("MAIN", "Restarted in "+time.Since(start).String()+" with result: "+string(data))
+func restartRpi(http.ResponseWriter, *http.Request, httprouter.Params) {
+	exec.Command("reboot")
 }
 
-func Shutdown(http.ResponseWriter, *http.Request, httprouter.Params) {
-	LogInfo("MAIN", "Shutting down")
-	start := time.Now()
-	data, err := exec.Command("poweroff").Output()
-	if err != nil {
-		LogError("MAIN", err.Error())
-	}
-	LogInfo("MAIN", "Shut down in "+time.Since(start).String()+" with result: "+string(data))
+func shutdownRpi(http.ResponseWriter, *http.Request, httprouter.Params) {
+	exec.Command("poweroff")
 }
 
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Index page Loading")
-	start := time.Now()
+func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	_ = r.ParseForm()
 	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
@@ -119,7 +103,6 @@ func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		data.ServerIpAddress = interfaceServerIpAddress + " offline"
 	}
 	_ = tmpl.Execute(w, data)
-	LogInfo("MAIN", "Homepage loaded in "+time.Since(start).String())
 }
 
 func CalculateMaskFrom(maskNumber string) string {
