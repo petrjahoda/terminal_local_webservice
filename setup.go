@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"html/template"
 	"io/ioutil"
@@ -17,30 +18,24 @@ import (
 func Setup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Setup loading")
 	start := time.Now()
-	_ = r.ParseForm()
-	password := r.Form["password"]
-	println(len(password))
-	if password[0] == "2011" {
-		HomepageLoaded = false
-		renderTemplate(w, "setup", &Page{})
-	} else {
-		LogInfo("MAIN", "Bad password")
-		HomepageLoaded = true
-		_ = r.ParseForm()
-		tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-		LogInfo("MAIN", version)
-		data := HomepageData{
-			IpAddress:       "",
-			Mask:            "",
-			Gateway:         "",
-			ServerIpAddress: "",
-			Dhcp:            "",
-			Version:         version,
-		}
-		HomepageLoaded = true
-		_ = tmpl.Execute(w, data)
-		LogInfo("MAIN", "Setup loaded in "+time.Since(start).String())
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
+	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+	tmpl := template.Must(template.ParseFiles("html/setup.html"))
+	data := HomepageData{
+		IpAddress:       interfaceIpAddress,
+		Mask:            interfaceMask,
+		Gateway:         interfaceGateway,
+		ServerIpAddress: interfaceServerIpAddress,
+		Dhcp:            dhcpEnabled,
+		DhcpChecked:     "",
+		Version:         version,
 	}
+	if strings.Contains(dhcpEnabled, "yes") {
+		data.DhcpChecked = "checked"
+	}
+	fmt.Println(data)
+	_ = tmpl.Execute(w, data)
+	LogInfo("MAIN", "Setup loaded in "+time.Since(start).String())
 }
 
 func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -87,7 +82,6 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 			LogInfo("MAIN", "Server ip address updated")
 		}
 	}
-	HomepageLoaded = true
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 	data := HomepageData{
@@ -98,7 +92,6 @@ func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 		Dhcp:            "",
 		Version:         version,
 	}
-	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
 	LogInfo("MAIN", "Change network loaded in "+time.Since(start).String())
 
@@ -182,7 +175,6 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 		LogError("MAIN", err.Error())
 	}
 	LogInfo("MAIN", "Changed to DHCP with result: "+string(result))
-	HomepageLoaded = true
 	_ = r.ParseForm()
 	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
 	data := HomepageData{
@@ -193,28 +185,23 @@ func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 		Dhcp:            "",
 		Version:         version,
 	}
-	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
 	LogInfo("MAIN", "Loaded in "+time.Since(start).String())
 }
 
-func CheckServerIpAddress(interfaceServerIpAddress string) (bool, string, string) {
+func CheckServerIpAddress(interfaceServerIpAddress string) bool {
 	LogInfo("STREAM", "Checking server ip address")
 	start := time.Now()
 	serverAccessible := false
-	url := ""
-	hostName := interfaceServerIpAddress
 	seconds := 2
 	timeOut := time.Duration(seconds) * time.Second
-	_, err := net.DialTimeout("tcp", hostName, timeOut)
+	_, err := net.DialTimeout("tcp", interfaceServerIpAddress, timeOut)
 	if err != nil {
-		LogError("STREAM", interfaceServerIpAddress+" not accessible: "+err.Error())
-		interfaceServerIpAddress += " not accessible"
+		LogError("STREAM", "Not accessible: "+err.Error())
 	} else {
-		LogInfo("STREAM", interfaceServerIpAddress+" accessible")
+		LogInfo("STREAM", "Accessible")
 		serverAccessible = true
-		url = "http://" + interfaceServerIpAddress + "/"
 	}
 	LogInfo("STREAM", "Checked in "+time.Since(start).String())
-	return serverAccessible, url, interfaceServerIpAddress
+	return serverAccessible
 }

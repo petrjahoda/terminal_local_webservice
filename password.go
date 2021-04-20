@@ -1,15 +1,38 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
-	"time"
 )
 
-func Password(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	LogInfo("MAIN", "Password loading")
-	start := time.Now()
-	HomepageLoaded = false
-	renderTemplate(w, "password", &Page{})
-	LogInfo("MAIN", "Password loaded in "+time.Since(start).String())
+type PasswordInput struct {
+	Password string
+}
+
+type PasswordOutput struct {
+	Result string
+}
+
+func Password(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var data PasswordInput
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		var responseData PasswordOutput
+		responseData.Result = "nok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	if data.Password == "2011" {
+		var responseData PasswordOutput
+		responseData.Result = "ok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	var responseData PasswordOutput
+	responseData.Result = "nok"
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(responseData)
 }

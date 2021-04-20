@@ -1,58 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" style="background: black">
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="../css/uikit.min.css">
     <link rel="stylesheet" href="../css/keyboard.css">
     <link rel="stylesheet" href="../css/zapsi.css">
-    <script src="../js/uikit.min.js" defer></script>
-    <script src="../js/keyboard.js" defer></script>
     <script src="../js/index.js" defer></script>
     <meta charset="UTF-8">
     <title>Zapsi Local Webservice</title>
 </head>
 <body>
-<div id="info-panel" class="uk-light uk-position-top uk-text-center uk-position-small">
-    <div class="uk-text-lead uk-text-primary">
-        {{.Version}}
-    </div>
-    <div id="info" class="uk-text-lead uk-text-primary">
+<div id="info-panel" style="position: fixed;left: 50%;top: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
+    {{.Version}}
+</div>
+<div  style="position: fixed;left: 50%;top: 8%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
+    refresh every 5 seconds
+</div>
+<div style="position: fixed;left: 50%;top: 40%;transform: translate(-50%, -50%);margin: 0 0;font-size: 3vw;width: 100%">
+    <div>
+        <div style="display: flex;margin-top: 5px">
+            <div style="flex: 1;text-align: right;margin-right: 10px">IP ADDRESS:</div>
+            <div id="ipaddress" style="flex: 1;text-align: left"> {{.IpAddress}}</div>
+        </div>
+        <div style="display: flex;margin-top: 5px">
+            <div style="flex: 1;text-align: right;margin-right: 10px">MASK:</div>
+            <div id="mask" style="flex: 1;text-align: left"> {{.Mask}}</div>
+        </div>
+        <div style="display: flex;margin-top: 5px">
+            <div style="flex: 1;text-align: right;margin-right: 10px">GATEWAY:</div>
+            <div id="gateway" style="flex: 1;text-align: left"> {{.Gateway}}</div>
+        </div>
+        <div style="display: flex;margin-top: 5px">
+            <div style="flex: 1;text-align: right;margin-right: 10px">SERVER ADDRESS:</div>
+            <div id="server" style="flex: 1;text-align: left"> {{.ServerIpAddress}}</div>
+        </div>
+        <div style="display: flex;margin-top: 5px">
+            <div style="flex: 1;text-align: right;margin-right: 10px">DHCP:</div>
+            <div id="dhcp" style="flex: 1;text-align: left"> {{.Dhcp}}</div>
+        </div>
     </div>
 </div>
-<div class="uk-position-center uk-light"
-     style=" transform: scale(2.2, 2.2) translateY(-60px);  transform-origin: right">
-    <div class="uk-align-center">
-        <label for="ipaddress"></label><input class="use-keyboard-input" style="width: 300px;">
-        <div style="display: flex;">
-            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">IP ADDRESS:</div>
-            <div id="ipaddress" class="uk-text-primary" style="flex: 1;text-align: left"> {{.IpAddress}}</div>
-        </div>
-        <div style="display: flex;">
-            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">MASK:</div>
-            <div id="mask" class="uk-text-primary" style="flex: 1;text-align: left"> {{.Mask}}</div>
-        </div>
-        <div style="display: flex;">
-            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">GATEWAY:</div>
-            <div id="gateway" class="uk-text-primary" style="flex: 1;text-align: left"> {{.Gateway}}</div>
-        </div>
-        <div style="display: flex;">
-            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">SERVER ADDRESS:</div>
-            <div id="server" class="uk-text-primary" style="flex: 1;text-align: left"> {{.ServerIpAddress}}</div>
-        </div>
-        <div style="display: flex;">
-            <div class="uk-text-primary" style="flex: 1;text-align: right;margin-right: 10px">DHCP:</div>
-            <div id="dhcp" class="uk-text-primary" style="flex: 1;text-align: left"> {{.Dhcp}}</div>
-        </div>
-    </div>
-    <div id="button-panel">
-        <button id="left-button" class="uk-button-default uk-button-large" style="width: 180px">RESTART</button>
-        <button id="middle-button" class="uk-button-default uk-button-large" style="width: 180px">SETUP</button>
-        <button id="right-button" class="uk-button-default uk-button-large" style="width: 180px">SHUTDOWN</button>
-    </div>
+<div id="button-panel" style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">
+    <button id="left-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">RESTART</button>
+    <button id="middle-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">SETUP</button>
+    <button id="right-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">SHUTDOWN</button>
 </div>
-<div id="version-panel" class="uk-light uk-position-bottom uk-text-center uk-position-small">
-    <div class="uk-text-lead uk-text-primary">
-        www.zapsi.eu
-    </div>
+<div id="version-panel" style="position: fixed;left: 50%;bottom: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
+    www.zapsi.eu
 </div>
 </body>
 </html>

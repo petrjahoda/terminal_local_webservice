@@ -16,7 +16,6 @@ const Keyboard = {
     },
 
     init() {
-        // Create main elements
         this.elements.main = document.createElement("div");
         this.elements.keysContainer = document.createElement("div");
 
@@ -46,12 +45,11 @@ const Keyboard = {
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
             "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
             "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-            "z", "x", "c", "v", "b", "n", "m", ".", "/",
+            "z", "x", "c", "v", "b", "n", "m", ".", ":", "/",
         ];
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
             const insertLineBreak = ["backspace", "p", "enter", "/"].indexOf(key) !== -1;
-            // Add attributes/classes
             keyElement.setAttribute("type", "button");
             keyElement.classList.add("keyboard__key");
 
@@ -59,7 +57,7 @@ const Keyboard = {
                 case "backspace":
                     keyElement.classList.add("keyboard__key--wide");
                     keyElement.innerHTML = "⌫";
-                    keyElement.addEventListener("click", () => {
+                    keyElement.addEventListener("touchstart", () => {
                         this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
                         this._triggerEvent("oninput");
                     });
@@ -67,15 +65,45 @@ const Keyboard = {
                 case "enter":
                     keyElement.classList.add("keyboard__key--wide");
                     keyElement.innerHTML = "↵";
+                    keyElement.addEventListener("touchstart", () => {
+                        if (sessionStorage.getItem("selection") === "password") {
+                            let password = this.properties.value
+                            let data = {
+                                password: password
+                            };
+                            fetch("/password", {
+                                method: "POST",
+                                body: JSON.stringify(data)
+                            }).then((response) => {
+                                response.text().then(function (data) {
+                                    let result = JSON.parse(data);
+                                    if (result["Result"] === "ok") {
+                                        document.getElementById("password").hidden = true
+                                        if (!dhcpSlider.checked) {
+                                            document.getElementById("ipaddress").disabled = false
+                                            document.getElementById("gateway").disabled = false
+                                            document.getElementById("mask").disabled = false
 
-                    keyElement.addEventListener("click", () => {
-                        this.properties.value += "\n";
+                                        } else {
+                                            Keyboard.close()
+                                        }
+                                        middleButton.disabled = false
+                                        middleButton.style.pointerEvents = "auto"
+                                        rightButton.disabled = false
+                                        rightButton.style.pointerEvents = "auto"
+                                        document.getElementById("server").disabled = false
+                                        document.getElementById("dhcp-slider").disabled = false
+                                    }
+                                })
+                            }).catch(() => {
+                            });
+                        }
                         this._triggerEvent("oninput");
                     });
                     break;
                 default:
                     keyElement.textContent = key.toLowerCase();
-                    keyElement.addEventListener("click", () => {
+                    keyElement.addEventListener("touchstart", () => {
                         this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
                         this._triggerEvent("oninput");
                     });
@@ -96,16 +124,8 @@ const Keyboard = {
         if (typeof this.eventHandlers[handlerName] == "function") {
             this.eventHandlers[handlerName](this.properties.value);
         }
-    },
-
-    _toggleCapsLock() {
-        this.properties.capsLock = !this.properties.capsLock;
-
-        for (const key of this.elements.keys) {
-            if (key.childElementCount === 0) {
-                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
-            }
-        }
+        let elem = document.getElementById('server');
+        elem.scrollLeft = elem.scrollWidth;
     },
 
     open(initialValue, oninput, onclose) {

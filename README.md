@@ -56,8 +56,8 @@ ConditionPathExists=/home/pi/rpi_linux
 After=network.target
 [Service]
 Type=simple
-User=pi
-Group=pi
+User=root
+Group=root
 LimitNOFILE=1024
 Restart=on-failure
 RestartSec=10

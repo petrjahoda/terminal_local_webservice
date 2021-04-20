@@ -14,6 +14,13 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2021.2.1.20] - 2020-04-20
+
+### Added
+- setup page with keyboard and proper functionality
+- loading data for dhcp when cable plugged or unplugged
+
+
 ## [2021.2.1.19] - 2020-04-19
 
 ### Changed

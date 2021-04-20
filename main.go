@@ -37,20 +37,21 @@ func (p *program) run() {
 	router := httprouter.New()
 	timeStreamer := sse.New()
 	networkDataStreamer := sse.New()
-	router.GET("/", index)
+	router.GET("/", Index)
 	router.GET("/screenshot", Screenshot)
-	//router.GET("/password", Password)
+	router.GET("/setup", Setup)
+	router.POST("/password", Password)
 	//router.GET("/changenetwork", ChangeNetwork)
 	//router.GET("/changenetworktodhcp", ChangeNetworkToDhcp)
 	router.POST("/restart", Restart)
 	router.POST("/shutdown", Shutdown)
+	router.ServeFiles("/font/*filepath", http.Dir("font"))
 	router.ServeFiles("/html/*filepath", http.Dir("html"))
 	router.ServeFiles("/css/*filepath", http.Dir("css"))
 	router.ServeFiles("/js/*filepath", http.Dir("js"))
 	router.GET("/image.png", image)
 	router.Handler("GET", "/listen", timeStreamer)
 	router.Handler("GET", "/networkdata", networkDataStreamer)
-	go StreamTime(timeStreamer)
 	go StreamNetworkData(networkDataStreamer)
 	LogInfo("MAIN", "Server running")
 	_ = http.ListenAndServe(":9999", router)
@@ -121,51 +122,19 @@ func main() {
 }
 
 func StreamNetworkData(streamer *sse.Streamer) {
-	timing := 20
 	timeToSend := "20"
-	refreshDone := true
 	for {
 		LogInfo("STREAM", "Streaming network data")
 		start := time.Now()
 		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 		interfaceServerIpAddress := LoadSettingsFromConfigFile()
-		serverAccessible, url, interfaceServerIpAddress := CheckServerIpAddress(interfaceServerIpAddress)
-		if serverAccessible && !HomepageLoaded {
-			timing = 0
-			timeToSend = strconv.Itoa(timing)
-			url = "http://localhost:9999"
-		} else if serverAccessible && HomepageLoaded {
-			timing--
-			timeToSend = strconv.Itoa(timing)
-			refreshDone = false
-		} else if !HomepageLoaded {
-			timing = 20
-			timeToSend = strconv.Itoa(timing)
-		} else if !serverAccessible {
-			if !refreshDone {
-				timing = 0
-				url = "http://localhost:9999"
-				timeToSend = strconv.Itoa(timing)
-				refreshDone = true
-			} else {
-				timing = 20
-				timeToSend = strconv.Itoa(timing)
-			}
+		serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
+		if !serverAccessible {
+			interfaceServerIpAddress = interfaceServerIpAddress + " offline"
 		}
-		if timing < 0 {
-			timing = 20
-			timeToSend = strconv.Itoa(timing)
-		}
-		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+url+";"+interfaceServerIpAddress)
-		LogInfo("STREAM", "Stream done in "+time.Since(start).String())
-		time.Sleep(1 * time.Second)
-	}
-}
-
-func StreamTime(streamer *sse.Streamer) {
-	for {
-		streamer.SendString("", "time", time.Now().Format("15:04:05"))
-		time.Sleep(1 * time.Second)
+		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+interfaceServerIpAddress+";"+interfaceServerIpAddress)
+		LogInfo("STREAM", "Stream done in "+time.Since(start).String()+" "+strconv.FormatBool(serverAccessible))
+		time.Sleep(5 * time.Second)
 	}
 }
 

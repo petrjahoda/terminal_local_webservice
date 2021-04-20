@@ -13,61 +13,26 @@ type ServerIpAddress struct {
 	ServerIpAddress string
 }
 
-var HomepageLoaded bool
-
 type HomepageData struct {
 	IpAddress       string
 	Mask            string
 	Gateway         string
 	ServerIpAddress string
 	Dhcp            string
+	DhcpChecked     string
 	Version         string
 }
 
 func GetNetworkData() (string, string, string, string) {
 	LogInfo("STREAM", "Getting network data")
-	var interfaceIpAddress string
-	var notConnectedInterfaceIpAddress string
-	var interfaceMask string
-	var interfaceGateway string
-	var notConnectedGateway string
-	var interfaceDhcp string
-	data, err := exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
-	if err != nil {
-		LogError("STREAM", err.Error())
-	}
+	interfaceIpAddress := "not assigned"
+	interfaceMask := "not assigned"
+	interfaceGateway := "not assigned"
+	interfaceDhcp := "no"
+	data, _ := exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
 	result := string(data)
 	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "IP4.ADDRESS") {
-			LogInfo("STREAM", "Processing: "+line)
-			interfaceIpAddress = line[38:]
-			LogInfo("STREAM", "Ip Address: "+interfaceIpAddress)
-			interfaceIpAddress = interfaceIpAddress[:]
-			splittedIpAddress := strings.Split(interfaceIpAddress, "/")
-			maskNumber := splittedIpAddress[1]
-			interfaceMask = CalculateMaskFrom(maskNumber)
-			LogInfo("STREAM", "Mask: "+interfaceMask)
-		} else if strings.Contains(line, "ipv4.addresses") {
-			LogInfo("STREAM", "Processing: "+line)
-			interfaceIpAddress = line[38:]
-			LogInfo("STREAM", "Interface: "+interfaceIpAddress)
-			if interfaceIpAddress != "  --" {
-				notConnectedInterfaceIpAddress = interfaceIpAddress[:]
-				LogInfo("STREAM", "Ip Address: "+notConnectedInterfaceIpAddress)
-				splittedIpAddress := strings.Split(notConnectedInterfaceIpAddress, "/")
-				maskNumber := splittedIpAddress[1]
-				interfaceMask = CalculateMaskFrom(maskNumber)
-				LogInfo("STREAM", "Mask: "+interfaceMask)
-			}
-		}
-		if strings.Contains(line, "IP4.GATEWAY") {
-			LogInfo("STREAM", "Processing: "+line)
-			interfaceGateway = line[40:]
-			LogInfo("STREAM", "Gateway: "+interfaceGateway)
-			interfaceGateway = interfaceGateway[:]
-		}
 		if strings.Contains(line, "ipv4.method") {
-			LogInfo("STREAM", "Processing: "+line)
 			interfaceDhcp = line[40:]
 			if strings.Contains(interfaceDhcp, "auto") {
 				interfaceDhcp = "yes"
@@ -75,19 +40,41 @@ func GetNetworkData() (string, string, string, string) {
 				interfaceDhcp = "no"
 			}
 		}
-		if strings.Contains(line, "ipv4.gateway") {
-			LogInfo("STREAM", "Processing: "+line)
-			notConnectedGateway = line[40:]
-			LogInfo("STREAM", "Gateway: "+notConnectedGateway)
-			notConnectedGateway = notConnectedGateway[:]
+		if interfaceDhcp == "yes" {
+			if strings.Contains(line, "IP4.ADDRESS") {
+				interfaceIpAddress = line[38:]
+				interfaceIpAddress = interfaceIpAddress[:]
+				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
+				maskNumber := splittedIpAddress[1]
+				interfaceMask = CalculateMaskFrom(maskNumber)
+			}
+			if strings.Contains(line, "IP4.GATEWAY") {
+				interfaceGateway = line[40:]
+				interfaceGateway = interfaceGateway[:]
+			}
+		} else {
+			if strings.Contains(line, "ipv4.addresses") {
+				interfaceIpAddress = line[38:]
+				interfaceIpAddress = interfaceIpAddress[:]
+				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
+				maskNumber := splittedIpAddress[1]
+				interfaceMask = CalculateMaskFrom(maskNumber)
+				if strings.Contains(line, "ipv4.gateway") {
+					interfaceGateway = line[40:]
+					interfaceGateway = interfaceGateway[:]
+				}
+			}
 		}
 
 	}
-	if interfaceGateway == "" {
-		interfaceGateway = notConnectedGateway + " not connected"
-		interfaceIpAddress = notConnectedInterfaceIpAddress + " not connected"
-		interfaceMask = interfaceMask + " not connected"
-		interfaceDhcp = interfaceDhcp + " not connected"
+	if strings.Contains(interfaceGateway, "--") {
+		interfaceGateway = "not assigned"
+	}
+	if !strings.Contains(interfaceIpAddress, "assigned") {
+		interfaceIpAddress = strings.ReplaceAll(interfaceIpAddress, " ", "")
+	}
+	if strings.Contains(interfaceIpAddress, "/") {
+		interfaceIpAddress = strings.Split(interfaceIpAddress, "/")[0]
 	}
 	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }
@@ -112,26 +99,25 @@ func Shutdown(http.ResponseWriter, *http.Request, httprouter.Params) {
 	LogInfo("MAIN", "Shut down in "+time.Since(start).String()+" with result: "+string(data))
 }
 
-func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	LogInfo("MAIN", "Index page Loading")
 	start := time.Now()
 	_ = r.ParseForm()
 	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
-	serverAccessible, url, interfaceServerIpAddress := CheckServerIpAddress(interfaceServerIpAddress)
+	serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
 	tmpl := template.Must(template.ParseFiles("html/index.html"))
 	data := HomepageData{
 		IpAddress:       interfaceIpAddress,
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
 		Dhcp:            dhcpEnabled,
-		ServerIpAddress: url + " online",
+		ServerIpAddress: interfaceServerIpAddress + " online",
 		Version:         version,
 	}
 	if !serverAccessible {
-		data.ServerIpAddress = url + " offline"
+		data.ServerIpAddress = interfaceServerIpAddress + " offline"
 	}
-	HomepageLoaded = true
 	_ = tmpl.Execute(w, data)
 	LogInfo("MAIN", "Homepage loaded in "+time.Since(start).String())
 }

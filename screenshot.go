@@ -22,7 +22,6 @@ func Screenshot(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 		LogError("MAIN", err.Error())
 	}
 	LogInfo("MAIN", "Screenshot taken: "+string(data))
-	HomepageLoaded = false
 	renderTemplate(w, "screenshot", &Page{})
 	LogInfo("MAIN", "Screenshot loaded in "+time.Since(start).String())
 }
