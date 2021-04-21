@@ -6,8 +6,8 @@
 
 
 ## 1. Prepare Raspberry Pi
-* update and upgrade using `sudo apt-get update && sudo apt-get upgrade`
 * install raspbian lite using Raspberry Pi Imager from [official site](https://www.raspberrypi.org/software/)
+* update and upgrade using `sudo apt-get update && sudo apt-get upgrade`
 * using `sudo raspi-config`
   * enable console autologin
   * enable ssh
