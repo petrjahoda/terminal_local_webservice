@@ -2,6 +2,7 @@
 
 ![actual screenshot](screenshot.png)
 ![actual screenshot](screenshot-2.png)
+![actual screenshot](screenshot-3.png)
 
 
 ## 1. Prepare Raspberry Pi
