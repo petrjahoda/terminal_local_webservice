@@ -132,7 +132,7 @@ fetch("/shutdown", {
 ```
 let data = {
   password: "3600",
-  server: server.value,         // server web, example: http://192.168.86.100:80/terminal/1
+  server: server.value,         // server web, example: 192.168.86.100:80/terminal/1
 };
 fetch("/dhcp", {
   method: "POST",
@@ -150,7 +150,7 @@ let data = {
   ipaddress: ipaddress.value,   // ip address, example: 192.168.86.128
   mask: mask.value,             // mask, example: 255.255.255.0
   gateway: gateway.value,       // gateway, example: 192.168.86.1
-  server: server.value,         // server web, example: http://192.168.86.100:80/terminal/1
+  server: server.value,         // server web, example: 192.168.86.100:80/terminal/1
 };
   fetch("/static", {
   method: "POST",
