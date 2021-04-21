@@ -100,7 +100,7 @@ WantedBy=multi-user.target
 * user `pi` with password `3600`
 * setup password is `3600`
 
-## 8. Remove administration
+## 8. Remote javascript administration
 * screenshot at `http://<ipaddress>:9999/screenshot`
 * remote restart using javascript:
 ```
