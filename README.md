@@ -40,7 +40,7 @@ chromium-browser temporary-unexpire-flags-m80 --start-fullscreen --kiosk --incog
 ```
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
 ```
-####TIP: by pressing `Ctrl-Alt-Backspace` you can kill chromium and get into command line
+>TIP: by pressing `Ctrl-Alt-Backspace` you can kill chromium and get into command line
 
 ## 3. Copy program data to Raspberry
 * copy files from terminal_local_webservice/rpi directory to raspberry pi /home/pi using `scp rpi/rpi_linux pi@<ipaddress>:/home/pi`
@@ -79,7 +79,7 @@ WantedBy=multi-user.target
 * make sure that file is executable using `sudo chmod 755 /lib/systemd/system/zapsi.service`
 * make service autostart using `sudo systemctl enable zapsi.service`
 * start the service now using  `sudo systemctl start zapsi.service`
-####TIP: search logs using `journalctl -f -u zapsi.service`
+>TIP: search logs using `journalctl -f -u zapsi.service`
 
 ## 5. Clean booting screen and information
 * disable starting rainbow using `sudo nano /boot/config.txt`
