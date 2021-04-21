@@ -32,7 +32,9 @@
         </div>
         <div style="display: flex;margin-top: 5px">
             <div style="flex: 1;text-align: right;margin-right: 10px">SERVER ADDRESS:</div>
-            <div id="server" style="flex: 1;text-align: left"> {{.ServerIpAddress}}</div>
+            <div id="server" style="flex: 1;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
+                {{.ServerIpAddress}}
+            </div>
         </div>
         <div style="display: flex;margin-top: 5px">
             <div style="flex: 1;text-align: right;margin-right: 10px">DHCP:</div>

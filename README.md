@@ -1,5 +1,8 @@
 # Terminal Local WebService Rpi
 
+> ![actual screenshot](screenshot.png)
+
+
 ## 1. Prepare Raspberry Pi
 * update and upgrade using `sudo apt-get update && sudo apt-get upgrade`
 * install raspbian lite using Raspberry Pi Imager from [official site](https://www.raspberrypi.org/software/)
@@ -40,12 +43,14 @@ chromium-browser temporary-unexpire-flags-m80 --start-fullscreen --kiosk --incog
 ####TIP: by pressing `Ctrl-Alt-Backspace` you can kill chromium and get into command line
 
 ## 3. Copy program data to Raspberry
-* copy files from terminal_local_webservice/rpi directory to raspberry pi /home/pi
+* copy files from terminal_local_webservice/rpi directory to raspberry pi /home/pi using `scp rpi/rpi_linux pi@<ipaddress>:/home/pi`
   * rpi_linux into /home/pi
+  * /config/* into /home/pi/*
   * /html/* into /home/pi/*
   * /css/* into /home/pi/*
   * /js/* into /home/pi/*
-  * example copying js directory using scp: `scp -r js pi@192.168.86.249:/home/pi`
+  * /font/* into /home/font/*
+  * example copying js directory using scp: `scp -r config html css js font pi@<ipaddress>:/home/pi`
   
 ## 4. Make program run as service
 * create new file using `sudo nano /lib/systemd/system/zapsi.service`, insert those lines:
@@ -93,7 +98,7 @@ WantedBy=multi-user.target
 * user `pi` with password `3600`
 * setup password is `3600`
 
-## 8. Remove configuration
+## 8. Remove administration
 * screenshot at `http://<ipaddress>:9999/screenshot`
 * remote restart using javascript:
 ```
@@ -134,7 +139,6 @@ fetch("/dhcp", {
   console.log(result)
 }).catch(() => {
 });
-
 ```
 
 * set static using javascript:
@@ -153,7 +157,6 @@ let data = {
   console.log(result)
 }).catch(() => {
 });
-
 ```
 
 © 2021 Petr Jahoda
