@@ -31,7 +31,7 @@ setxkbmap -option terminate:ctrl_alt_bksp
 # Start Chromium in kiosk mode
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
-chromium-browser --disable-infobars --kiosk 'http://localhost:9999'
+chromium-browser temporary-unexpire-flags-m80 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null  --password-store=basic --disable-pinch --overscroll-history-navigation=0 --disable-features="TouchpadOverscrollHistoryNavigation" 'http://localhost:9999'
 ```
 * make everything start on boot using `sudo nano .bash_profile` , insert this line:
 ```
@@ -77,6 +77,83 @@ WantedBy=multi-user.target
 ####TIP: search logs using `journalctl -f -u zapsi.service`
 
 ## 5. Clean booting screen and information
+* disable starting rainbow using `sudo nano /boot/config.txt`
+    * add line `disable_splash=1`
+* disable booting information using `sudo nano /boot/cmdline.txt`
+    * add at the end of first line `silent quiet splash loglevel=0 logo.nologo vt.global_cursor_default=0`
+    * replace `console=tty1` with `console=tty3`
+* disable booting autologin terminal information
+    * run `touch ~/.hushlogin`
+    * run `sudo nano /etc/systemd/system/getty@tty1.service.d/autologin.conf`
+      * replace line `ExecStart=-/sbin/agetty --autologin pi --noclear %I xterm-256color` with `ExecStart=-/sbin/agetty --skip-login --noclear --noissue --login-options "-f pi" %I $TERM`
+
 ## 6. Make Raspberry Pi read-only
+
+## 7. Passwords
+* user `pi` with password `3600`
+* setup password is `3600`
+
+## 8. Remove configuration
+* screenshot at `http://<ipaddress>:9999/screenshot`
+* remote restart using javascript:
+```
+let data = {
+  password: "3600"
+};
+fetch("/restart", {
+  method: "POST",
+  body: JSON.stringify(data)
+}).then((result) => {
+  console.log(result)
+}).catch(() => {
+});
+```
+* remote shutdown using javascript:
+```
+let data = {
+  password: "3600"
+};
+fetch("/shutdown", {
+  method: "POST",
+  body: JSON.stringify(data)
+}).then((result) => {
+  console.log(result)
+}).catch(() => {
+});
+```
+* set dhcp using javascript:
+```
+let data = {
+  password: "3600",
+  server: server.value,         // server web, example: http://192.168.86.100:80/terminal/1
+};
+fetch("/dhcp", {
+  method: "POST",
+  body: JSON.stringify(data)
+}).then((result) => {
+  console.log(result)
+}).catch(() => {
+});
+
+```
+
+* set static using javascript:
+```
+let data = {
+  password: "3600",     
+  ipaddress: ipaddress.value,   // ip address, example: 192.168.86.128
+  mask: mask.value,             // mask, example: 255.255.255.0
+  gateway: gateway.value,       // gateway, example: 192.168.86.1
+  server: server.value,         // server web, example: http://192.168.86.100:80/terminal/1
+};
+  fetch("/static", {
+  method: "POST",
+  body: JSON.stringify(data)
+}).then((result) => {
+  console.log(result)
+}).catch(() => {
+});
+
+```
 
 © 2021 Petr Jahoda

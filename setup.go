@@ -15,7 +15,19 @@ import (
 	"time"
 )
 
-func setupPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+type ChangeInput struct {
+	Password  string
+	IpAddress string
+	Mask      string
+	Gateway   string
+	Server    string
+}
+
+type ChangeOutput struct {
+	Result string
+}
+
+func setupPage(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	tmpl := template.Must(template.ParseFiles("html/setup.html"))
@@ -31,44 +43,93 @@ func setupPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	if strings.Contains(dhcpEnabled, "yes") {
 		data.DhcpChecked = "checked"
 	}
-	fmt.Println(data)
 	_ = tmpl.Execute(w, data)
 }
 
-func ChangeNetwork(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	_ = r.ParseForm()
-	ipaddress := r.Form["ipaddress"]
-	gateway := r.Form["gateway"]
-	mask := r.Form["mask"]
-	serveripaddress := r.Form["serveripaddress"]
-	pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
-	if pattern.MatchString(ipaddress[0]) && pattern.MatchString(gateway[0]) {
-		maskNumber := GetMaskNumberFrom(mask[0])
-		exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress[0]+"/"+maskNumber, "ipv4.gateway", gateway[0])
-		exec.Command("nmcli", "con", "up", "Wired connection 1")
+func changeToStatic(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var data ChangeInput
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		var responseData ChangeOutput
+		responseData.Result = "nok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
 	}
-	if len(serveripaddress[0]) > 0 {
-		configDirectory := filepath.Join(".", "config")
-		configFileName := "config.json"
-		configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-		data := ServerIpAddress{
-			ServerIpAddress: serveripaddress[0],
+	if data.Password == "3600" {
+		pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
+		if pattern.MatchString(data.IpAddress) && pattern.MatchString(data.Gateway) {
+			maskNumber := GetMaskNumberFrom(data.Mask)
+			result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", data.IpAddress+"/"+maskNumber, "ipv4.gateway", data.Gateway).Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println(result)
+			result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println(result)
 		}
-		file, _ := json.MarshalIndent(data, "", "  ")
-		_ = ioutil.WriteFile(configFullPath, file, 0666)
+		if len(data.Server) > 0 {
+			configDirectory := filepath.Join(".", "config")
+			configFileName := "config.json"
+			configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+			data := ServerIpAddress{
+				ServerIpAddress: data.Server,
+			}
+			file, _ := json.MarshalIndent(data, "", "  ")
+			_ = ioutil.WriteFile(configFullPath, file, 0666)
+		}
+		var responseData ChangeOutput
+		responseData.Result = "ok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
 	}
-	_ = r.ParseForm()
-	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-	data := HomepageData{
-		IpAddress:       "",
-		Mask:            "",
-		Gateway:         "",
-		ServerIpAddress: "",
-		Dhcp:            "",
-		Version:         version,
-	}
-	_ = tmpl.Execute(w, data)
+	var responseData PasswordOutput
+	responseData.Result = "nok"
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(responseData)
+}
 
+func changeToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var data ChangeInput
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		var responseData ChangeOutput
+		responseData.Result = "nok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	fmt.Println(data)
+	if data.Password == "3600" {
+		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println(result)
+		if len(data.Server) > 0 {
+			configDirectory := filepath.Join(".", "config")
+			configFileName := "config.json"
+			configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+			data := ServerIpAddress{
+				ServerIpAddress: data.Server,
+			}
+			file, _ := json.MarshalIndent(data, "", "  ")
+			_ = ioutil.WriteFile(configFullPath, file, 0666)
+		}
+		var responseData ChangeOutput
+		responseData.Result = "ok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	var responseData ChangeOutput
+	responseData.Result = "nok"
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(responseData)
 }
 
 func GetMaskNumberFrom(maskNumber string) string {
@@ -141,26 +202,14 @@ func GetMaskNumberFrom(maskNumber string) string {
 	return "0"
 }
 
-func ChangeNetworkToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto")
-	_ = r.ParseForm()
-	tmpl := template.Must(template.ParseFiles("html/homepage.html"))
-	data := HomepageData{
-		IpAddress:       "",
-		Mask:            "",
-		Gateway:         "",
-		ServerIpAddress: "",
-		Dhcp:            "",
-		Version:         version,
-	}
-	_ = tmpl.Execute(w, data)
-}
-
 func CheckServerIpAddress(interfaceServerIpAddress string) bool {
 	seconds := 2
 	timeOut := time.Duration(seconds) * time.Second
-	_, err := net.DialTimeout("tcp", interfaceServerIpAddress, timeOut)
+	fmt.Println(interfaceServerIpAddress)
+	result, err := net.DialTimeout("tcp", interfaceServerIpAddress, timeOut)
+	fmt.Println(result)
 	if err != nil {
+		fmt.Println(err.Error())
 		return false
 	}
 	return true

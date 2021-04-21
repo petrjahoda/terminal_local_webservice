@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"html/template"
 	"net/http"
@@ -27,9 +29,13 @@ func GetNetworkData() (string, string, string, string) {
 	interfaceMask := "not assigned"
 	interfaceGateway := "not assigned"
 	interfaceDhcp := "no"
+	activated := false
 	data, _ := exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
 	result := string(data)
 	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+		if strings.Contains(line, "GENERAL.STATE") {
+			activated = true
+		}
 		if strings.Contains(line, "ipv4.method") {
 			interfaceDhcp = line[40:]
 			if strings.Contains(interfaceDhcp, "auto") {
@@ -57,16 +63,19 @@ func GetNetworkData() (string, string, string, string) {
 				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
 				maskNumber := splittedIpAddress[1]
 				interfaceMask = CalculateMaskFrom(maskNumber)
-				if strings.Contains(line, "ipv4.gateway") {
-					interfaceGateway = line[40:]
-					interfaceGateway = interfaceGateway[:]
-				}
 			}
+			if strings.Contains(line, "ipv4.gateway") {
+				interfaceGateway = line[40:]
+				interfaceGateway = interfaceGateway[:]
+			}
+
 		}
 
 	}
 	if strings.Contains(interfaceGateway, "--") {
 		interfaceGateway = "not assigned"
+		interfaceIpAddress = "not assigned"
+		interfaceMask = "not assigned"
 	}
 	if !strings.Contains(interfaceIpAddress, "assigned") {
 		interfaceIpAddress = strings.ReplaceAll(interfaceIpAddress, " ", "")
@@ -74,15 +83,66 @@ func GetNetworkData() (string, string, string, string) {
 	if strings.Contains(interfaceIpAddress, "/") {
 		interfaceIpAddress = strings.Split(interfaceIpAddress, "/")[0]
 	}
+	if !activated {
+		interfaceIpAddress += ", offline"
+	}
 	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }
 
-func restartRpi(http.ResponseWriter, *http.Request, httprouter.Params) {
-	exec.Command("reboot")
+func restartRpi(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var data PasswordInput
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		var responseData PasswordOutput
+		responseData.Result = "nok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	if data.Password == "3600" {
+		var responseData PasswordOutput
+		responseData.Result = "ok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		result, err := exec.Command("reboot").Output()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println(result)
+		return
+	}
+	var responseData PasswordOutput
+	responseData.Result = "nok"
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(responseData)
 }
 
-func shutdownRpi(http.ResponseWriter, *http.Request, httprouter.Params) {
-	exec.Command("poweroff")
+func shutdownRpi(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var data PasswordInput
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		var responseData PasswordOutput
+		responseData.Result = "nok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	if data.Password == "3600" {
+		var responseData PasswordOutput
+		responseData.Result = "ok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		result, err := exec.Command("poweroff").Output()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println(result)
+		return
+	}
+	var responseData PasswordOutput
+	responseData.Result = "nok"
+	w.Header().Set("Content-Type", "application/json")
+
 }
 
 func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -96,11 +156,11 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
 		Dhcp:            dhcpEnabled,
-		ServerIpAddress: interfaceServerIpAddress + " online",
+		ServerIpAddress: interfaceServerIpAddress,
 		Version:         version,
 	}
 	if !serverAccessible {
-		data.ServerIpAddress = interfaceServerIpAddress + " offline"
+		data.ServerIpAddress = interfaceServerIpAddress + ", offline"
 	}
 	_ = tmpl.Execute(w, data)
 }

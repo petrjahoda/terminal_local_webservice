@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"os/exec"
@@ -13,6 +14,10 @@ func screenshotPage(w http.ResponseWriter, _ *http.Request, _ httprouter.Params)
 	for _, arg := range args {
 		argumentDebug += arg + " "
 	}
-	exec.Command(command, args...)
+	result, err := exec.Command(command, args...).Output()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println(result)
 	renderTemplate(w, "screenshot", &Page{})
 }

@@ -14,6 +14,13 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2021.2.1.21] - 2020-04-21
+
+### Added
+- complete setup page with setting terminal to dhcp or static
+- complete loading server page when available
+- updated readme.md
+
 ## [2021.2.1.20] - 2020-04-20
 
 ### Added

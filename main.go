@@ -39,6 +39,8 @@ func (p *program) run() {
 	router.POST("/password", checkPassword)
 	router.POST("/restart", restartRpi)
 	router.POST("/shutdown", shutdownRpi)
+	router.POST("/dhcp", changeToDhcp)
+	router.POST("/static", changeToStatic)
 	router.ServeFiles("/font/*filepath", http.Dir("font"))
 	router.ServeFiles("/html/*filepath", http.Dir("html"))
 	router.ServeFiles("/css/*filepath", http.Dir("css"))
@@ -81,7 +83,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 		interfaceServerIpAddress := LoadSettingsFromConfigFile()
 		serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
 		if !serverAccessible {
-			interfaceServerIpAddress = interfaceServerIpAddress + " offline"
+			interfaceServerIpAddress = interfaceServerIpAddress + ", offline"
 		}
 		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+interfaceServerIpAddress+";"+interfaceServerIpAddress)
 		time.Sleep(5 * time.Second)
