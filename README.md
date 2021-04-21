@@ -1,6 +1,6 @@
 # Terminal Local WebService Rpi
 
-> ![actual screenshot](screenshot.png)
+![actual screenshot](screenshot.png)
 
 
 ## 1. Prepare Raspberry Pi
