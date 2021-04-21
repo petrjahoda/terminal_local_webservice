@@ -45,14 +45,15 @@ chromium-browser temporary-unexpire-flags-m80 --start-fullscreen --kiosk --incog
 >TIP: by pressing `Ctrl-Alt-Backspace` you can kill chromium and get into command line
 
 ## 3. Copy program data to Raspberry
-* copy files from terminal_local_webservice/rpi directory to raspberry pi /home/pi using `scp rpi/rpi_linux pi@<ipaddress>:/home/pi`
+* copy files from terminal_local_webservice/rpi directory to raspberry pi /home/pi
   * rpi_linux into /home/pi
   * /config/* into /home/pi/*
   * /html/* into /home/pi/*
   * /css/* into /home/pi/*
   * /js/* into /home/pi/*
   * /font/* into /home/font/*
-  * example copying js directory using scp: `scp -r config html css js font pi@<ipaddress>:/home/pi`
+  * example copying rpi program file using scp: `scp rpi/rpi_linux pi@<ipaddress>:/home/pi`
+  * example copying all directories using scp: `scp -r config html css js font pi@<ipaddress>:/home/pi`
   
 ## 4. Make program run as service
 * create new file using `sudo nano /lib/systemd/system/zapsi.service`, insert those lines:
