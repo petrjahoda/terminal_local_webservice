@@ -53,9 +53,9 @@ chromium-browser temporary-unexpire-flags-m80 --start-fullscreen --kiosk --incog
   * /js/* into /home/pi/*
   * /font/* into /home/font/*
     
-> example copying rpi program file using scp: `scp rpi/rpi_linux pi@<ipaddress>:/home/pi`> 
+> EXAMPLE: copying rpi program file using scp: `scp rpi/rpi_linux pi@<ipaddress>:/home/pi`> 
 
-> example copying all directories using scp: `scp -r config html css js font pi@<ipaddress>:/home/pi`
+> EXAMPLE: copying all directories using scp: `scp -r config html css js font pi@<ipaddress>:/home/pi`
   
 ## 4. Make program run as service
 * create new file using `sudo nano /lib/systemd/system/zapsi.service`, insert those lines:
