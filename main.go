@@ -9,7 +9,9 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -35,6 +37,7 @@ func (p *program) Start(s service.Service) error {
 }
 
 func (p *program) run() {
+	initiateRaspberry()
 	router := httprouter.New()
 	networkDataStreamer := sse.New()
 	router.GET("/image.png", image)
@@ -54,6 +57,43 @@ func (p *program) run() {
 	router.Handler("GET", "/networkdata", networkDataStreamer)
 	go StreamNetworkData(networkDataStreamer)
 	_ = http.ListenAndServe(":9999", router)
+}
+
+func initiateRaspberry() {
+	configDirectory := filepath.Join(".", "config")
+	configFileName := "config.json"
+	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+	readFile, _ := ioutil.ReadFile(configFullPath)
+	ConfigFile := ServerIpAddress{}
+	_ = json.Unmarshal(readFile, &ConfigFile)
+	ipaddress := ConfigFile.IpAddress
+	mask := ConfigFile.Mask
+	gateway := ConfigFile.Gateway
+	dhcp := ConfigFile.Dhcp
+	if dhcp == "true" {
+		fmt.Println("INITIATE DHCP TRUE")
+		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println("INITIATE DHCP TRUE RESULT: " + string(result))
+	} else {
+		fmt.Println("INITIATE DHCP FALSE")
+		pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
+		if pattern.MatchString(ipaddress) && pattern.MatchString(gateway) {
+			maskNumber := GetMaskNumberFrom(mask)
+			result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress+"/"+maskNumber, "ipv4.gateway", gateway).Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println("INITIATE DHCP FALSE RESULT1 " + string(result))
+			result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println("INITIATE DHCP FALSE RESULT2 " + string(result))
+		}
+	}
 }
 
 func LoadSettingsFromConfigFile() string {
@@ -83,17 +123,23 @@ func main() {
 }
 
 func StreamNetworkData(streamer *sse.Streamer) {
-	timeToSend := "20"
 	for {
 		if streamCanRun {
 			fmt.Println("streaming data")
-			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
+			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, result := GetNetworkData()
 			interfaceServerIpAddress := LoadSettingsFromConfigFile()
 			serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
 			if !serverAccessible {
 				interfaceServerIpAddress = interfaceServerIpAddress + ", offline"
 			}
-			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+interfaceServerIpAddress+";"+interfaceServerIpAddress)
+			if dhcpEnabled == "yes" {
+				dhcpEnabled = "ano"
+			} else {
+				dhcpEnabled = "ne"
+			}
+			fmt.Println(result)
+			fmt.Println(interfaceIpAddress)
+			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+result)
 		}
 		time.Sleep(5 * time.Second)
 	}

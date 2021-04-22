@@ -4,7 +4,7 @@ const downloadTimer = setInterval(function () {
     if (serverName.includes("offline")) {
         timeleft = 15
     } else {
-        document.getElementById("server-info").innerText = "server page will be loaded in " + timeleft +" seconds";
+        document.getElementById("server-info").innerText = "stránka serveru se načte za " + timeleft +" vteřin";
         if (timeleft <= 0) {
             clearInterval(downloadTimer);
             fetch("/stop_stream", {
@@ -25,7 +25,8 @@ networkDataSource.addEventListener('networkdata', (e) => {
     document.getElementById("mask").innerHTML = networkdata[1];
     document.getElementById("gateway").innerHTML = networkdata[2];
     document.getElementById("dhcp").innerHTML = networkdata[3];
-    document.getElementById("server").innerHTML = networkdata[6];
+    document.getElementById("server").innerHTML = networkdata[4];
+    document.getElementById("server-info").innerText = networkdata[5];
 }, false);
 
 const leftButton = document.getElementById("left-button")

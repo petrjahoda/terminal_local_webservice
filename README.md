@@ -16,6 +16,7 @@
 * install network manager using `sudo apt-get install network-manager`
 * enable network manager as service using `sudo systemctl enable NetworkManager`
 * start network manager as service using `sudo systemctl start NetworkManager`
+* disable old dhcp service using `sudo systemctl mask dhcpcd`  
 * install ufw using `sudo apt-get install ufw`
 * enable port 9999 using `sudo ufw allow 9999`
 * reboot using `sudo reboot now`
@@ -98,6 +99,35 @@ WantedBy=multi-user.target
       * replace line `ExecStart=-/sbin/agetty --autologin pi --noclear %I xterm-256color` with `ExecStart=-/sbin/agetty --skip-login --noclear --noissue --login-options "-f pi" %I $TERM`
 
 ## 6. Make Raspberry Pi read-only
+* remove swap
+```
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+sudo update-rc.d dphys-swapfile remove
+```
+* update and upgrade everything
+```
+sudo apt-get update
+sudo apt-get dist-upgrade
+s
+sudo BRANCH=next rpi-update
+```
+* reboot using `sudo reboot now`
+* create initramfs using `sudo mkinitramfs -o /boot/initrd`
+* add script using `sudo curl https://gist.githubusercontent.com/paul-ridgway/d39cbb30530442dca416734c3ee70162/raw/c490df8be1976dd062a8b5f429ef42ed1b393ecb/ro-root.sh -o /bin/ro-root.sh`
+* make the script executable using `sudo chmod +x /bin/ro-root.sh`
+* add those files into config using `sudo nano /boot/config.txt`
+```
+initramfs initrd followkernel
+ramfsfile=initrd
+ramfsaddr=-1
+```
+* add config at the end of cmdline using `sudo nano /boot/cmdline.txt`
+```
+init=/bin/ro-root.sh
+```
+* reboot using `sudo reboot now`
+> TIP: root partition is mounted as `/ro`, you can make it writable using `sudo mount -o remount,rw /ro`, create a permanent file using `touch /ro/home/pi/test` and make it back read-only using `sudo mount -o remount,ro /ro`, the file will persist after boot 
 
 ## 7. Passwords
 * user `pi` with password `3600`

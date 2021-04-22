@@ -18,6 +18,11 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
 ### Changed
 - streaming data only on main screen
+- saving configuration
+
+### Added
+- loading and setting rpi configuration after start
+- using initramfs and /ro
 
 ## [2021.2.1.21] - 2020-04-21
 

@@ -11,7 +11,11 @@ import (
 )
 
 type ServerIpAddress struct {
-	ServerIpAddress string
+	ServerIpAddress string `json:"ServerIpAddress"`
+	IpAddress       string `json:"IpAddress"`
+	Mask            string `json:"Mask"`
+	Gateway         string `json:"Gateway"`
+	Dhcp            string `json:"Dhcp"`
 }
 
 type HomepageData struct {
@@ -24,19 +28,17 @@ type HomepageData struct {
 	Version         string
 }
 
-func GetNetworkData() (string, string, string, string) {
+func GetNetworkData() (string, string, string, string, string) {
 	interfaceIpAddress := "not assigned"
 	interfaceMask := "not assigned"
 	interfaceGateway := "not assigned"
 	interfaceDhcp := "no"
-	activated := false
+	backResult := "DATA:"
 	data, _ := exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
 	result := string(data)
 	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "GENERAL.STATE") {
-			activated = true
-		}
 		if strings.Contains(line, "ipv4.method") {
+			backResult += line + "|"
 			interfaceDhcp = line[40:]
 			if strings.Contains(interfaceDhcp, "auto") {
 				interfaceDhcp = "yes"
@@ -46,6 +48,7 @@ func GetNetworkData() (string, string, string, string) {
 		}
 		if interfaceDhcp == "yes" {
 			if strings.Contains(line, "IP4.ADDRESS") {
+				backResult += line + "|"
 				interfaceIpAddress = line[38:]
 				interfaceIpAddress = interfaceIpAddress[:]
 				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
@@ -53,11 +56,13 @@ func GetNetworkData() (string, string, string, string) {
 				interfaceMask = CalculateMaskFrom(maskNumber)
 			}
 			if strings.Contains(line, "IP4.GATEWAY") {
+				backResult += line + "|"
 				interfaceGateway = line[40:]
 				interfaceGateway = interfaceGateway[:]
 			}
 		} else {
 			if strings.Contains(line, "ipv4.addresses") {
+				backResult += line + "|"
 				interfaceIpAddress = line[38:]
 				interfaceIpAddress = interfaceIpAddress[:]
 				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
@@ -65,12 +70,11 @@ func GetNetworkData() (string, string, string, string) {
 				interfaceMask = CalculateMaskFrom(maskNumber)
 			}
 			if strings.Contains(line, "ipv4.gateway") {
+				backResult += line + "|"
 				interfaceGateway = line[40:]
 				interfaceGateway = interfaceGateway[:]
 			}
-
 		}
-
 	}
 	if strings.Contains(interfaceGateway, "--") {
 		interfaceGateway = "not assigned"
@@ -83,10 +87,8 @@ func GetNetworkData() (string, string, string, string) {
 	if strings.Contains(interfaceIpAddress, "/") {
 		interfaceIpAddress = strings.Split(interfaceIpAddress, "/")[0]
 	}
-	if !activated {
-		interfaceIpAddress += ", offline"
-	}
-	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
+	fmt.Println(backResult)
+	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, backResult
 }
 
 func stopStream(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -160,7 +162,7 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	streamCanRun = true
 	streamSync.Unlock()
 	_ = r.ParseForm()
-	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _ := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
 	tmpl := template.Must(template.ParseFiles("html/index.html"))
@@ -168,9 +170,12 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		IpAddress:       interfaceIpAddress,
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
-		Dhcp:            dhcpEnabled,
+		Dhcp:            "ne",
 		ServerIpAddress: interfaceServerIpAddress,
 		Version:         version,
+	}
+	if dhcpEnabled == "yes" {
+		data.Dhcp = "ano"
 	}
 	if !serverAccessible {
 		data.ServerIpAddress = interfaceServerIpAddress + ", offline"

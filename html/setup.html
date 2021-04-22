@@ -10,33 +10,33 @@
 <body>
 <div id="info-panel"
      style="position: fixed;left: 50%;top: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
-    {{.Version}}
+    verze {{.Version}}
 </div>
 <div style="position: fixed;left: 50%;top: 15%;transform: translate(-50%, -50%);margin: 0 auto">
-    <input id="password" class="use-keyboard-input" placeholder="PASSWORD"
+    <input id="password" class="use-keyboard-input" placeholder="HESLO"
            style="flex: 1;text-align: center;border: 2px solid white;width: 100%;font-size: 2.5vw" autocomplete="off">
 </div>
 <div style="position: fixed;left: 50%;top: 40%;transform: translate(-50%, -50%);margin: 0 0;font-size: 3vw;width: 100%">
     <div style="display: flex;margin-top: 5px">
-        <div style="flex: 1;text-align: right;margin-right: 10px">IP ADDRESS:</div>
+        <div style="flex: 1;text-align: right;margin-right: 10px">IP ADRESA:</div>
         <div style="flex: 1;text-align: left;display: flex; align-items: center">
             <input id="ipaddress" class="use-keyboard-input" style="border: 1px solid white;font-size: 2.2vw" disabled value="{{.IpAddress}}">
         </div>
     </div>
     <div style="display: flex;margin-top: 5px">
-        <div style="flex: 1;text-align: right;margin-right: 10px">MASK:</div>
+        <div style="flex: 1;text-align: right;margin-right: 10px">MASKA:</div>
         <div style="flex: 1;text-align: left;display: flex; align-items: center">
             <input id="mask" class="use-keyboard-input" style="border: 1px solid white;font-size: 2.2vw" disabled value="{{.Mask}}">
         </div>
     </div>
     <div style="display: flex;margin-top: 5px">
-        <div style="flex: 1;text-align: right;margin-right: 10px">GATEWAY:</div>
+        <div style="flex: 1;text-align: right;margin-right: 10px">BRÁNA:</div>
         <div style="flex: 1;text-align: left;display: flex; align-items: center">
             <input id="gateway" class="use-keyboard-input" style="border: 1px solid white;font-size: 2.2vw" disabled value="{{.Gateway}}">
         </div>
     </div>
     <div style="display: flex;margin-top: 5px">
-        <div style="flex: 1;text-align: right;margin-right: 10px;">SERVER ADDRESS:</div>
+        <div style="flex: 1;text-align: right;margin-right: 10px;">ADRESA SERVERU:</div>
         <div style="flex: 1;text-align: left;display: flex; align-items: center">
             <input id="server" class="use-keyboard-input" style="border: 1px solid white;font-size: 2.2vw" disabled value="{{.ServerIpAddress}}">
         </div>
@@ -55,18 +55,18 @@
 </div>
 <div id="button-panel" style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">
     <button id="left-button"
-            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">BACK
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">ZPĚT
     </button>
     <button id="middle-button"
-            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white;pointer-events: none" disabled>CLEAR ALL
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white;pointer-events: none" disabled>SMAZAT
     </button>
     <button id="right-button"
-            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white;pointer-events: none" disabled>SAVE
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white;pointer-events: none" disabled>ULOŽIT
     </button>
 </div>
 <div id="version-panel"
      style="position: fixed;left: 50%;bottom: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
-    &copy; 2021 Petr Jahoda for Zapsi®
+    &copy; 2021 Petr Jahoda pro Zapsi®
 </div>
 </body>
 </html>
