@@ -116,13 +116,13 @@ sudo BRANCH=next rpi-update
 * create initramfs using `sudo mkinitramfs -o /boot/initrd`
 * add script using `sudo curl https://gist.githubusercontent.com/paul-ridgway/d39cbb30530442dca416734c3ee70162/raw/c490df8be1976dd062a8b5f429ef42ed1b393ecb/ro-root.sh -o /bin/ro-root.sh`
 * make the script executable using `sudo chmod +x /bin/ro-root.sh`
-* add those files into config using `sudo nano /boot/config.txt`
+* add those lines at the end of config file using `sudo nano /boot/config.txt`
 ```
 initramfs initrd followkernel
 ramfsfile=initrd
 ramfsaddr=-1
 ```
-* add config at the end of cmdline using `sudo nano /boot/cmdline.txt`
+* add this text at the end of cmdline file using `sudo nano /boot/cmdline.txt`
 ```
 init=/bin/ro-root.sh
 ```
