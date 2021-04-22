@@ -1,5 +1,14 @@
 # Terminal Local WebService Rpi
 
+* [1. Prepare Raspberry Pi](#1-prepare-raspberry-pi)
+* [2. Install Chromium in kiosk mode](#2-install-chromium-in-kiosk-mode)
+* [3. Copy program data to Raspberry](#3-copy-program-data-to-raspberry)
+* [4. Make program run as service](#4-make-program-run-as-service)
+* [5. Clean booting screen and information](#5-clean-booting-screen-and-information)
+* [6. Make Raspberry Pi read-only](#6-make-raspberry-pi-read-only)
+* [7. Passwords](#7-passwords)
+* [8. Remote administration](#8-remote-administration)
+
 ![actual screenshot](screenshot-3.png)
 ![actual screenshot](screenshot-4.png)
 ![actual screenshot](screenshot-5.png)
