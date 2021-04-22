@@ -109,7 +109,7 @@ sudo update-rc.d dphys-swapfile remove
 ```
 sudo apt-get update
 sudo apt-get dist-upgrade
-s
+sudo apt-get upgrade
 sudo BRANCH=next rpi-update
 ```
 * reboot using `sudo reboot now`
