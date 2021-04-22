@@ -7,11 +7,14 @@ const downloadTimer = setInterval(function () {
         document.getElementById("server-info").innerText = "server page will be loaded in " + timeleft +" seconds";
         if (timeleft <= 0) {
             clearInterval(downloadTimer);
-            console.log(serverName)
-            window.open("http://" + serverName, "_self")
+            fetch("/stop_stream", {
+                method: "POST",
+            }).then((result) => {
+                window.open("http://" + serverName, "_self")
+            }).catch(() => {
+            });
         }
         timeleft -= 1;
-
     }
 }, 1000);
 

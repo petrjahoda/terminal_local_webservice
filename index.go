@@ -89,6 +89,16 @@ func GetNetworkData() (string, string, string, string) {
 	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp
 }
 
+func stopStream(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	streamSync.Lock()
+	streamCanRun = false
+	streamSync.Unlock()
+	var responseData PasswordOutput
+	responseData.Result = "ok"
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(responseData)
+}
+
 func restartRpi(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var data PasswordInput
 	err := json.NewDecoder(r.Body).Decode(&data)
@@ -146,6 +156,9 @@ func shutdownRpi(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 }
 
 func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	streamSync.Lock()
+	streamCanRun = true
+	streamSync.Unlock()
 	_ = r.ParseForm()
 	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()

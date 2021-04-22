@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"github.com/julienschmidt/sse"
 	"github.com/kardianos/service"
@@ -10,10 +11,11 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 )
 
-const version = "2021.2.1.21"
+const version = "2021.2.1.22"
 const programName = "Terminal local webservice"
 const programDesription = "Display local web for rpi terminals"
 
@@ -21,6 +23,9 @@ type Page struct {
 	Title string
 	Body  []byte
 }
+
+var streamCanRun = false
+var streamSync sync.RWMutex
 
 type program struct{}
 
@@ -38,6 +43,7 @@ func (p *program) run() {
 	router.GET("/setup", setupPage)
 	router.POST("/password", checkPassword)
 	router.POST("/restart", restartRpi)
+	router.POST("/stop_stream", stopStream)
 	router.POST("/shutdown", shutdownRpi)
 	router.POST("/dhcp", changeToDhcp)
 	router.POST("/static", changeToStatic)
@@ -79,13 +85,16 @@ func main() {
 func StreamNetworkData(streamer *sse.Streamer) {
 	timeToSend := "20"
 	for {
-		interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
-		interfaceServerIpAddress := LoadSettingsFromConfigFile()
-		serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
-		if !serverAccessible {
-			interfaceServerIpAddress = interfaceServerIpAddress + ", offline"
+		if streamCanRun {
+			fmt.Println("streaming data")
+			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
+			interfaceServerIpAddress := LoadSettingsFromConfigFile()
+			serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
+			if !serverAccessible {
+				interfaceServerIpAddress = interfaceServerIpAddress + ", offline"
+			}
+			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+interfaceServerIpAddress+";"+interfaceServerIpAddress)
 		}
-		streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+timeToSend+";"+interfaceServerIpAddress+";"+interfaceServerIpAddress)
 		time.Sleep(5 * time.Second)
 	}
 }

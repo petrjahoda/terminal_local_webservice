@@ -28,6 +28,9 @@ type ChangeOutput struct {
 }
 
 func setupPage(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+	streamSync.Lock()
+	streamCanRun = false
+	streamSync.Unlock()
 	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	tmpl := template.Must(template.ParseFiles("html/setup.html"))
