@@ -28,14 +28,23 @@ type HomepageData struct {
 	Version         string
 }
 
-func GetNetworkData() (string, string, string, string, string) {
-	interfaceIpAddress := "not assigned"
-	interfaceMask := "not assigned"
-	interfaceGateway := "not assigned"
+func GetNetworkData() (string, string, string, string, string, string) {
+	interfaceIpAddress := "nepřiřazeno"
+	interfaceMask := "nepřiřazeno"
+	interfaceGateway := "nepřiřazeno"
 	interfaceDhcp := "no"
 	backResult := "DATA:"
-	data, _ := exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
+	active := "kabel odpojený"
+	data, _ := exec.Command("nmcli", "con", "show", "-active").Output()
 	result := string(data)
+	fmt.Println(result)
+	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+		if strings.Contains(line, "Wired connection") {
+			active = "kabel zapojený"
+		}
+	}
+	data, _ = exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
+	result = string(data)
 	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
 		if strings.Contains(line, "ipv4.method") {
 			backResult += line + "|"
@@ -88,7 +97,7 @@ func GetNetworkData() (string, string, string, string, string) {
 		interfaceIpAddress = strings.Split(interfaceIpAddress, "/")[0]
 	}
 	fmt.Println(backResult)
-	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, backResult
+	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, active, backResult
 }
 
 func stopStream(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -162,9 +171,8 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	streamCanRun = true
 	streamSync.Unlock()
 	_ = r.ParseForm()
-	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _ := GetNetworkData()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _, _ := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
-	serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
 	tmpl := template.Must(template.ParseFiles("html/index.html"))
 	data := HomepageData{
 		IpAddress:       interfaceIpAddress,
@@ -176,9 +184,6 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 	if dhcpEnabled == "yes" {
 		data.Dhcp = "ano"
-	}
-	if !serverAccessible {
-		data.ServerIpAddress = interfaceServerIpAddress + ", offline"
 	}
 	_ = tmpl.Execute(w, data)
 }

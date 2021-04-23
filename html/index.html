@@ -8,13 +8,15 @@
     <title>Zapsi Local Webservice</title>
 </head>
 <body>
-<div id="info-panel" style="position: fixed;left: 50%;top: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
+<div id="info-panel"
+     style="position: fixed;left: 50%;top: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
     verze {{.Version}}
 </div>
-<div  style="position: fixed;left: 50%;top: 8%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
+<div style="position: fixed;left: 50%;top: 8%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
     aktualizace každých 5 vteřin
 </div>
-<div  id="server-info" style="position: fixed;left: 50%;top: 10%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
+<div id="server-info"
+     style="position: fixed;left: 50%;top: 10%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
 </div>
 <div style="position: fixed;left: 50%;top: 40%;transform: translate(-50%, -50%);margin: 0 0;font-size: 3vw;width: 100%">
     <div>
@@ -32,7 +34,8 @@
         </div>
         <div style="display: flex;margin-top: 5px">
             <div style="flex: 1;text-align: right;margin-right: 10px">ADRESA SERVERU:</div>
-            <div id="server" style="flex: 1;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
+            <div id="server"
+                 style="flex: 1;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
                 {{.ServerIpAddress}}
             </div>
         </div>
@@ -42,13 +45,25 @@
         </div>
     </div>
 </div>
-<div id="button-panel" style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">
-    <button id="left-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">RESTARTOVAT</button>
-    <button id="middle-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">NASTAVIT</button>
-    <button id="right-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">VYPNOUT</button>
+<div id="button-panel"
+     style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">
+    <button id="left-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">
+        RESTARTOVAT
+    </button>
+    <button id="middle-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">NASTAVIT
+    </button>
+    <button id="right-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">VYPNOUT
+    </button>
 </div>
-<div id="version-panel" style="position: fixed;left: 50%;bottom: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
+<div id="version-panel"
+     style="position: fixed;left: 50%;bottom: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
     &copy; 2021 Petr Jahoda pro Zapsi®
+</div>
+<div id="active-panel" style="position: fixed;right: 5%;bottom: 7%;margin: 0 auto;font-size: 2vw">
+</div>
+<div id="server-active-panel" style="position: fixed;right: 5%;bottom: 12%;margin: 0 auto;font-size: 2vw">
 </div>
 </body>
 </html>

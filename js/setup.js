@@ -108,7 +108,6 @@ const Keyboard = {
                     });
                     break;
             }
-
             fragment.appendChild(keyElement);
             if (insertLineBreak) {
                 fragment.appendChild(document.createElement("br"));
@@ -116,7 +115,6 @@ const Keyboard = {
         });
         return fragment;
     },
-
     _triggerEvent(handlerName) {
         if (typeof this.eventHandlers[handlerName] == "function") {
             this.eventHandlers[handlerName](this.properties.value);
@@ -124,14 +122,12 @@ const Keyboard = {
         let elem = document.getElementById('server');
         elem.scrollLeft = elem.scrollWidth;
     },
-
     open(initialValue, oninput, onclose) {
         this.properties.value = initialValue || "";
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
         this.elements.main.classList.remove("keyboard--hidden");
     },
-
     close() {
         this.properties.value = "";
         this.eventHandlers.oninput = oninput;
@@ -144,7 +140,7 @@ window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
 });
 
-dhcpSlider.addEventListener('change', function (e) {
+dhcpSlider.addEventListener('change', function () {
     if (dhcpSlider.checked) {
         document.getElementById("ipaddress").disabled = true
         document.getElementById("gateway").disabled = true
@@ -259,7 +255,6 @@ rightButton.addEventListener('touchstart', function () {
         }).catch(() => {
         });
     } else {
-
         let resultOk = checkInputData();
         if (resultOk) {
             let data = {

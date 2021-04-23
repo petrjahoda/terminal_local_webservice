@@ -1,32 +1,36 @@
-let timeleft = 15;
+let timeLeft = 15;
 const downloadTimer = setInterval(function () {
-    let serverName = document.getElementById("server").innerText
-    if (serverName.includes("offline")) {
-        timeleft = 15
-    } else {
-        document.getElementById("server-info").innerText = "stránka serveru se načte za " + timeleft +" vteřin";
-        if (timeleft <= 0) {
+    let serverActive = document.getElementById("server-active-panel")
+    if (serverActive.innerText.includes("server dostupný")) {
+        document.getElementById("server-info").innerText = "stránka serveru se načte za " + timeLeft + " vteřin";
+        if (timeLeft <= 0) {
             clearInterval(downloadTimer);
             fetch("/stop_stream", {
                 method: "POST",
-            }).then((result) => {
-                window.open("http://" + serverName, "_self")
+            }).then(() => {
+                window.open("http://" + serverActive, "_self")
             }).catch(() => {
             });
         }
-        timeleft -= 1;
+        timeLeft -= 1;
+    } else {
+        timeLeft = 15
     }
 }, 1000);
 
 const networkDataSource = new EventSource('/networkdata');
 networkDataSource.addEventListener('networkdata', (e) => {
-    const networkdata = e.data.split(";");
-    document.getElementById("ipaddress").innerHTML = networkdata[0];
-    document.getElementById("mask").innerHTML = networkdata[1];
-    document.getElementById("gateway").innerHTML = networkdata[2];
-    document.getElementById("dhcp").innerHTML = networkdata[3];
-    document.getElementById("server").innerHTML = networkdata[4];
-    document.getElementById("server-info").innerText = networkdata[5];
+    const networkData = e.data.split(";");
+    document.getElementById("ipaddress").innerHTML = networkData[0];
+    document.getElementById("mask").innerHTML = networkData[1];
+    document.getElementById("gateway").innerHTML = networkData[2];
+    document.getElementById("dhcp").innerHTML = networkData[3];
+    document.getElementById("server").innerHTML = networkData[4];
+    document.getElementById("server-info").innerText = networkData[5];
+    document.getElementById("active-panel").innerText = networkData[6];
+    document.getElementById("server-active-panel").innerText = networkData[7];
+    document.getElementById("active-panel").style.color = networkData[8];
+    document.getElementById("server-active-panel").style.color = networkData[9];
 }, false);
 
 const leftButton = document.getElementById("left-button")

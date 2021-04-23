@@ -14,6 +14,14 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2021.2.1.23] - 2020-04-23
+
+### Added
+- better information about device and server network accessibility
+
+### Changed
+- code reformat and cleanup
+
 ## [2021.2.1.22] - 2020-04-22
 
 ### Changed

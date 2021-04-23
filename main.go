@@ -17,9 +17,9 @@ import (
 	"time"
 )
 
-const version = "2021.2.1.22"
+const version = "2021.2.1.23"
 const programName = "Terminal local webservice"
-const programDesription = "Display local web for rpi terminals"
+const programDescription = "Display local web for rpi terminals"
 
 type Page struct {
 	Title string
@@ -34,6 +34,21 @@ type program struct{}
 func (p *program) Start(s service.Service) error {
 	go p.run()
 	return nil
+}
+
+func (p *program) Stop(s service.Service) error {
+	return nil
+}
+
+func main() {
+	serviceConfig := &service.Config{
+		Name:        programName,
+		DisplayName: programName,
+		Description: programDescription,
+	}
+	prg := &program{}
+	s, _ := service.New(prg, serviceConfig)
+	_ = s.Run()
 }
 
 func (p *program) run() {
@@ -107,39 +122,29 @@ func LoadSettingsFromConfigFile() string {
 	return ServerIpAddress
 }
 
-func (p *program) Stop(s service.Service) error {
-	return nil
-}
-
-func main() {
-	serviceConfig := &service.Config{
-		Name:        programName,
-		DisplayName: programName,
-		Description: programDesription,
-	}
-	prg := &program{}
-	s, _ := service.New(prg, serviceConfig)
-	_ = s.Run()
-}
-
 func StreamNetworkData(streamer *sse.Streamer) {
 	for {
 		if streamCanRun {
 			fmt.Println("streaming data")
-			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, result := GetNetworkData()
+			activColor := "red"
+			serverActivColor := "red"
+			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, active, result := GetNetworkData()
 			interfaceServerIpAddress := LoadSettingsFromConfigFile()
 			serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
-			if !serverAccessible {
-				interfaceServerIpAddress = interfaceServerIpAddress + ", offline"
-			}
 			if dhcpEnabled == "yes" {
 				dhcpEnabled = "ano"
 			} else {
 				dhcpEnabled = "ne"
 			}
-			fmt.Println(result)
-			fmt.Println(interfaceIpAddress)
-			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+result)
+			serverActive := "server nedostupný"
+			if serverAccessible {
+				serverActive = "server dostupný"
+				serverActivColor = "green"
+			}
+			if active == "kabel zapojený" {
+				activColor = "green"
+			}
+			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+result+";"+active+";"+serverActive+";"+activColor+";"+serverActivColor)
 		}
 		time.Sleep(5 * time.Second)
 	}

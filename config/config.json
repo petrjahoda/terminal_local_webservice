@@ -1,5 +1,5 @@
 {
-  "ServerIpAddress": "www.seznam.cz:86",
+  "ServerIpAddress": "192.168.86.100:80/rpi/1",
   "IpAddress": "192.168.86.253",
   "Mask": "255.255.255.0",
   "Gateway": "192.168.86.1",
