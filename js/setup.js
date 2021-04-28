@@ -294,3 +294,4 @@ gateway.addEventListener('touchstart', function () {
 mask.addEventListener('touchstart', function () {
     sessionStorage.setItem("selection", "mask")
 }, false);
+

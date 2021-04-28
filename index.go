@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"html/template"
+	"io/ioutil"
 	"net/http"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -16,6 +18,7 @@ type ServerIpAddress struct {
 	Mask            string `json:"Mask"`
 	Gateway         string `json:"Gateway"`
 	Dhcp            string `json:"Dhcp"`
+	Connection      string `json:"Connection"`
 }
 
 type HomepageData struct {
@@ -39,65 +42,85 @@ func GetNetworkData() (string, string, string, string, string, string) {
 	result := string(data)
 	fmt.Println(result)
 	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "Wired connection") {
+		if strings.Contains(line, "ethernet") {
 			active = "kabel zapojený"
 		}
 	}
-	data, _ = exec.Command("nmcli", "con", "show", "Wired connection 1").Output()
-	result = string(data)
-	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "ipv4.method") {
-			backResult += line + "|"
-			interfaceDhcp = line[40:]
-			if strings.Contains(interfaceDhcp, "auto") {
-				interfaceDhcp = "yes"
-			} else {
-				interfaceDhcp = "no"
-			}
-		}
-		if interfaceDhcp == "yes" {
-			if strings.Contains(line, "IP4.ADDRESS") {
-				backResult += line + "|"
-				interfaceIpAddress = line[38:]
-				interfaceIpAddress = interfaceIpAddress[:]
-				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
-				maskNumber := splittedIpAddress[1]
-				interfaceMask = CalculateMaskFrom(maskNumber)
-			}
-			if strings.Contains(line, "IP4.GATEWAY") {
-				backResult += line + "|"
-				interfaceGateway = line[40:]
-				interfaceGateway = interfaceGateway[:]
-			}
+	configDirectory := filepath.Join("/ro", "home", "pi", "config")
+	configFileName := "config.json"
+	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+	readFile, _ := ioutil.ReadFile(configFullPath)
+	ConfigFile := ServerIpAddress{}
+	_ = json.Unmarshal(readFile, &ConfigFile)
+	if len(ConfigFile.Connection) == 0 {
+		configFileUpdated := updateConfigFile(ConfigFile)
+		if configFileUpdated {
+			return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
 		} else {
-			if strings.Contains(line, "ipv4.addresses") {
-				backResult += line + "|"
-				interfaceIpAddress = line[38:]
-				interfaceIpAddress = interfaceIpAddress[:]
-				splittedIpAddress := strings.Split(interfaceIpAddress, "/")
-				maskNumber := splittedIpAddress[1]
-				interfaceMask = CalculateMaskFrom(maskNumber)
+			return "Připojte kabel", "", "", "", active, ""
+		}
+	} else {
+		if !initiated {
+			initiateConnection(ConfigFile)
+			return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
+		} else {
+			output, _ := exec.Command("nmcli", "con", "show", ConfigFile.Connection).Output()
+			result := string(output)
+			for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+				if strings.Contains(line, "ipv4.method") {
+					backResult += line + "|"
+					interfaceDhcp = line[40:]
+					if strings.Contains(interfaceDhcp, "auto") {
+						interfaceDhcp = "yes"
+					} else {
+						interfaceDhcp = "no"
+					}
+				}
+				if interfaceDhcp == "yes" {
+					if strings.Contains(line, "IP4.ADDRESS") {
+						backResult += line + "|"
+						interfaceIpAddress = line[38:]
+						interfaceIpAddress = interfaceIpAddress[:]
+						splittedIpAddress := strings.Split(interfaceIpAddress, "/")
+						maskNumber := splittedIpAddress[1]
+						interfaceMask = CalculateMaskFrom(maskNumber)
+					}
+					if strings.Contains(line, "IP4.GATEWAY") {
+						backResult += line + "|"
+						interfaceGateway = line[40:]
+						interfaceGateway = interfaceGateway[:]
+					}
+				} else {
+					if strings.Contains(line, "ipv4.addresses") {
+						backResult += line + "|"
+						interfaceIpAddress = line[38:]
+						interfaceIpAddress = interfaceIpAddress[:]
+						splittedIpAddress := strings.Split(interfaceIpAddress, "/")
+						maskNumber := splittedIpAddress[1]
+						interfaceMask = CalculateMaskFrom(maskNumber)
+					}
+					if strings.Contains(line, "ipv4.gateway") {
+						backResult += line + "|"
+						interfaceGateway = line[40:]
+						interfaceGateway = interfaceGateway[:]
+					}
+				}
 			}
-			if strings.Contains(line, "ipv4.gateway") {
-				backResult += line + "|"
-				interfaceGateway = line[40:]
-				interfaceGateway = interfaceGateway[:]
+			if strings.Contains(interfaceGateway, "--") {
+				interfaceGateway = "not assigned"
+				interfaceIpAddress = "not assigned"
+				interfaceMask = "not assigned"
 			}
+			if !strings.Contains(interfaceIpAddress, "assigned") {
+				interfaceIpAddress = strings.ReplaceAll(interfaceIpAddress, " ", "")
+			}
+			if strings.Contains(interfaceIpAddress, "/") {
+				interfaceIpAddress = strings.Split(interfaceIpAddress, "/")[0]
+			}
+			fmt.Println(backResult)
+			return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, active, backResult
 		}
 	}
-	if strings.Contains(interfaceGateway, "--") {
-		interfaceGateway = "not assigned"
-		interfaceIpAddress = "not assigned"
-		interfaceMask = "not assigned"
-	}
-	if !strings.Contains(interfaceIpAddress, "assigned") {
-		interfaceIpAddress = strings.ReplaceAll(interfaceIpAddress, " ", "")
-	}
-	if strings.Contains(interfaceIpAddress, "/") {
-		interfaceIpAddress = strings.Split(interfaceIpAddress, "/")[0]
-	}
-	fmt.Println(backResult)
-	return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, active, backResult
 }
 
 func stopStream(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

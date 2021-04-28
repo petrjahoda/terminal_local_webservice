@@ -9,9 +9,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"os/exec"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -20,6 +18,8 @@ import (
 const version = "2021.2.1.23"
 const programName = "Terminal local webservice"
 const programDescription = "Display local web for rpi terminals"
+
+var initiated = false
 
 type Page struct {
 	Title string
@@ -52,7 +52,6 @@ func main() {
 }
 
 func (p *program) run() {
-	initiateRaspberry()
 	router := httprouter.New()
 	networkDataStreamer := sse.New()
 	router.GET("/image.png", image)
@@ -61,6 +60,7 @@ func (p *program) run() {
 	router.GET("/setup", setupPage)
 	router.POST("/password", checkPassword)
 	router.POST("/restart", restartRpi)
+	router.POST("/check_cable", checkCable)
 	router.POST("/stop_stream", stopStream)
 	router.POST("/shutdown", shutdownRpi)
 	router.POST("/dhcp", changeToDhcp)
@@ -74,41 +74,12 @@ func (p *program) run() {
 	_ = http.ListenAndServe(":9999", router)
 }
 
-func initiateRaspberry() {
-	configDirectory := filepath.Join(".", "config")
-	configFileName := "config.json"
-	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-	readFile, _ := ioutil.ReadFile(configFullPath)
-	ConfigFile := ServerIpAddress{}
-	_ = json.Unmarshal(readFile, &ConfigFile)
-	ipaddress := ConfigFile.IpAddress
-	mask := ConfigFile.Mask
-	gateway := ConfigFile.Gateway
-	dhcp := ConfigFile.Dhcp
-	if dhcp == "true" {
-		fmt.Println("INITIATE DHCP TRUE")
-		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
-		if err != nil {
-			fmt.Println(err.Error())
-		}
-		fmt.Println("INITIATE DHCP TRUE RESULT: " + string(result))
-	} else {
-		fmt.Println("INITIATE DHCP FALSE")
-		pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
-		if pattern.MatchString(ipaddress) && pattern.MatchString(gateway) {
-			maskNumber := GetMaskNumberFrom(mask)
-			result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual", "ipv4.addresses", ipaddress+"/"+maskNumber, "ipv4.gateway", gateway).Output()
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			fmt.Println("INITIATE DHCP FALSE RESULT1 " + string(result))
-			result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			fmt.Println("INITIATE DHCP FALSE RESULT2 " + string(result))
-		}
-	}
+func checkCable(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	_, _, _, _, active, _ := GetNetworkData()
+	var responseData ChangeOutput
+	responseData.Result = active
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(responseData)
 }
 
 func LoadSettingsFromConfigFile() string {
@@ -126,8 +97,8 @@ func StreamNetworkData(streamer *sse.Streamer) {
 	for {
 		if streamCanRun {
 			fmt.Println("streaming data")
-			activColor := "red"
-			serverActivColor := "red"
+			activeColor := "red"
+			serverActiveColor := "red"
 			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, active, result := GetNetworkData()
 			interfaceServerIpAddress := LoadSettingsFromConfigFile()
 			serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
@@ -139,12 +110,12 @@ func StreamNetworkData(streamer *sse.Streamer) {
 			serverActive := "server nedostupný"
 			if serverAccessible {
 				serverActive = "server dostupný"
-				serverActivColor = "green"
+				serverActiveColor = "green"
 			}
 			if active == "kabel zapojený" {
-				activColor = "green"
+				activeColor = "green"
 			}
-			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+result+";"+active+";"+serverActive+";"+activColor+";"+serverActivColor)
+			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+result+";"+active+";"+serverActive+";"+activeColor+";"+serverActiveColor)
 		}
 		time.Sleep(5 * time.Second)
 	}

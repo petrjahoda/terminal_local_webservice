@@ -50,116 +50,163 @@ func setupPage(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 }
 
 func changeToStatic(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	var data ChangeInput
-	err := json.NewDecoder(r.Body).Decode(&data)
-	if err != nil {
+	configDirectory := filepath.Join("/ro", "home", "pi", "config")
+	configFileName := "config.json"
+	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+	readFile, _ := ioutil.ReadFile(configFullPath)
+	ConfigFile := ServerIpAddress{}
+	_ = json.Unmarshal(readFile, &ConfigFile)
+	if ConfigFile.Connection == "" {
 		var responseData ChangeOutput
 		responseData.Result = "nok"
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(responseData)
-		return
-	}
-	if data.Password == "3600" {
-		pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
-		if pattern.MatchString(data.IpAddress) && pattern.MatchString(data.Gateway) {
-			maskNumber := GetMaskNumberFrom(data.Mask)
-			result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.addresses", data.IpAddress+"/"+maskNumber, "ipv4.gateway", data.Gateway).Output()
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			fmt.Println(string(result))
-			result, err = exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "manual").Output()
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			fmt.Println(string(result))
-			result, err = exec.Command("nmcli", "con", "up", "Wired connection 1").Output()
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			fmt.Println(string(result))
-			result, err = exec.Command("mount", "-o", "remount,rw", "/ro").Output()
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			fmt.Println(result)
-			configDirectory := filepath.Join("/ro", "home", "pi", "config")
-			configFileName := "config.json"
-			configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-			data := ServerIpAddress{
-				ServerIpAddress: data.Server,
-				IpAddress:       data.IpAddress,
-				Mask:            data.Mask,
-				Gateway:         data.Gateway,
-				Dhcp:            "false",
-			}
-			file, _ := json.MarshalIndent(data, "", "  ")
-			_ = ioutil.WriteFile(configFullPath, file, 0666)
-			result, err = exec.Command("mount", "-o", "remount,ro", "/ro").Output()
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			fmt.Println(result)
+	} else {
+		var data ChangeInput
+		err := json.NewDecoder(r.Body).Decode(&data)
+		if err != nil {
+			var responseData ChangeOutput
+			responseData.Result = "nok"
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(responseData)
+			return
 		}
-		var responseData ChangeOutput
-		responseData.Result = "ok"
+		if data.Password == "3600" {
+			pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
+			if pattern.MatchString(data.IpAddress) && pattern.MatchString(data.Gateway) {
+				maskNumber := GetMaskNumberFrom(data.Mask)
+				connectionName := "Wired connection 1"
+				output, _ := exec.Command("nmcli", "dev", "show").Output()
+				result := string(output)
+				for index, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+					if strings.Contains(line, "GENERAL.CONNECTION") && index == 5 {
+						connectionName = line[40:]
+						break
+					}
+				}
+				fmt.Println("CHANGING STATIC FOR: " + connectionName)
+				output, err := exec.Command("nmcli", "con", "mod", connectionName, "ipv4.addresses", data.IpAddress+"/"+maskNumber, "ipv4.gateway", data.Gateway).Output()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				fmt.Println(string(output))
+				output, err = exec.Command("nmcli", "con", "mod", connectionName, "ipv4.method", "manual").Output()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				fmt.Println(string(output))
+				output, err = exec.Command("nmcli", "con", "up", connectionName).Output()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				fmt.Println(string(output))
+				output, err = exec.Command("mount", "-o", "remount,rw", "/ro").Output()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				fmt.Println(output)
+				configDirectory := filepath.Join("/ro", "home", "pi", "config")
+				configFileName := "config.json"
+				configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+				data := ServerIpAddress{
+					ServerIpAddress: data.Server,
+					IpAddress:       data.IpAddress,
+					Mask:            data.Mask,
+					Gateway:         data.Gateway,
+					Dhcp:            "false",
+				}
+				file, _ := json.MarshalIndent(data, "", "  ")
+				_ = ioutil.WriteFile(configFullPath, file, 0666)
+				output, err = exec.Command("mount", "-o", "remount,ro", "/ro").Output()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				fmt.Println(output)
+			}
+			var responseData ChangeOutput
+			responseData.Result = "ok"
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(responseData)
+			return
+		}
+		var responseData PasswordOutput
+		responseData.Result = "nok"
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(responseData)
-		return
 	}
-	var responseData PasswordOutput
-	responseData.Result = "nok"
-	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(responseData)
 }
 
 func changeToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	var data ChangeInput
-	err := json.NewDecoder(r.Body).Decode(&data)
-	if err != nil {
+	configDirectory := filepath.Join("/ro", "home", "pi", "config")
+	configFileName := "config.json"
+	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+	readFile, _ := ioutil.ReadFile(configFullPath)
+	ConfigFile := ServerIpAddress{}
+	_ = json.Unmarshal(readFile, &ConfigFile)
+	if ConfigFile.Connection == "" {
 		var responseData ChangeOutput
 		responseData.Result = "nok"
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(responseData)
-		return
-	}
-	if data.Password == "3600" {
-		fmt.Println("SAVING DHCP")
-		result, err := exec.Command("nmcli", "con", "mod", "Wired connection 1", "ipv4.method", "auto").Output()
+	} else {
+		var data ChangeInput
+		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
-			fmt.Println(err.Error())
+			var responseData ChangeOutput
+			responseData.Result = "nok"
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(responseData)
+			return
 		}
-		fmt.Println("SAVING DHCP RESULT: " + string(result))
-		result, err = exec.Command("mount", "-o", "remount,rw", "/ro").Output()
-		if err != nil {
-			fmt.Println(err.Error())
+		if data.Password == "3600" {
+			fmt.Println("SAVING DHCP")
+			connectionName := "Wired connection 1"
+			output, _ := exec.Command("nmcli", "dev", "show").Output()
+			result := string(output)
+			for index, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+				if strings.Contains(line, "GENERAL.CONNECTION") && index == 5 {
+					connectionName = line[40:]
+					break
+				}
+			}
+			fmt.Println("CHANGING DHCP FOR: " + connectionName)
+			output, err := exec.Command("nmcli", "con", "mod", connectionName, "ipv4.method", "auto").Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println("SAVING DHCP RESULT: " + string(output))
+			output, err = exec.Command("mount", "-o", "remount,rw", "/ro").Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println("SAVING DHCP WRITE RESULT: " + string(output))
+			configDirectory := filepath.Join("/ro", "home", "pi", "config")
+			configFileName := "config.json"
+			configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+			fmt.Println("FILEPATH: " + configFullPath)
+			data := ServerIpAddress{
+				ServerIpAddress: data.Server,
+				Dhcp:            "true",
+			}
+			file, _ := json.MarshalIndent(data, "", "  ")
+			_ = ioutil.WriteFile(configFullPath, file, 0666)
+			output, err = exec.Command("mount", "-o", "remount,ro", "/ro").Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println("SAVING DHCP READ RESULT: " + string(output))
+			var responseData ChangeOutput
+			responseData.Result = "ok"
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(responseData)
+			return
 		}
-		fmt.Println("SAVING DHCP WRITE RESULT: " + string(result))
-		configDirectory := filepath.Join("/ro", "home", "pi", "config")
-		configFileName := "config.json"
-		configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-		fmt.Println("FILEPATH: " + configFullPath)
-		data := ServerIpAddress{
-			ServerIpAddress: data.Server,
-			Dhcp:            "true",
-		}
-		file, _ := json.MarshalIndent(data, "", "  ")
-		_ = ioutil.WriteFile(configFullPath, file, 0666)
-		result, err = exec.Command("mount", "-o", "remount,ro", "/ro").Output()
-		if err != nil {
-			fmt.Println(err.Error())
-		}
-		fmt.Println("SAVING DHCP READ RESULT: " + string(result))
 		var responseData ChangeOutput
-		responseData.Result = "ok"
+		responseData.Result = "nok"
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(responseData)
-		return
 	}
-	var responseData ChangeOutput
-	responseData.Result = "nok"
-	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(responseData)
+
 }
 
 func GetMaskNumberFrom(maskNumber string) string {

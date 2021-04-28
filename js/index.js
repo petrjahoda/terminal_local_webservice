@@ -8,7 +8,9 @@ const downloadTimer = setInterval(function () {
             fetch("/stop_stream", {
                 method: "POST",
             }).then(() => {
-                window.open("http://" + serverActive, "_self")
+                console.log('OPENING' + document.getElementById("server").innerHTML)
+                window.open("http://" + document.getElementById("server").innerHTML, "_self")
+            }).catch(() => {
             }).catch(() => {
             });
         }
@@ -26,7 +28,6 @@ networkDataSource.addEventListener('networkdata', (e) => {
     document.getElementById("gateway").innerHTML = networkData[2];
     document.getElementById("dhcp").innerHTML = networkData[3];
     document.getElementById("server").innerHTML = networkData[4];
-    document.getElementById("server-info").innerText = networkData[5];
     document.getElementById("active-panel").innerText = networkData[6];
     document.getElementById("server-active-panel").innerText = networkData[7];
     document.getElementById("active-panel").style.color = networkData[8];
