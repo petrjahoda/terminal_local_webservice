@@ -15,11 +15,12 @@ import (
 	"time"
 )
 
-const version = "2021.2.1.23"
+const version = "2021.2.1.29"
 const programName = "Terminal local webservice"
 const programDescription = "Display local web for rpi terminals"
 
 var initiated = false
+var homepageLoaded = false
 
 type Page struct {
 	Title string

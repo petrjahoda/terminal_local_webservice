@@ -14,6 +14,11 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2021.2.1.29] - 2020-04-29
+
+### Changed
+- updated to check available ethernet connections on boot
+
 ## [2021.2.1.28] - 2020-04-28
 
 ### Changed

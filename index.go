@@ -32,38 +32,51 @@ type HomepageData struct {
 }
 
 func GetNetworkData() (string, string, string, string, string, string) {
-	interfaceIpAddress := "nepřiřazeno"
-	interfaceMask := "nepřiřazeno"
-	interfaceGateway := "nepřiřazeno"
-	interfaceDhcp := "no"
-	backResult := "DATA:"
-	active := "kabel odpojený"
-	data, _ := exec.Command("nmcli", "con", "show", "-active").Output()
-	result := string(data)
-	fmt.Println(result)
-	for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-		if strings.Contains(line, "ethernet") {
-			active = "kabel zapojený"
+	if homepageLoaded {
+		interfaceIpAddress := "nepřiřazeno"
+		interfaceMask := "nepřiřazeno"
+		interfaceGateway := "nepřiřazeno"
+		interfaceDhcp := "no"
+		backResult := "DATA:"
+		active := "kabel odpojený"
+		data, _ := exec.Command("nmcli", "con", "show", "-active").Output()
+		result := string(data)
+		fmt.Println(result)
+		for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+			if strings.Contains(line, "ethernet") {
+				active = "kabel zapojený"
+			}
 		}
-	}
-	configDirectory := filepath.Join("/ro", "home", "pi", "config")
-	configFileName := "config.json"
-	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
-	readFile, _ := ioutil.ReadFile(configFullPath)
-	ConfigFile := ServerIpAddress{}
-	_ = json.Unmarshal(readFile, &ConfigFile)
-	if len(ConfigFile.Connection) == 0 {
-		configFileUpdated := updateConfigFile(ConfigFile)
-		if configFileUpdated {
-			return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
-		} else {
-			return "Připojte kabel", "", "", "", active, ""
-		}
-	} else {
+		configDirectory := filepath.Join("/ro", "home", "pi", "config")
+		configFileName := "config.json"
+		configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+		readFile, _ := ioutil.ReadFile(configFullPath)
+		ConfigFile := ServerIpAddress{}
+		_ = json.Unmarshal(readFile, &ConfigFile)
 		if !initiated {
-			initiateConnection(ConfigFile)
-			return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
+			fmt.Println("DEBUG ", "NOT INITIATED")
+			configFileUpdated := updateConfigFile(ConfigFile)
+			if configFileUpdated {
+				fmt.Println("DEBUG ", "CONFIG FILE UPDATED")
+				readFile, _ := ioutil.ReadFile(configFullPath)
+				ConfigFile := ServerIpAddress{}
+				_ = json.Unmarshal(readFile, &ConfigFile)
+				initiateConnection(ConfigFile)
+				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
+			} else {
+				return "Připojte kabel", "", "", "", active, ""
+			}
+		}
+		if len(ConfigFile.Connection) == 0 {
+			fmt.Println("DEBUG ", "CONFIG CONNECTION ZERO")
+			configFileUpdated := updateConfigFile(ConfigFile)
+			if configFileUpdated {
+				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
+			} else {
+				return "Připojte kabel", "", "", "", active, ""
+			}
 		} else {
+			fmt.Println("DEBUG", "GOOD WAY")
 			output, _ := exec.Command("nmcli", "con", "show", ConfigFile.Connection).Output()
 			result := string(output)
 			for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
@@ -121,6 +134,7 @@ func GetNetworkData() (string, string, string, string, string, string) {
 			return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, active, backResult
 		}
 	}
+	return "", "", "", "", "", ""
 }
 
 func stopStream(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -208,6 +222,7 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	if dhcpEnabled == "yes" {
 		data.Dhcp = "ano"
 	}
+	homepageLoaded = true
 	_ = tmpl.Execute(w, data)
 }
 

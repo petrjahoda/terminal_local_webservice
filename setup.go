@@ -75,31 +75,27 @@ func changeToStatic(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 			pattern := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
 			if pattern.MatchString(data.IpAddress) && pattern.MatchString(data.Gateway) {
 				maskNumber := GetMaskNumberFrom(data.Mask)
-				connectionName := "Wired connection 1"
-				output, _ := exec.Command("nmcli", "dev", "show").Output()
-				result := string(output)
-				for index, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-					if strings.Contains(line, "GENERAL.CONNECTION") && index == 5 {
-						connectionName = line[40:]
-						break
-					}
-				}
-				fmt.Println("CHANGING STATIC FOR: " + connectionName)
-				output, err := exec.Command("nmcli", "con", "mod", connectionName, "ipv4.addresses", data.IpAddress+"/"+maskNumber, "ipv4.gateway", data.Gateway).Output()
+				fmt.Println("CHANGING STATIC FOR: " + ConfigFile.Connection)
+				output, err := exec.Command("nmcli", "con", "mod", ConfigFile.Connection, "ipv4.addresses", data.IpAddress+"/"+maskNumber, "ipv4.gateway", data.Gateway).Output()
 				if err != nil {
 					fmt.Println(err.Error())
 				}
 				fmt.Println(string(output))
-				output, err = exec.Command("nmcli", "con", "mod", connectionName, "ipv4.method", "manual").Output()
+				output, err = exec.Command("nmcli", "con", "mod", ConfigFile.Connection, "ipv4.method", "manual").Output()
 				if err != nil {
 					fmt.Println(err.Error())
 				}
 				fmt.Println(string(output))
-				output, err = exec.Command("nmcli", "con", "up", connectionName).Output()
+				output, err = exec.Command("nmcli", "con", "down", ConfigFile.Connection).Output()
 				if err != nil {
 					fmt.Println(err.Error())
 				}
-				fmt.Println(string(output))
+				fmt.Println("Terminal connection turned down: " + string(output))
+				output, err = exec.Command("systemctl", "restart", "NetworkManager").Output()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				fmt.Println("Terminal connection turned up: " + string(output))
 				output, err = exec.Command("mount", "-o", "remount,rw", "/ro").Output()
 				if err != nil {
 					fmt.Println(err.Error())
@@ -114,6 +110,7 @@ func changeToStatic(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 					Mask:            data.Mask,
 					Gateway:         data.Gateway,
 					Dhcp:            "false",
+					Connection:      ConfigFile.Connection,
 				}
 				file, _ := json.MarshalIndent(data, "", "  ")
 				_ = ioutil.WriteFile(configFullPath, file, 0666)
@@ -160,21 +157,16 @@ func changeToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		}
 		if data.Password == "3600" {
 			fmt.Println("SAVING DHCP")
-			connectionName := "Wired connection 1"
-			output, _ := exec.Command("nmcli", "dev", "show").Output()
-			result := string(output)
-			for index, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
-				if strings.Contains(line, "GENERAL.CONNECTION") && index == 5 {
-					connectionName = line[40:]
-					break
-				}
-			}
-			fmt.Println("CHANGING DHCP FOR: " + connectionName)
-			output, err := exec.Command("nmcli", "con", "mod", connectionName, "ipv4.method", "auto").Output()
+			output, err := exec.Command("nmcli", "con", "mod", ConfigFile.Connection, "ipv4.method", "auto").Output()
 			if err != nil {
 				fmt.Println(err.Error())
 			}
 			fmt.Println("SAVING DHCP RESULT: " + string(output))
+			output, err = exec.Command("systemctl", "restart", "NetworkManager").Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println(string(output))
 			output, err = exec.Command("mount", "-o", "remount,rw", "/ro").Output()
 			if err != nil {
 				fmt.Println(err.Error())
@@ -187,6 +179,7 @@ func changeToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 			data := ServerIpAddress{
 				ServerIpAddress: data.Server,
 				Dhcp:            "true",
+				Connection:      ConfigFile.Connection,
 			}
 			file, _ := json.MarshalIndent(data, "", "  ")
 			_ = ioutil.WriteFile(configFullPath, file, 0666)
