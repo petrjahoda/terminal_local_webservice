@@ -14,6 +14,13 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2021.2.1.30] - 2020-04-30
+
+### Changed
+- password field is blinking
+- network is restarted after DHCP is set
+- www.zapsi.eu:80 is set as default server
+
 ## [2021.2.1.29] - 2020-04-29
 
 ### Changed

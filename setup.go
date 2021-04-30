@@ -162,11 +162,16 @@ func changeToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 				fmt.Println(err.Error())
 			}
 			fmt.Println("SAVING DHCP RESULT: " + string(output))
+			output, err = exec.Command("nmcli", "con", "down", ConfigFile.Connection).Output()
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			fmt.Println("Terminal connection turned down: " + string(output))
 			output, err = exec.Command("systemctl", "restart", "NetworkManager").Output()
 			if err != nil {
 				fmt.Println(err.Error())
 			}
-			fmt.Println(string(output))
+			fmt.Println("Terminal connection turned up: " + string(output))
 			output, err = exec.Command("mount", "-o", "remount,rw", "/ro").Output()
 			if err != nil {
 				fmt.Println(err.Error())

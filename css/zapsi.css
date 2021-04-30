@@ -56,3 +56,11 @@ input:checked + .slider:before {
     -ms-transform: translateX(3.8vw);
     transform: translateX(3.8vw);
 }
+
+@keyframes blink {
+    50% { border-color: #ff0000; }
+}
+
+#password{ /*or other element you want*/
+    animation: blink .5s step-end infinite alternate;
+}
