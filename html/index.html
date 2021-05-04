@@ -18,32 +18,17 @@
 <div id="server-info"
      style="position: fixed;left: 50%;top: 10%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
 </div>
-<div style="position: fixed;left: 50%;top: 40%;transform: translate(-50%, -50%);margin: 0 0;font-size: 3vw;width: 100%">
-    <div>
-        <div style="display: flex;margin-top: 5px">
-            <div style="flex: 1;text-align: right;margin-right: 10px">IP ADRESA:</div>
-            <div id="ipaddress" style="flex: 1;text-align: left"> {{.IpAddress}}</div>
-        </div>
-        <div style="display: flex;margin-top: 5px">
-            <div style="flex: 1;text-align: right;margin-right: 10px">MASKA:</div>
-            <div id="mask" style="flex: 1;text-align: left"> {{.Mask}}</div>
-        </div>
-        <div style="display: flex;margin-top: 5px">
-            <div style="flex: 1;text-align: right;margin-right: 10px">BRÁNA:</div>
-            <div id="gateway" style="flex: 1;text-align: left"> {{.Gateway}}</div>
-        </div>
-        <div style="display: flex;margin-top: 5px">
-            <div style="flex: 1;text-align: right;margin-right: 10px">ADRESA SERVERU:</div>
-            <div id="server"
-                 style="flex: 1;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
-                {{.ServerIpAddress}}
-            </div>
-        </div>
-        <div style="display: flex;margin-top: 5px">
-            <div style="flex: 1;text-align: right;margin-right: 10px">DHCP:</div>
-            <div id="dhcp" style="flex: 1;text-align: left"> {{.Dhcp}}</div>
-        </div>
-    </div>
+<div style="position: fixed;top: 20%;width: 100%">
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">IP ADRESA</div>
+        <div id="ipaddress" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.IpAddress}}</div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">MASKA</div>
+        <div id="mask" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Mask}}</div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">BRÁNA</div>
+        <div id="gateway" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Gateway}}</div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">ADRESA SERVERU</div>
+        <div id="server" style="text-align: center;height: 1.5vw;font-size: 1.5vw"> {{.ServerIpAddress}}</div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">DHCP</div>
+        <div id="dhcp" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Dhcp}}</div>
 </div>
 <div id="button-panel"
      style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">

@@ -7,7 +7,7 @@ const ipaddress = document.getElementById("ipaddress")
 const gateway = document.getElementById("gateway")
 const server = document.getElementById("server")
 const mask = document.getElementById("mask")
-
+var position = 0
 const Keyboard = {
     elements: {
         main: null,
@@ -56,17 +56,21 @@ const Keyboard = {
                 case "backspace":
                     keyElement.classList.add("keyboard__key--wide");
                     keyElement.innerHTML = "⌫";
-                    keyElement.addEventListener('touchstart', () => {
-                        this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    keyElement.addEventListener('touchstart', (event) => {
+                        let field = document.getElementById(sessionStorage.getItem("selection"))
+                        position = field.selectionStart
+                        this.properties.value = field.value.substring(0, position - 1) + field.value.substring(position, field.value.length);
+                        position = field.selectionStart-1
                         this._triggerEvent("oninput");
                     });
+
                     break;
                 case "enter":
                     keyElement.classList.add("keyboard__key--wide");
                     keyElement.innerHTML = "↵";
-                    keyElement.addEventListener('touchstart', () => {
+                    keyElement.addEventListener('touchstart', (event) => {
                         if (sessionStorage.getItem("selection") === "password") {
-                            let password = this.properties.value
+                            let password = passwordField.value
                             let data = {
                                 password: password
                             };
@@ -102,9 +106,14 @@ const Keyboard = {
                     break;
                 default:
                     keyElement.textContent = key.toLowerCase();
-                    keyElement.addEventListener('touchstart', () => {
-                        this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                    keyElement.addEventListener('touchstart', (event) => {
+                        let field = document.getElementById(sessionStorage.getItem("selection"))
+                        console.log(field.value)
+                        position = field.selectionStart
+                        this.properties.value = field.value.substring(0, position) + key +field.value.substring(position, field.value.length)
+                        position = field.selectionStart+1
                         this._triggerEvent("oninput");
+
                     });
                     break;
             }
@@ -121,6 +130,8 @@ const Keyboard = {
         }
         let elem = document.getElementById('server');
         elem.scrollLeft = elem.scrollWidth;
+        document.getElementById(sessionStorage.getItem("selection")).focus()
+        document.getElementById(sessionStorage.getItem("selection")).setSelectionRange(position, position);
     },
     open(initialValue, oninput, onclose) {
         this.properties.value = initialValue || "";
@@ -136,11 +147,11 @@ const Keyboard = {
     }
 };
 
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", function (event) {
     Keyboard.init();
 });
 
-dhcpSlider.addEventListener('change', function () {
+dhcpSlider.addEventListener('change', function (event) {
     if (dhcpSlider.checked) {
         document.getElementById("ipaddress").disabled = true
         document.getElementById("gateway").disabled = true
@@ -152,22 +163,19 @@ dhcpSlider.addEventListener('change', function () {
     }
 }, false);
 
-leftButton.addEventListener('touchstart', function () {
+
+leftButton.addEventListener('touchstart', function (event) {
+    callRpiIndex();
+}, false);
+
+function callRpiIndex() {
     leftButton.style.border = "2px solid red"
     middleButton.style.border = "2px solid white"
     rightButton.style.border = "2px solid white"
     window.open("/", "_self")
-}, false);
+}
 
-leftButton.addEventListener('touchstart', function () {
-    leftButton.style.border = "2px solid red"
-    middleButton.style.border = "2px solid white"
-    rightButton.style.border = "2px solid white"
-    window.open("/", "_self")
-}, false);
-
-
-middleButton.addEventListener('touchend', function () {
+middleButton.addEventListener('touchend', function (event) {
     middleButton.style.border = "2px solid white"
     middleButton.blur()
     setTimeout(() => {
@@ -175,7 +183,7 @@ middleButton.addEventListener('touchend', function () {
     }, 10);
 })
 
-rightButton.addEventListener('touchend', function () {
+rightButton.addEventListener('touchend', function (event) {
     rightButton.style.border = "2px solid white"
     rightButton.blur()
     setTimeout(() => {
@@ -183,7 +191,17 @@ rightButton.addEventListener('touchend', function () {
     }, 10);
 })
 
-middleButton.addEventListener('touchstart', function () {
+
+middleButton.addEventListener('touchstart', function (event) {
+    callRpiResetAll();
+}, false);
+
+
+rightButton.addEventListener('touchstart', function (event) {
+    callRpiSaveNetworkChange();
+}, false);
+
+function callRpiResetAll() {
     middleButton.blur()
     if (!dhcpSlider.checked) {
         leftButton.style.border = "2px solid white"
@@ -200,7 +218,7 @@ middleButton.addEventListener('touchstart', function () {
         server.value = ""
     }
     middleButton.blur()
-}, false);
+}
 
 function checkInputData() {
     let result = false
@@ -234,7 +252,7 @@ function checkInputData() {
     return result;
 }
 
-rightButton.addEventListener('touchstart', function () {
+function callRpiSaveNetworkChange() {
     leftButton.style.border = "2px solid white"
     middleButton.style.border = "2px solid white"
     rightButton.style.border = "2px solid red"
@@ -273,25 +291,25 @@ rightButton.addEventListener('touchstart', function () {
             });
         }
     }
-}, false);
+}
 
-passwordField.addEventListener('touchstart', function () {
+passwordField.addEventListener('touchstart', function (event) {
     sessionStorage.setItem("selection", "password")
 }, false);
 
-ipaddress.addEventListener('touchstart', function () {
+ipaddress.addEventListener('touchstart', function (event) {
     sessionStorage.setItem("selection", "ipaddress")
 }, false);
 
-server.addEventListener('touchstart', function () {
+server.addEventListener('touchstart', function (event) {
     sessionStorage.setItem("selection", "server")
 }, false);
 
-gateway.addEventListener('touchstart', function () {
+gateway.addEventListener('touchstart', function (event) {
     sessionStorage.setItem("selection", "gateway")
 }, false);
 
-mask.addEventListener('touchstart', function () {
+mask.addEventListener('touchstart', function (event) {
     sessionStorage.setItem("selection", "mask")
 }, false);
 

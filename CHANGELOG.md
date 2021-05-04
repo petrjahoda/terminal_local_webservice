@@ -14,6 +14,16 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2021.2.2.4] - 2021-05-04
+
+### Changed
+- checking server address
+- index and setup page design
+
+### Added
+- /server function for setting only server address
+- editing input fields via keyboard from cursor position
+
 ## [2021.2.2.3] - 2021-05-03
 
 ### Changed

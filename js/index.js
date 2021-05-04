@@ -8,10 +8,12 @@ const downloadTimer = setInterval(function () {
             fetch("/stop_stream", {
                 method: "POST",
             }).then(() => {
-                console.log('OPENING' + document.getElementById("server").innerHTML)
-                window.open("http://" + document.getElementById("server").innerHTML, "_self")
-            }).catch(() => {
-            }).catch(() => {
+                // serverActive.innerText = document.getElementById("server").innerHTML
+                window.open(document.getElementById("server").innerHTML, "_self")
+            }).catch((error) => {
+                console.log(error)
+            }).catch((error) => {
+                console.log(error)
             });
         }
         timeLeft -= 1;
@@ -38,8 +40,19 @@ const leftButton = document.getElementById("left-button")
 const middleButton = document.getElementById("middle-button")
 const rightButton = document.getElementById("right-button")
 
+leftButton.addEventListener('touchstart', function (event) {
+    callRpiRestart();
+}, false);
 
-leftButton.addEventListener('touchstart', function () {
+rightButton.addEventListener('touchstart', function (event) {
+    callRpiShutdown();
+}, false);
+
+middleButton.addEventListener('touchstart', function (event) {
+    callRpiSetup();
+}, false);
+
+function callRpiRestart() {
     leftButton.style.border = "2px solid red"
     middleButton.style.border = "2px solid white"
     rightButton.style.border = "2px solid white"
@@ -52,16 +65,16 @@ leftButton.addEventListener('touchstart', function () {
     }).then(() => {
     }).catch(() => {
     });
-}, false);
+}
 
-middleButton.addEventListener('touchstart', function () {
+function callRpiSetup() {
     leftButton.style.border = "2px solid white"
     middleButton.style.border = "2px solid red"
     rightButton.style.border = "2px solid white"
     window.open("/setup", "_self")
-}, false);
+}
 
-rightButton.addEventListener('touchstart', function () {
+function callRpiShutdown() {
     leftButton.style.border = "2px solid white"
     middleButton.style.border = "2px solid white"
     rightButton.style.border = "2px solid red"
@@ -74,4 +87,4 @@ rightButton.addEventListener('touchstart', function () {
     }).then(() => {
     }).catch(() => {
     });
-}, false);
+}

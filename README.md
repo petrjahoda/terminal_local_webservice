@@ -200,6 +200,20 @@ fetch("/static", {
 }).catch(() => {
 });
 ```
+* set only server address using javascript:
+```
+let data = {
+  password: "3600",
+  server: server.value,         // server web, example: 192.168.86.100:80/terminal/1
+};
+fetch("/server", {
+  method: "POST",
+  body: JSON.stringify(data)
+}).then((result) => {
+  console.log(result)
+}).catch(() => {
+});
+```
 * check if cable is connected:
 ```
 fetch("/checkCable", {

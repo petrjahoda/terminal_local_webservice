@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const version = "2021.2.2.3"
+const version = "2021.2.2.4"
 const programName = "Terminal local webservice"
 const programDescription = "Display local web for rpi terminals"
 
@@ -65,6 +65,7 @@ func (p *program) run() {
 	router.POST("/stop_stream", stopStream)
 	router.POST("/shutdown", shutdownRpi)
 	router.POST("/dhcp", changeToDhcp)
+	router.POST("/server", changeServerAddress)
 	router.POST("/static", changeToStatic)
 	router.ServeFiles("/font/*filepath", http.Dir("font"))
 	router.ServeFiles("/html/*filepath", http.Dir("html"))

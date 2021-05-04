@@ -6,13 +6,12 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"html/template"
 	"io/ioutil"
-	"net"
+	//"net"
 	"net/http"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
-	"time"
 )
 
 type ChangeInput struct {
@@ -131,6 +130,59 @@ func changeToStatic(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(responseData)
 	}
+}
+
+func changeServerAddress(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	configDirectory := filepath.Join("/ro", "home", "pi", "config")
+	configFileName := "config.json"
+	configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+	readFile, _ := ioutil.ReadFile(configFullPath)
+	ConfigFile := ServerIpAddress{}
+	_ = json.Unmarshal(readFile, &ConfigFile)
+	var data ChangeInput
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		var responseData ChangeOutput
+		responseData.Result = "nok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	if data.Password == "3600" {
+		output, err := exec.Command("mount", "-o", "remount,rw", "/ro").Output()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println("SAVING SERVER WRITE RESULT: " + string(output))
+		configDirectory := filepath.Join("/ro", "home", "pi", "config")
+		configFileName := "config.json"
+		configFullPath := strings.Join([]string{configDirectory, configFileName}, "/")
+		fmt.Println("FILEPATH: " + configFullPath)
+		data := ServerIpAddress{
+			IpAddress:       ConfigFile.IpAddress,
+			Mask:            ConfigFile.Mask,
+			Gateway:         ConfigFile.Gateway,
+			ServerIpAddress: data.Server,
+			Dhcp:            ConfigFile.Dhcp,
+			Connection:      ConfigFile.Connection,
+		}
+		file, _ := json.MarshalIndent(data, "", "  ")
+		_ = ioutil.WriteFile(configFullPath, file, 0666)
+		output, err = exec.Command("mount", "-o", "remount,ro", "/ro").Output()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println("SAVING DHCP READ RESULT: " + string(output))
+		var responseData ChangeOutput
+		responseData.Result = "ok"
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(responseData)
+		return
+	}
+	var responseData ChangeOutput
+	responseData.Result = "nok"
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(responseData)
 }
 
 func changeToDhcp(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -278,11 +330,9 @@ func GetMaskNumberFrom(maskNumber string) string {
 }
 
 func CheckServerIpAddress(interfaceServerIpAddress string) bool {
-	seconds := 2
-	timeOut := time.Duration(seconds) * time.Second
-	_, err := net.DialTimeout("tcp", interfaceServerIpAddress, timeOut)
-	if err != nil {
-		fmt.Println(err.Error())
+	_, netErrors := http.Get(interfaceServerIpAddress)
+	if netErrors != nil {
+		fmt.Println(netErrors.Error())
 		return false
 	}
 	return true
