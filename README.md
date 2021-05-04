@@ -9,9 +9,11 @@
 * [7. Passwords](#7-passwords)
 * [8. Remote administration](#8-remote-administration)
 
+![actual screenshot](image-2.png)
+
 ![actual screenshot](image.png)
 
-![actual screenshot](image-2.png)
+
 
 
 ## 1. Prepare Raspberry Pi
