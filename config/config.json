@@ -1,8 +1,8 @@
 {
   "ServerIpAddress": "http://www.zapsi.eu/info",
-  "IpAddress": "192.168.86.253",
-  "Mask": "255.255.255.0",
-  "Gateway": "192.168.86.1",
-  "Dhcp": "false",
+  "IpAddress": "",
+  "Mask": "",
+  "Gateway": "",
+  "Dhcp": "true",
   "Connection": ""
 }

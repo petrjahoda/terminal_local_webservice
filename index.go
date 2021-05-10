@@ -26,17 +26,19 @@ type HomepageData struct {
 	Mask            string
 	Gateway         string
 	ServerIpAddress string
+	Mac             string
 	Dhcp            string
 	DhcpChecked     string
 	Version         string
 }
 
-func GetNetworkData() (string, string, string, string, string, string) {
+func GetNetworkData() (string, string, string, string, string, string, string) {
 	if homepageLoaded {
 		interfaceIpAddress := "nepřiřazeno"
 		interfaceMask := "nepřiřazeno"
 		interfaceGateway := "nepřiřazeno"
 		interfaceDhcp := "no"
+		mac := ""
 		backResult := "DATA:"
 		active := "kabel odpojený"
 		data, _ := exec.Command("nmcli", "con", "show", "-active").Output()
@@ -62,21 +64,19 @@ func GetNetworkData() (string, string, string, string, string, string) {
 				ConfigFile := ServerIpAddress{}
 				_ = json.Unmarshal(readFile, &ConfigFile)
 				initiateConnection(ConfigFile)
-				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
+				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, "", ""
 			} else {
-				return "Připojte kabel", "", "", "", active, ""
+				return "Připojte kabel", "", "", "", active, "", ""
 			}
 		}
 		if len(ConfigFile.Connection) == 0 {
-			fmt.Println("DEBUG ", "CONFIG CONNECTION ZERO")
 			configFileUpdated := updateConfigFile(ConfigFile)
 			if configFileUpdated {
-				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, ""
+				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, "", ""
 			} else {
-				return "Připojte kabel", "", "", "", active, ""
+				return "Připojte kabel", "", "", "", active, "", ""
 			}
 		} else {
-			fmt.Println("DEBUG", "GOOD WAY")
 			output, _ := exec.Command("nmcli", "con", "show", ConfigFile.Connection).Output()
 			result := string(output)
 			for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
@@ -103,6 +103,9 @@ func GetNetworkData() (string, string, string, string, string, string) {
 						interfaceGateway = line[40:]
 						interfaceGateway = interfaceGateway[:]
 					}
+					if strings.Contains(line, "802-3-ethernet.mac-address:") {
+						mac = line[40:]
+					}
 				} else {
 					if strings.Contains(line, "ipv4.addresses") {
 						backResult += line + "|"
@@ -117,6 +120,10 @@ func GetNetworkData() (string, string, string, string, string, string) {
 						interfaceGateway = line[40:]
 						interfaceGateway = interfaceGateway[:]
 					}
+					if strings.Contains(line, "802-3-ethernet.mac-address:") {
+						mac = line[40:]
+					}
+
 				}
 			}
 			if strings.Contains(interfaceGateway, "--") {
@@ -130,11 +137,11 @@ func GetNetworkData() (string, string, string, string, string, string) {
 			if strings.Contains(interfaceIpAddress, "/") {
 				interfaceIpAddress = strings.Split(interfaceIpAddress, "/")[0]
 			}
-			fmt.Println(backResult)
-			return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, active, backResult
+
+			return interfaceIpAddress, interfaceMask, interfaceGateway, interfaceDhcp, active, backResult, mac
 		}
 	}
-	return "", "", "", "", "", ""
+	return "", "", "", "", "", "", ""
 }
 
 func stopStream(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -208,7 +215,7 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	streamCanRun = true
 	streamSync.Unlock()
 	_ = r.ParseForm()
-	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _, _ := GetNetworkData()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _, _, mac := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	tmpl := template.Must(template.ParseFiles("html/index.html"))
 	data := HomepageData{
@@ -217,6 +224,7 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		Gateway:         interfaceGateway,
 		Dhcp:            "ne",
 		ServerIpAddress: interfaceServerIpAddress,
+		Mac:             mac,
 		Version:         version,
 	}
 	if dhcpEnabled == "yes" {

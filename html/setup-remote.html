@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../css/zapsi.css">
+    <script src="../js/setup-remote.js" defer></script>
+    <meta charset="UTF-8">
+    <title>Zapsi Local Webservice</title>
+</head>
+<body>
+<div id="info-panel"
+     style="position: fixed;left: 50%;top: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
+    verze {{.Version}}
+</div>
+<div style="position: fixed;left: 50%;top: 12%;transform: translate(-50%, -50%);margin: 0 auto">
+    <input type="password" id="password"  placeholder="HESLO"
+           style="flex: 1;text-align: center;border: 2px solid white;width: 100%;font-size: 2.5vw" autocomplete="off">
+</div>
+
+
+<div style="position: fixed;top: 20%;width: 100%">
+    <div style="position: fixed;top: 20%;width: 100%">
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">IP ADRESA</div>
+        <div style="text-align: center;height: 1.5vw;">
+            <input id="ipaddress"
+                   style="background:#2c2c2c;height: 1.5vw;text-align: center;font-size: 1.5vw;width: 80%" disabled
+                   value="{{.IpAddress}}">
+        </div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">MASKA</div>
+        <div style="text-align: center;height: 1.5vw;">
+            <input id="mask"
+                   style="background:#2c2c2c;height: 1.5vw;text-align: center;font-size: 1.5vw;width: 80%" disabled
+                   value="{{.Mask}}">
+        </div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">BRÁNA</div>
+        <div style="text-align: center;height: 1.5vw;">
+            <input id="gateway"
+                   style="background:#2c2c2c;height: 1.5vw;text-align: center;font-size: 1.5vw;width: 80%" disabled
+                   value="{{.Gateway}}">
+        </div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">ADRESA SERVERU</div>
+        <div style="text-align: center;height: 1.5vw;">
+            <input id="server"
+                   style="background:#2c2c2c;height: 1.5vw;text-align: center;font-size: 1.5vw;width: 80%" disabled
+                   value="{{.ServerIpAddress}}">
+        </div>
+        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">DHCP</div>
+        <div style="text-align: center">
+            <label class="switch">
+                <input type="checkbox" id="dhcp-slider" {{.DhcpChecked}} disabled>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div>
+        </div>
+    </div>
+    <div id="button-panel"
+         style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">
+        <button id="left-button"
+                style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">ZPĚT
+        </button>
+        <button id="middle-button"
+                style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white;pointer-events: none"
+                disabled>SMAZAT
+        </button>
+        <button id="right-button"
+                style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white;pointer-events: none"
+                disabled>ULOŽIT
+        </button>
+    </div>
+    <div id="version-panel"
+         style="position: fixed;left: 50%;bottom: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
+        &copy; 2021 Petr Jahoda pro Zapsi®
+    </div>
+</div>
+</body>
+</html>
+
+
+

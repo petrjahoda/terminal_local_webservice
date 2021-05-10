@@ -31,20 +31,17 @@
         <div id="dhcp" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Dhcp}}</div>
 </div>
 <div id="button-panel"
-     style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">
-    <button id="left-button" style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">
-        RESTARTOVAT
-    </button>
+     style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 20vw;display: flex;">
     <button id="middle-button"
             style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">NASTAVIT
-    </button>
-    <button id="right-button"
-            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">VYPNOUT
     </button>
 </div>
 <div id="version-panel"
      style="position: fixed;left: 50%;bottom: 5%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 2vw">
     &copy; 2021 Petr Jahoda pro Zapsi®
+</div>
+<div id="mac-panel" style="position: fixed;left: 5%;bottom: 7%;margin: 0 auto;font-size: 2vw">
+    {{.Mac}}
 </div>
 <div id="active-panel" style="position: fixed;right: 5%;bottom: 7%;margin: 0 auto;font-size: 2vw">
 </div>

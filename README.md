@@ -9,9 +9,7 @@
 * [7. Passwords](#7-passwords)
 * [8. Remote administration](#8-remote-administration)
 
-![actual screenshot](image-2.png)
-
-![actual screenshot](image.png)
+![actual screenshot](image3.png)
 
 
 
@@ -29,7 +27,7 @@
 * start network manager as service using `sudo systemctl start NetworkManager`
 * disable old dhcp service using `sudo systemctl mask dhcpcd`  
 * install ufw using `sudo apt-get install ufw`
-* enable port 9999 using `sudo ufw allow 9999`
+* enable port 80 using `sudo ufw allow 80`
 * reboot using `sudo reboot now`
 
 ## 2. Install Chromium in kiosk mode
@@ -48,7 +46,7 @@ setxkbmap -option terminate:ctrl_alt_bksp
 # Start Chromium in kiosk mode
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
-chromium-browser temporary-unexpire-flags-m80 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null  --password-store=basic --disable-pinch --overscroll-history-navigation=disabled --disable-features=TouchpadOverscrollHistoryNavigation 'http://localhost:9999'
+chromium-browser temporary-unexpire-flags-m80 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null  --password-store=basic --disable-pinch --overscroll-history-navigation=disabled --disable-features=TouchpadOverscrollHistoryNavigation 'http://localhost'
 ```
 * make everything start on boot using `sudo nano .bash_profile` , insert this line:
 ```
@@ -145,7 +143,7 @@ init=/bin/ro-root.sh
 * setup password is `3600`
 
 ## 8. Remote administration
-* screenshot at `http://<ipaddress>:9999/screenshot`
+* screenshot at `http://<ipaddress>/screenshot`
 * remote restart using javascript:
 ```
 let data = {
@@ -176,7 +174,7 @@ fetch("/shutdown", {
 ```
 let data = {
   password: "3600",
-  server: server.value,         // server web, example: 192.168.86.100:80/terminal/1
+  server: server.value,         // server web, example: 192.168.86.100:82/terminal/1
 };
 fetch("/dhcp", {
   method: "POST",
@@ -194,7 +192,7 @@ let data = {
   ipaddress: ipaddress.value,   // ip address, example: 192.168.86.128
   mask: mask.value,             // mask, example: 255.255.255.0
   gateway: gateway.value,       // gateway, example: 192.168.86.1
-  server: server.value,         // server web, example: 192.168.86.100:80/terminal/1
+  server: server.value,         // server web, example: 192.168.86.100:82/terminal/1
 };
 fetch("/static", {
   method: "POST",

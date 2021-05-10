@@ -30,7 +30,7 @@ func setupPage(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	streamSync.Lock()
 	streamCanRun = false
 	streamSync.Unlock()
-	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _, _ := GetNetworkData()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _, _, mac := GetNetworkData()
 	interfaceServerIpAddress := LoadSettingsFromConfigFile()
 	tmpl := template.Must(template.ParseFiles("html/setup.html"))
 	data := HomepageData{
@@ -40,6 +40,7 @@ func setupPage(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 		ServerIpAddress: interfaceServerIpAddress,
 		Dhcp:            dhcpEnabled,
 		DhcpChecked:     "",
+		Mac:             mac,
 		Version:         version,
 	}
 	if strings.Contains(dhcpEnabled, "yes") {

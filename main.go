@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const version = "2021.2.2.4"
+const version = "2021.2.2.10"
 const programName = "Terminal local webservice"
 const programDescription = "Display local web for rpi terminals"
 
@@ -59,6 +59,7 @@ func (p *program) run() {
 	router.GET("/", indexPage)
 	router.GET("/screenshot", screenshotPage)
 	router.GET("/setup", setupPage)
+	router.GET("/setup-remote", setupRemotePage)
 	router.POST("/password", checkPassword)
 	router.POST("/restart", restartRpi)
 	router.POST("/check_cable", checkCable)
@@ -73,11 +74,34 @@ func (p *program) run() {
 	router.ServeFiles("/js/*filepath", http.Dir("js"))
 	router.Handler("GET", "/networkdata", networkDataStreamer)
 	go StreamNetworkData(networkDataStreamer)
-	_ = http.ListenAndServe(":9999", router)
+	_ = http.ListenAndServe("", router)
+}
+
+func setupRemotePage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	streamSync.Lock()
+	streamCanRun = false
+	streamSync.Unlock()
+	interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, _, _, mac := GetNetworkData()
+	interfaceServerIpAddress := LoadSettingsFromConfigFile()
+	tmpl := template.Must(template.ParseFiles("html/setup-remote.html"))
+	data := HomepageData{
+		IpAddress:       interfaceIpAddress,
+		Mask:            interfaceMask,
+		Gateway:         interfaceGateway,
+		ServerIpAddress: interfaceServerIpAddress,
+		Dhcp:            dhcpEnabled,
+		Mac:             mac,
+		DhcpChecked:     "",
+		Version:         version,
+	}
+	if strings.Contains(dhcpEnabled, "yes") {
+		data.DhcpChecked = "checked"
+	}
+	_ = tmpl.Execute(w, data)
 }
 
 func checkCable(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	_, _, _, _, active, _ := GetNetworkData()
+	_, _, _, _, active, _, _ := GetNetworkData()
 	var responseData ChangeOutput
 	responseData.Result = active
 	w.Header().Set("Content-Type", "application/json")
@@ -101,7 +125,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 			fmt.Println("streaming data")
 			activeColor := "red"
 			serverActiveColor := "red"
-			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, active, result := GetNetworkData()
+			interfaceIpAddress, interfaceMask, interfaceGateway, dhcpEnabled, active, _, mac := GetNetworkData()
 			interfaceServerIpAddress := LoadSettingsFromConfigFile()
 			serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
 			if dhcpEnabled == "yes" {
@@ -117,7 +141,7 @@ func StreamNetworkData(streamer *sse.Streamer) {
 			if active == "kabel zapojený" {
 				activeColor = "green"
 			}
-			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+result+";"+active+";"+serverActive+";"+activeColor+";"+serverActiveColor)
+			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+mac+";"+active+";"+serverActive+";"+activeColor+";"+serverActiveColor+";"+mac)
 		}
 		time.Sleep(5 * time.Second)
 	}
