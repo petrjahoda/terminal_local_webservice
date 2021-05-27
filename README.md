@@ -144,6 +144,7 @@ init=/bin/ro-root.sh
 
 ## 8. Remote administration
 * screenshot at `http://<ipaddress>/screenshot`
+* remote settings at `http://<ipaddress>/setup-remote`
 * remote restart using javascript:
 ```
 let data = {
