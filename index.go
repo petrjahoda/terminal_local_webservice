@@ -34,19 +34,19 @@ type HomepageData struct {
 
 func GetNetworkData() (string, string, string, string, string, string, string) {
 	if homepageLoaded {
-		interfaceIpAddress := "nepřiřazeno"
-		interfaceMask := "nepřiřazeno"
-		interfaceGateway := "nepřiřazeno"
+		interfaceIpAddress := "not assigned"
+		interfaceMask := "not assigned"
+		interfaceGateway := "not assigned"
 		interfaceDhcp := "no"
 		mac := ""
 		backResult := "DATA:"
-		active := "kabel odpojený"
+		active := "cable disconnected"
 		data, _ := exec.Command("nmcli", "con", "show", "-active").Output()
 		result := string(data)
 		fmt.Println(result)
 		for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
 			if strings.Contains(line, "ethernet") {
-				active = "kabel zapojený"
+				active = "cable connected"
 			}
 		}
 		configDirectory := filepath.Join("/ro", "home", "pi", "config")
@@ -64,17 +64,17 @@ func GetNetworkData() (string, string, string, string, string, string, string) {
 				ConfigFile := ServerIpAddress{}
 				_ = json.Unmarshal(readFile, &ConfigFile)
 				initiateConnection(ConfigFile)
-				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, "", ""
+				return "Updating...", "Updating...", "Updating...", "Updating", active, "", ""
 			} else {
-				return "Připojte kabel", "", "", "", active, "", ""
+				return "Please connect cable", "", "", "", active, "", ""
 			}
 		}
 		if len(ConfigFile.Connection) == 0 {
 			configFileUpdated := updateConfigFile(ConfigFile)
 			if configFileUpdated {
-				return "Aktualizace...", "Aktualizace...", "Aktualizace...", "Aktualizace", active, "", ""
+				return "Updating...", "Updating...", "Updating...", "Updating", active, "", ""
 			} else {
-				return "Připojte kabel", "", "", "", active, "", ""
+				return "Please connect cable", "", "", "", active, "", ""
 			}
 		} else {
 			output, _ := exec.Command("nmcli", "con", "show", ConfigFile.Connection).Output()
@@ -103,9 +103,6 @@ func GetNetworkData() (string, string, string, string, string, string, string) {
 						interfaceGateway = line[40:]
 						interfaceGateway = interfaceGateway[:]
 					}
-					if strings.Contains(line, "802-3-ethernet.mac-address:") {
-						mac = line[40:]
-					}
 				} else {
 					if strings.Contains(line, "ipv4.addresses") {
 						backResult += line + "|"
@@ -120,10 +117,14 @@ func GetNetworkData() (string, string, string, string, string, string, string) {
 						interfaceGateway = line[40:]
 						interfaceGateway = interfaceGateway[:]
 					}
-					if strings.Contains(line, "802-3-ethernet.mac-address:") {
-						mac = line[40:]
-					}
+				}
+			}
 
+			output, _ = exec.Command("ip", "link", "show").Output()
+			result = string(output)
+			for _, line := range strings.Split(strings.TrimSuffix(result, "\n"), "\n") {
+				if strings.Contains(line, "link/ether") {
+					mac = line[15:33]
 				}
 			}
 			if strings.Contains(interfaceGateway, "--") {
@@ -222,13 +223,13 @@ func indexPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		IpAddress:       interfaceIpAddress,
 		Mask:            interfaceMask,
 		Gateway:         interfaceGateway,
-		Dhcp:            "ne",
+		Dhcp:            "no",
 		ServerIpAddress: interfaceServerIpAddress,
 		Mac:             mac,
 		Version:         version,
 	}
 	if dhcpEnabled == "yes" {
-		data.Dhcp = "ano"
+		data.Dhcp = "yes"
 	}
 	homepageLoaded = true
 	_ = tmpl.Execute(w, data)

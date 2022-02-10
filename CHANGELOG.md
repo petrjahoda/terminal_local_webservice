@@ -14,6 +14,11 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2022.1.2.10] - 2022-01-10
+
+### Changed
+- updated for latest RaspberryPiOS
+
 ## [2021.2.2.27] - 2021-05-27
 
 ### Changed

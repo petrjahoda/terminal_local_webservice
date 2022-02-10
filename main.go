@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const version = "2021.2.2.10"
+const version = "2022.1.2.10"
 const programName = "Terminal local webservice"
 const programDescription = "Display local web for rpi terminals"
 
@@ -74,7 +74,7 @@ func (p *program) run() {
 	router.ServeFiles("/js/*filepath", http.Dir("js"))
 	router.Handler("GET", "/networkdata", networkDataStreamer)
 	go StreamNetworkData(networkDataStreamer)
-	_ = http.ListenAndServe("", router)
+	_ = http.ListenAndServe(":9999", router)
 }
 
 func setupRemotePage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -129,16 +129,16 @@ func StreamNetworkData(streamer *sse.Streamer) {
 			interfaceServerIpAddress := LoadSettingsFromConfigFile()
 			serverAccessible := CheckServerIpAddress(interfaceServerIpAddress)
 			if dhcpEnabled == "yes" {
-				dhcpEnabled = "ano"
+				dhcpEnabled = "yes"
 			} else {
-				dhcpEnabled = "ne"
+				dhcpEnabled = "no"
 			}
-			serverActive := "server nedostupný"
+			serverActive := "server not accessible"
 			if serverAccessible {
-				serverActive = "server dostupný"
+				serverActive = "server accessible"
 				serverActiveColor = "green"
 			}
-			if active == "kabel zapojený" {
+			if active == "cable connected" {
 				activeColor = "green"
 			}
 			streamer.SendString("", "networkdata", interfaceIpAddress+";"+interfaceMask+";"+interfaceGateway+";"+dhcpEnabled+";"+interfaceServerIpAddress+";"+mac+";"+active+";"+serverActive+";"+activeColor+";"+serverActiveColor+";"+mac)

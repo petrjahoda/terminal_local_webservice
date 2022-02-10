@@ -1,8 +1,8 @@
 let timeLeft = 15;
 const downloadTimer = setInterval(function () {
     let serverActive = document.getElementById("server-active-panel")
-    if (serverActive.innerText.includes("server dostupný")) {
-        document.getElementById("server-info").innerText = "stránka serveru se načte za " + timeLeft + " vteřin";
+    if (serverActive.innerText.includes("server accessible")) {
+        document.getElementById("server-info").innerText = "server address will load in " + timeLeft + " seconds";
         if (timeLeft <= 0) {
             clearInterval(downloadTimer);
             fetch("/stop_stream", {
