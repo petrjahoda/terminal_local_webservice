@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const version = "2022.1.2.10"
+const version = "2022.1.2.14"
 const programName = "Terminal local webservice"
 const programDescription = "Display local web for rpi terminals"
 
@@ -60,6 +60,16 @@ func (p *program) run() {
 	router.GET("/screenshot", screenshotPage)
 	router.GET("/setup", setupPage)
 	router.GET("/setup-remote", setupRemotePage)
+	router.GET("/demo_1", demo1)
+	router.GET("/demo_2", demo2)
+	router.GET("/demo_3", demo3)
+	router.GET("/demo_4", demo4)
+	router.GET("/demo_5", demo5)
+	router.GET("/demo_6", demo6)
+	router.GET("/demo_7", demo7)
+	router.GET("/demo_8", demo8)
+	router.GET("/demo_9", demo9)
+	router.GET("/demo_10", demo10)
 	router.POST("/password", checkPassword)
 	router.POST("/restart", restartRpi)
 	router.POST("/check_cable", checkCable)
@@ -72,6 +82,7 @@ func (p *program) run() {
 	router.ServeFiles("/html/*filepath", http.Dir("html"))
 	router.ServeFiles("/css/*filepath", http.Dir("css"))
 	router.ServeFiles("/js/*filepath", http.Dir("js"))
+	router.ServeFiles("/pdf/*filepath", http.Dir("pdf"))
 	router.Handler("GET", "/networkdata", networkDataStreamer)
 	go StreamNetworkData(networkDataStreamer)
 	_ = http.ListenAndServe(":9999", router)

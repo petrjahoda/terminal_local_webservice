@@ -14,6 +14,12 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+## [2022.1.2.14] - 2022-01-14
+
+### Added
+- shutdown button
+- demobutton with 10 additional pages
+
 ## [2022.1.2.10] - 2022-01-10
 
 ### Changed

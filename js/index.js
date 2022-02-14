@@ -37,14 +37,46 @@ networkDataSource.addEventListener('networkdata', (e) => {
 }, false);
 
 const middleButton = document.getElementById("middle-button")
+const leftButton = document.getElementById("left-button")
+const rightButton = document.getElementById("right-button")
 
 
-middleButton.addEventListener('touchstart', function (event) {
+leftButton.addEventListener('touchend', function () {
+    leftButton.style.border = "2px solid red"
+    middleButton.style.border = "2px solid white"
+    rightButton.style.border = "2px solid white"
+    let data = {
+        password: "3600"
+    };
+    fetch("/shutdown", {
+        method: "POST",
+        body: JSON.stringify(data)
+    }).then(() => {
+    }).catch(() => {
+    });
+}, false);
+
+middleButton.addEventListener('touchend', function (event) {
     callRpiSetup();
 }, false);
 
 
+rightButton.addEventListener('touchend', function (event) {
+    openDemoPage();
+}, false);
+
+
 function callRpiSetup() {
+    leftButton.style.border = "2px solid white"
     middleButton.style.border = "2px solid red"
+    rightButton.style.border = "2px solid white"
     window.open("/setup", "_self")
+}
+
+
+function openDemoPage() {
+    leftButton.style.border = "2px solid white"
+    middleButton.style.border = "2px solid white"
+    rightButton.style.border = "2px solid red"
+    window.open("/demo_1", "_self")
 }

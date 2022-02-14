@@ -19,21 +19,33 @@
      style="position: fixed;left: 50%;top: 10%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
 </div>
 <div style="position: fixed;top: 20%;width: 100%">
-        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">IP ADDRESS</div>
-        <div id="ipaddress" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.IpAddress}}</div>
-        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">MASK</div>
-        <div id="mask" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Mask}}</div>
-        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">GATEWAY</div>
-        <div id="gateway" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Gateway}}</div>
-        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">SERVER ADDRESS</div>
-        <div id="server" style="text-align: center;height: 1.5vw;font-size: 1.5vw"> {{.ServerIpAddress}}</div>
-        <div style="text-align: center;font-size: 2vw;margin-top: 1vw">DHCP</div>
-        <div id="dhcp" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Dhcp}}</div>
+    <div style="text-align: center;font-size: 2vw;margin-top: 1vw">IP ADDRESS</div>
+    <div id="ipaddress" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.IpAddress}}</div>
+    <div style="text-align: center;font-size: 2vw;margin-top: 1vw">MASK</div>
+    <div id="mask" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Mask}}</div>
+    <div style="text-align: center;font-size: 2vw;margin-top: 1vw">GATEWAY</div>
+    <div id="gateway" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Gateway}}</div>
+    <div style="text-align: center;font-size: 2vw;margin-top: 1vw">SERVER ADDRESS</div>
+    <div id="server" style="text-align: center;height: 1.5vw;font-size: 1.5vw"> {{.ServerIpAddress}}</div>
+    <div style="text-align: center;font-size: 2vw;margin-top: 1vw">DHCP</div>
+    <div id="dhcp" style="text-align: center;height: 1.5vw;font-size: 1.5vw">{{.Dhcp}}</div>
 </div>
+<!--<div id="button-panel"-->
+<!--     style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 20vw;display: flex;">-->
+<!--    <button id="middle-button"-->
+<!--            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">SETUP-->
+<!--    </button>-->
+<!--</div>-->
 <div id="button-panel"
-     style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 20vw;display: flex;">
+     style="position: fixed;left: 50%;top: 70%;transform: translate(-50%, -50%);font-size: 3vw;width: 60vw;display: flex;">
+    <button id="left-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">SHUTDOWN
+    </button>
     <button id="middle-button"
             style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">SETUP
+    </button>
+    <button id="right-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white">DEMO CZ
     </button>
 </div>
 <div id="version-panel"

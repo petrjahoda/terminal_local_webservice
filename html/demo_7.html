@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../css/keyboard.css">
+    <link rel="stylesheet" href="../css/zapsi.css">
+    <script src="../js/demo_7.js" defer></script>
+    <meta charset="UTF-8">
+    <title>Zapsi Local Webservice</title>
+</head>
+<body>
+<div id="server-info"
+     style="position: fixed;left: 50%;top: 10%;transform: translate(-50%, -50%);margin: 0 auto;font-size: 1vw">
+</div>
+<div
+        style="position: fixed;left: 50%;top: 20%;transform: translate(-50%, -50%);font-size: 3vw;width: 90vw;display: flex;">
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Přestávka
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height:8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Uklízení
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        WC
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Kouření
+    </button>
+</div>
+<div
+        style="position: fixed;left: 50%;top: 40%;transform: translate(-50%, -50%);font-size: 3vw;width: 90vw;display: flex;">
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Čištění venkovní
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height:8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Čištění vnitřní
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Ruční oprava
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Odbarvení
+    </button>
+</div>
+<div
+        style="position: fixed;left: 50%;top: 60%;transform: translate(-50%, -50%);font-size: 3vw;width: 90vw;display: flex;">
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Porucha stroje
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height:8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Není materiál
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Čekání na odvoz
+    </button>
+    <button
+            style="width: 180px;flex:1;margin:10px;height: 8vw;font-size: 2vw;border: 2px solid orange;color:orange;pointer-events: none">
+        Jiný problém
+    </button>
+</div>
+<div id="button-panel"
+     style="position: fixed;left: 50%;top: 90%;transform: translate(-50%, -50%);font-size: 3vw;width: 90vw;display: flex;">
+    <button id="left-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white"><-
+    </button>
+    <button id="middle-left-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid black;pointer-events: none"
+            disabled>
+    </button>
+    <button id="middle-right-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid black;pointer-events: none"
+            disabled>
+    </button>
+    <button id="right-button"
+            style="width: 180px;flex:1;margin:10px;height: 6vw;font-size: 2vw;border: 2px solid white"
+    >->
+    </button>
+</div>
+<div id="mac-panel" style="position: fixed;left: 5%;bottom: 7%;margin: 0 auto;font-size: 2vw">
+    {{.Mac}}
+</div>
+<div id="active-panel" style="position: fixed;right: 5%;bottom: 7%;margin: 0 auto;font-size: 2vw">
+</div>
+<div id="server-active-panel" style="position: fixed;right: 5%;bottom: 12%;margin: 0 auto;font-size: 2vw">
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
