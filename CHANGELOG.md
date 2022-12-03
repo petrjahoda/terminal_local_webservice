@@ -14,6 +14,12 @@ adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 * ```Fixed``` for any bug fixes.
 * ```Security``` in case of vulnerabilities.
 
+
+## [2022.4.3.3] - 2022-12-03
+
+### Added
+- license
+
 ## [2022.1.2.14] - 2022-01-14
 
 ### Added
