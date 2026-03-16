@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const version = "2022.1.2.14"
+const version = "2025.3.3.26"
 const programName = "Terminal local webservice"
 const programDescription = "Display local web for rpi terminals"
 
